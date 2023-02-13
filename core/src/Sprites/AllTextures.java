@@ -71,8 +71,5 @@ public class AllTextures {
         return _textures;
     }*/
 
-    public static void main(String[] args) {
-        AllTextures allTextures = new AllTextures();
-        System.out.println(allTextures.getLettuceTextures());
-    }
+    
 }

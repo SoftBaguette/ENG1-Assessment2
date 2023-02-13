@@ -15,7 +15,7 @@ public class Ingredient extends Sprite {
 
     public String name;
 
-    public String status;
+    public Integer status;
 
 
     /**
@@ -41,7 +41,7 @@ public class Ingredient extends Sprite {
      * @param prepareTime The time required to prepare the ingredient.
      * @param cookTime The time required to cook the ingredient.
      */
-    public Ingredient(String name, String status,float prepareTime, float cookTime, ArrayList<Texture> tex) {
+    public Ingredient(String name, Integer status,float prepareTime, float cookTime, ArrayList<Texture> tex) {
         this.name = name;
         this.status = status;
         this.prepareTime = prepareTime;
@@ -56,6 +56,7 @@ public class Ingredient extends Sprite {
      *
      */
     public void setPrepared() {
+        status += 1;
         amIPrepared = true;
     }
 
@@ -73,6 +74,7 @@ public class Ingredient extends Sprite {
      *
      */
     public void setCooked() {
+        status += 1;
         amICooked= true;
     }
 

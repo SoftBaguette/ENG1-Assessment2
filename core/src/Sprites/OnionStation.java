@@ -21,7 +21,7 @@ public class OnionStation extends InteractiveTileObject {
 
     }
     public Ingredient getIngredient(){
-        return new Onion("Onion", "", 0,0, AllTextures.getOnionTextures());
+        return new Onion("Onion", 0, 0,0, AllTextures.getOnionTextures());
     }
 }
 

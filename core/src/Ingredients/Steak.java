@@ -12,7 +12,7 @@ public class Steak extends Ingredient{
      * The Steak class sets up an ArrayList of textures for its different skins.
      */
 
-    public Steak(String name, String status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
+    public Steak(String name, Integer status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
         super(name, status, prepareTime, cookTime, tex);
         super.name = name;
         super.status = status;

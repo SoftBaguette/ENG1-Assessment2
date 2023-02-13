@@ -12,7 +12,7 @@ public class Onion extends Ingredient{
      * The Onion class sets up an ArrayList of textures for its different skins.
      */
 
-    public Onion(String name, String status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
+    public Onion(String name, Integer status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
         super(name, status, prepareTime, cookTime, tex);
         super.name = name;
         super.status = status;

@@ -12,7 +12,7 @@ public class Tomato extends Ingredient{
      * The Tomato class sets up an ArrayList of textures for its different skins.
      */
 
-    public Tomato(String name, String status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
+    public Tomato(String name, Integer status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
         super(name, status, prepareTime, cookTime, tex);
         super.tex = new ArrayList<>();
         super.name = name;

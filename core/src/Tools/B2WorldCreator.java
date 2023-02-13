@@ -49,6 +49,22 @@ public class B2WorldCreator {
         lettuce_textures.add(new Texture("Food/Lettuce.png"));
         lettuce_textures.add(new Texture("Food/LettuceChopped.png"));
 
+        ArrayList<Texture> tomato_textures = new ArrayList<Texture>();
+        tomato_textures.add(new Texture("Food/Tomato.png"));
+        tomato_textures.add(new Texture("Food/TomatoChopped.png"));
+
+        ArrayList<Texture> onion_textures = new ArrayList<Texture>();
+        onion_textures.add(new Texture("Food/Onion.png"));
+        onion_textures.add(new Texture("Food/OnionChopped.png"));
+
+        ArrayList<Texture> burger_buns_textures = new ArrayList<Texture>();
+        burger_buns_textures.add(new Texture("Food/Burger_buns.png"));
+        burger_buns_textures.add(new Texture("Food/Burger_bunsToasted.png"));
+
+        ArrayList<Texture> patty_textures = new ArrayList<Texture>();
+        patty_textures.add(new Texture("Food/Meat.png"));
+        patty_textures.add(new Texture("Food/Patty.png"));
+        patty_textures.add(new Texture("Food/PattyCooked.png"));
 
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
         for (int x = 0; x < layer.getWidth(); x++) {
@@ -83,15 +99,18 @@ public class B2WorldCreator {
                 } else if (mapObject.getName().equals("plate")) {
                     screen.plateStation = new PlateStation(world, map, bdef, rectangle);
                 } else if (mapObject.getName().equals("tomato")) {
-                    new TomatoStation(world, map, bdef, rectangle);
+                    //new TomatoStation(world, map, bdef, rectangle);
+                    new IngredientStation(world, map, bdef, rectangle, new Ingredient("Tomato", 0, 2,0,tomato_textures ));
                 } else if (mapObject.getName().equals("lettuce")) {
                     //new LettuceStation(world, map, bdef, rectangle);
 
-                    new IngredientStation(world, map, bdef, rectangle, new Ingredient("Lettuce", "", 2,0,lettuce_textures ));
+                    new IngredientStation(world, map, bdef, rectangle, new Ingredient("Lettuce", 0, 2,0,lettuce_textures ));
                 } else if (mapObject.getName().equals("buns")) {
-                    new BunsStation(world, map, bdef, rectangle);
+                    //new BunsStation(world, map, bdef, rectangle);
+                    new IngredientStation(world, map, bdef, rectangle, new Ingredient("Burger_buns", 0, 2,0,burger_buns_textures ));
                 } else if (mapObject.getName().equals("onion")) {
-                    new OnionStation(world, map, bdef, rectangle);
+                    //new OnionStation(world, map, bdef, rectangle);
+                    new IngredientStation(world, map, bdef, rectangle, new Ingredient("Onion", 0, 2,0,onion_textures ));
                 } else if (mapObject.getName().equals("pan1")) {
                     new Pan(world, map, bdef, rectangle);
                 } else if (mapObject.getName().equals("steak")) {

@@ -12,7 +12,7 @@ public class Lettuce extends Ingredient{
      * The Lettuce class sets up an ArrayList of textures for its different skins.
      */
 
-    public Lettuce(String name, String status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
+    public Lettuce(String name, Integer status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
         super(name, status, prepareTime, cookTime, tex);
         super.name = name;
         super.status = status;

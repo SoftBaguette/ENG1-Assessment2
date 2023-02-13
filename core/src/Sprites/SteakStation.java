@@ -18,7 +18,7 @@ public class SteakStation extends InteractiveTileObject {
         fixture.setUserData(this);
     }
     public Ingredient getIngredient(){
-       return new Steak("Meat","",0,0, AllTextures.getPattyTextures());
+       return new Steak("Meat",0,0,0, AllTextures.getPattyTextures());
     }
 }
 

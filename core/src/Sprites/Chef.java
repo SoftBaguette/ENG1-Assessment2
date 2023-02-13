@@ -40,6 +40,9 @@ public class Chef extends Sprite {
     private float putDownWaitTimer;
     public boolean chefOnChefCollision;
     private final Texture normalChef;
+    private final Texture holdingChef;
+
+
     private final Texture bunsChef;
     private final Texture bunsToastedChef;
     private final Texture burgerChef;
@@ -92,6 +95,7 @@ public class Chef extends Sprite {
         initialY = startY / MainGame.PPM;
 
         normalChef = new Texture("Chef/Chef_normal.png");
+        holdingChef = new Texture("Chef/Chef_holding.png");
         bunsChef = new Texture("Chef/Chef_holding_buns.png");
         bunsToastedChef = new Texture("Chef/Chef_holding_buns_toasted.png");
         burgerChef = new Texture("Chef/Chef_holding_burger.png");
@@ -181,7 +185,7 @@ public class Chef extends Sprite {
                 break;
         }
 
-
+        //TODO change this
         if (!userControlChef && chefOnChefCollision) {
             waitTimer += dt;
             b2body.setLinearVelocity(new Vector2(startVector.x * -1, startVector.y * -1));
@@ -403,7 +407,13 @@ public class Chef extends Sprite {
     public void setChefSkin(Object item) {
         if (item == null) {
             skinNeeded = normalChef;
-        } else if (item instanceof Lettuce) {
+        }
+        else{
+            skinNeeded = holdingChef;
+        }
+        
+        /*
+         else if (item instanceof Lettuce) {
             if (inHandsIng.isPrepared()) {
                 skinNeeded = choppedLettuceChef;
             } else {
@@ -439,6 +449,13 @@ public class Chef extends Sprite {
             skinNeeded = completedBurgerChef;
         } else if (item instanceof SaladRecipe) {
             skinNeeded = saladChef;
+        }*/
+    }
+
+    public void draw_item(Batch batch){
+        Ingredient chefs_ingredient = this.getInHandsIng();
+        if (chefs_ingredient != null){
+            batch.draw(chefs_ingredient.tex.get(this.getInHandsIng().status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
         }
     }
 

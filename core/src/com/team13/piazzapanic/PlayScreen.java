@@ -163,17 +163,25 @@ public class PlayScreen implements Screen {
                     
                     if (tile.ingredient != null){
                         System.out.println(tile.ingredient.name);
+                        if (tileName == "Sprites.IngredientStation"){
+                            controlledChef.setInHandsIng(tile.ingredient);
+                            System.out.println(controlledChef.getInHandsIng());
+                        }
+                        
                         if (tile.ingredient.name == "Lettuce"){
                             ArrayList<Texture> lettuce_textures = new ArrayList<Texture>();
                             lettuce_textures.add(new Texture("Food/Lettuce.png"));
                             lettuce_textures.add(new Texture("Food/LettuceChopped.png"));
-                            Lettuce temp = new Lettuce("Lettuce", "", 2,0, AllTextures.getLettuceTextures());
+                            Lettuce temp = new Lettuce("Lettuce", 0, 2,0, AllTextures.getLettuceTextures());
                             temp.tex = lettuce_textures;
                             controlledChef.setInHandsIng(temp);
                             controlledChef.setChefSkin(controlledChef.getInHandsIng());
                             controlledChef.setChefSkin(temp);
                             System.out.println(controlledChef.getInHandsIng().tex.get(0));
                         }
+                    }
+                    if (tileName == "Sprites.ChoppingBoard"){
+                        tile.interact(controlledChef);
                     }
                     if (controlledChef.getInHandsIng() == null && controlledChef.getInHandsRecipe() == null) {
                         switch (tileName) {
@@ -218,6 +226,7 @@ public class PlayScreen implements Screen {
                                 break;
 
                             case "Sprites.ChoppingBoard":
+                                System.out.println("Here");
                                 if(controlledChef.getInHandsIng() != null){
                                     if(controlledChef.getInHandsIng().prepareTime > 0){
                                         controlledChef.setUserControlChef(false);
@@ -234,6 +243,7 @@ public class PlayScreen implements Screen {
                                 if(controlledChef.getInHandsIng() != null) {
                                     if (controlledChef.getInHandsIng().isPrepared() && controlledChef.getInHandsIng().cookTime > 0){
                                         controlledChef.setUserControlChef(false);
+                                        
                                     }
                                 }
 
@@ -354,7 +364,11 @@ public class PlayScreen implements Screen {
         updateOrder();
         //game.batch.draw(new Texture("Chef/Chef_normal.png"), chef1.getX(), chef1.getY(), chef1.getWidth(), chef1.getHeight());
         //chef1.draw_chef(game.batch);
+        //System.out.println(Gdx.input.getX());
+        //System.out.println(Gdx.input.getY());
         chef1.draw(game.batch);
+        chef1.draw_item(game.batch);
+        game.batch.draw(new Texture("Food/Lettuce.png"), (chef1.getX()*1.01f), chef1.getY(), chef1.getWidth()/2,chef1.getHeight()/2);
         chef2.draw(game.batch);
         controlledChef.drawNotification(game.batch);
         if (plateStation.getPlate().size() > 0){
@@ -386,7 +400,7 @@ public class PlayScreen implements Screen {
         if (chef2.previousInHandRecipe != null){
             chef2.displayIngDynamic(game.batch);
         }
-        game.batch.draw(new Texture ("Chef/Chef_holding_buns.png"), 50, 60, 200, 100);
+        //game.batch.draw(new Texture ("Chef/Chef_holding_buns.png"), 50, 60, 200, 100);
         game.batch.end();
     }
 

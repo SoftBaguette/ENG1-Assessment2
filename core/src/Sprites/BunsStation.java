@@ -33,7 +33,7 @@ public class BunsStation extends InteractiveTileObject {
      * @return A new Bun object.
      */
     public Ingredient getIngredient() {
-        return new Bun("Burger_bun", "",0,0, AllTextures.getBurgerBunsTextures());
+        return new Bun("Burger_bun", 0,0,0, AllTextures.getBurgerBunsTextures());
     }
 }
 

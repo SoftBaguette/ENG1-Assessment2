@@ -39,7 +39,7 @@ public abstract class InteractiveTileObject {
         ingredient = null;
     }
 
-    public void interact(){
+    public void interact(Chef chef){
         System.out.println("Interacted");
     }
     

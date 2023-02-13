@@ -5,6 +5,8 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
+import Ingredients.Ingredient;
+
 /**
  * The ChoppingBoard class extends the InteractiveTileObject class.
  *
@@ -24,5 +26,14 @@ public class ChoppingBoard extends InteractiveTileObject {
 
     public float getY(){
         return super.bdefNew.position.y;
+    }
+
+    
+    public void interact(Chef chef){
+        if (chef.getInHandsIng() != null){
+            Ingredient temp_ingredient = chef.getInHandsIng();
+            //temp_ingredient.status += 1;
+            chef.setInHandsIng(temp_ingredient);
+        }
     }
 }

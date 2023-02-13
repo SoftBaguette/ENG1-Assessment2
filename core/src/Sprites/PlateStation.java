@@ -93,11 +93,15 @@ public class PlateStation extends InteractiveTileObject {
             for (Ingredient ing : plate) {
                 saladIngFound = false;
                 for (int j = 0; j < saladRecipe.getIngredients().size(); j++) {
+                    if (ing.name == saladRecipe.getIngredients().get(j).name &&ing.status == saladRecipe.getIngredients().get(j).status){
+                        saladIngFound = true;   
+                    }
+                    /*
                     if (ing.getClass().toString().equals(saladRecipe.getIngredients().get(j).getClass().toString())) {
                         if (ing.isPrepared()) {
                             saladIngFound = true;
                         }
-                    }
+                    }*/
                 }
                 if (!saladIngFound) {
                     saladSame = false;

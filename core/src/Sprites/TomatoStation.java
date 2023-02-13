@@ -25,16 +25,9 @@ public class TomatoStation extends InteractiveTileObject {
     }
 
     public static Ingredient getIngredient(){
-        return new Tomato("Tomato", "", 2,0, AllTextures.getTomatoTextures());
+        return new Tomato("Tomato", 0, 2,0, AllTextures.getTomatoTextures());
     }
 
-    public static void main(String[] args) {
-        //TomatoStation tomatoStation = new TomatoStation(null, null, null, null);
-        
-        Texture texture = new Texture(Gdx.files.internal("Food/Onion.png"));
-        Ingredient tomato = getIngredient();
-        System.out.println(tomato.name);
-    }
     
     
 }

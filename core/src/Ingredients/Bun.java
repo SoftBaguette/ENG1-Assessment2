@@ -14,7 +14,7 @@ public class Bun extends Ingredient{
 
      */
 
-    public Bun(String name, String status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
+    public Bun(String name, Integer status, float prepareTime, float cookTime, ArrayList<Texture> tex) {
         super(name, status, prepareTime, cookTime, tex);
         super.setPrepared();
         super.name = name;
