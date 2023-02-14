@@ -16,6 +16,7 @@ import java.util.ArrayList;
 public class Recipe extends Sprite {
     protected ArrayList<Ingredient> ingredients;
     protected Texture completedImg;
+    protected Ingredient completedIngredient;
 
     /**
      * Constructor for the Recipe class.

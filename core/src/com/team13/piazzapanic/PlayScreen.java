@@ -224,7 +224,7 @@ public class PlayScreen implements Screen {
                                 controlledChef.setInHandsIng(null);
                                 controlledChef.setChefSkin(null);
                                 break;
-
+                            /*
                             case "Sprites.ChoppingBoard":
                                 System.out.println("Here");
                                 if(controlledChef.getInHandsIng() != null){
@@ -232,7 +232,7 @@ public class PlayScreen implements Screen {
                                         controlledChef.setUserControlChef(false);
                                     }
                                 }
-                               break;
+                               break;*/
                             case "Sprites.PlateStation":
                                 if (controlledChef.getInHandsRecipe() == null){
                                 controlledChef.dropItemOn(tile, controlledChef.getInHandsIng());
@@ -279,6 +279,14 @@ public class PlayScreen implements Screen {
         renderer.setView(gamecam);
         chef1.update(dt);
         chef2.update(dt);
+        if (chef1.getTouchingTile() != null){
+            if (chef1.getTouchingTile().getUserData().getClass().getName() == "Sprites.ChoppingBoard"){
+                InteractiveTileObject tile = (InteractiveTileObject) controlledChef.getTouchingTile().getUserData();
+                tile.update(chef1);
+                tile.draw_progress_bar(game.batch);
+            }
+        }
+        
         world.step(1/60f, 6, 2);
 
     }

@@ -17,8 +17,8 @@ public class CompletedDishStation extends InteractiveTileObject {
      * @param bdef Body definition for the object
      * @param rectangle The rectangle that defines the object's size and location
      */
-    public CompletedDishStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle) {
-        super(world, map, bdef, rectangle);
+    public CompletedDishStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
+        super(world, map, bdef, rectangle, type);
         fixture.setUserData(this);
     }
 

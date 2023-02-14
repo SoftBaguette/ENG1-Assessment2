@@ -11,8 +11,8 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 
 public class Bin extends InteractiveTileObject {
-    public Bin(World world, TiledMap map, BodyDef bdef, Rectangle rectangle) {
-        super(world, map, bdef, rectangle);
+    public Bin(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
+        super(world, map, bdef, rectangle, type);
         fixture.setUserData(this);
 
     }

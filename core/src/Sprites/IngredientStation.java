@@ -11,17 +11,24 @@ import Ingredients.Ingredient;
 public class IngredientStation extends InteractiveTileObject{
 
     
-    public IngredientStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, Ingredient ingredient) {
-        super(world, map, bdef, rectangle);
+    public IngredientStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, Ingredient ingredient, String type) {
+        super(world, map, bdef, rectangle, type);
         //TODO Auto-generated constructor stub
         fixture.setUserData(this);
         this.ingredient  = ingredient;
+        this.type = "IngredientSource";
+    }
+
+    public IngredientStation(Ingredient ingredient, String type){
+        super(type);
+        this.ingredient  = ingredient;
+        this.type = "IngredientSource";
     }
 
     public void interact(Chef chef){
-        System.out.println("Interacted");
-        if (chef.inHandsIng != null){
-            //chef.setInHandsIng(ingredient);
+        System.out.println("Interacted with ingredient source");
+        if (chef.inHandsIng == null){
+            chef.setInHandsIng(ingredient);
         }
     }
     

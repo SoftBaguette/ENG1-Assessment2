@@ -10,8 +10,8 @@ import com.badlogic.gdx.physics.box2d.World;
  * escaping the bounds
  */
 public class Worktop extends InteractiveTileObject {
-    public Worktop(World world, TiledMap map, BodyDef bdef, Rectangle rectangle) {
-        super(world, map, bdef, rectangle);
+    public Worktop(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
+        super(world, map, bdef, rectangle, type);
         fixture.setUserData(this);
 
     }

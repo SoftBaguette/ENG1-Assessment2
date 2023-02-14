@@ -83,6 +83,71 @@ public class Chef extends Sprite {
     public int nextOrderAppearTime;
     public Recipe previousInHandRecipe;
 
+    public Chef(){
+        initialX = 2 / MainGame.PPM;
+        initialY = 2 / MainGame.PPM;
+
+        normalChef = null;
+        holdingChef = null;
+        bunsChef = null;
+        bunsToastedChef = null;
+        burgerChef = null;
+        lettuceChef = null;
+        onionChef = null;
+        tomatoChef = null;
+        choppedLettuceChef = null;
+        choppedOnionChef = null;
+        choppedTomatoChef = null;
+        pattyChef = null;
+        completedBurgerChef = null;
+        meatChef = null;
+        saladChef = null;
+        saladChef = null;
+        skinNeeded = null;
+        circleSprite = null;
+        /*
+        normalChef = new Texture("Chef/Chef_normal.png");
+        holdingChef = new Texture("Chef/Chef_holding.png");
+        bunsChef = new Texture("Chef/Chef_holding_buns.png");
+        bunsToastedChef = new Texture("Chef/Chef_holding_buns_toasted.png");
+        burgerChef = new Texture("Chef/Chef_holding_burger.png");
+        lettuceChef = new Texture("Chef/Chef_holding_lettuce.png");
+        onionChef = new Texture("Chef/Chef_holding_onion.png");
+        tomatoChef = new Texture("Chef/Chef_holding_tomato.png");
+        choppedLettuceChef = new Texture("Chef/Chef_holding_chopped_lettuce.png");
+        choppedOnionChef = new Texture("Chef/Chef_holding_chopped_onion.png");
+        choppedTomatoChef = new Texture("Chef/Chef_holding_chopped_tomato.png");
+        pattyChef = new Texture("Chef/Chef_holding_patty.png");
+        completedBurgerChef = new Texture("Chef/Chef_holding_front.png");
+        meatChef = new Texture("Chef/Chef_holding_meat.png");
+        saladChef = new Texture("Chef/Chef_holding_salad.png");
+        saladChef = new Texture("Chef/Chef_holding_salad.png");
+
+
+        skinNeeded = normalChef;*/
+
+        currentState = State.DOWN;
+
+        //defineChef();
+
+        float chefWidth = 13 / MainGame.PPM;
+        float chefHeight = 20 / MainGame.PPM;
+        setBounds(0, 0, chefWidth, chefHeight);
+        chefOnChefCollision = false;
+        waitTimer = 0;
+        putDownWaitTimer = 0;
+        startVector = new Vector2(0, 0);
+        whatTouching = null;
+        inHandsIng = null;
+        inHandsRecipe = null;
+        userControlChef = true;
+
+        //Texture circleTexture = new Texture("Chef/chefIdentifier.png");
+        //circleSprite = new Sprite(circleTexture);
+        nextOrderAppearTime = 3;
+        completedStation = null;
+    }
+
     /**
      * Chef class constructor that initializes all the fields
      * @param world the world the chef exists in
@@ -135,6 +200,8 @@ public class Chef extends Sprite {
         nextOrderAppearTime = 3;
         completedStation = null;
     }
+
+    
 
 
     /**

@@ -20,8 +20,8 @@ public class LettuceStation extends InteractiveTileObject {
      * @param bdef the BodyDef for the physics of the LettuceStation
      * @param rectangle the rectangle representing the boundaries of the LettuceStation
      */
-    public LettuceStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle) {
-        super(world, map, bdef, rectangle);
+    public LettuceStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
+        super(world, map, bdef, rectangle, type);
         fixture.setUserData(this);
     }
 

@@ -19,8 +19,8 @@ import com.badlogic.gdx.physics.box2d.World;
  */
 public class TomatoStation extends InteractiveTileObject {
 
-    public TomatoStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle) {
-        super(world, map, bdef, rectangle);
+    public TomatoStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
+        super(world, map, bdef, rectangle, type);
         fixture.setUserData(this);
     }
 

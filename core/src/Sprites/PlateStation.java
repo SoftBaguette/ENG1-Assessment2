@@ -42,8 +42,8 @@ public class PlateStation extends InteractiveTileObject {
      * @param bdef the BodyDef object representing the plate's physical body
      * @param rectangle the Rectangle object representing the plate's hitbox
      */
-    public PlateStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle) {
-        super(world, map, bdef, rectangle);
+    public PlateStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
+        super(world, map, bdef, rectangle, type);
         fixture.setUserData(this);
         this.plate = new ArrayList<>();
         burgerRecipe = new BurgerRecipe();
@@ -85,7 +85,7 @@ public class PlateStation extends InteractiveTileObject {
             if (burgerSame) {
                 plate.clear();
                 recipeDone = burgerRecipe;
-            }
+            } 
         }
         if (plate.size() == saladRecipe.getIngredients().size()) {
             boolean saladSame = true;

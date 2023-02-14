@@ -1,6 +1,7 @@
 package Recipe;
 
 import Ingredients.Bun;
+import Ingredients.Ingredient;
 import Ingredients.Steak;
 import Sprites.AllTextures;
 
@@ -24,5 +25,6 @@ public class BurgerRecipe extends Recipe{
         ingredients.add(new Bun("Burger_bun", 1,0,0, AllTextures.getBurgerBunsTextures()));
         ingredients.add(new Steak("Meat",2,0,0, AllTextures.getPattyTextures()));
         completedImg = new Texture("Food/Burger.png");
+        //completedIngredient = new Ingredient("Burger", null, getRegionWidth(), getRegionHeight(), null);
     }
 }
