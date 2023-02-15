@@ -1,6 +1,8 @@
 package Sprites;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -81,6 +83,10 @@ public class InteractiveTileObject {
         if (type == "ChoppingBoard"){
             chopping_board_interact(chef);
         }
+
+        if (type == "Plate"){
+            plate_interact(chef);
+        }
     }
     
     public void update(Chef chef){
@@ -89,7 +95,6 @@ public class InteractiveTileObject {
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
             //progressBar.setProgress((int) (percent*100));
-            System.out.println(progress);
             if (System.currentTimeMillis() - start_time_interaction > (item_on_station.prepareTime*1000)){
                 item_on_station.status +=1;
                 item_on_station.isPrepared();
@@ -118,7 +123,6 @@ public class InteractiveTileObject {
                 chef.setInHandsIng(null);
                 //Stop the chef from moving
                 start_time_interaction = System.currentTimeMillis();
-                System.out.println(start_time_interaction);
                 interacting = true;
             }
             
@@ -135,8 +139,30 @@ public class InteractiveTileObject {
     }   
     
     public void checkRecipeCreated(){
+        Set<Ingredient> salad_ingredients_v1 = new HashSet<Ingredient>();
+        Set<String> salad_ingdredients = new HashSet<String>();
+        salad_ingdredients.add("Tomato");
+        salad_ingdredients.add("Lettuce");
+        salad_ingdredients.add("Onion");
+        salad_ingredients_v1.add(new Ingredient("Tomato", 1, 0,0, null));
+        salad_ingredients_v1.add(new Ingredient("Lettuce", 1, 0,0, null));
+        salad_ingredients_v1.add(new Ingredient("Onion", 1, 0,0, null));
+        
+        Set<Ingredient> burger_ingredients = new HashSet<Ingredient>();
+        burger_ingredients.add(new Ingredient("Tomato", 1, 0,0, null));
+        burger_ingredients.add(new Ingredient("Lettuce", 1, 0,0, null));
         for (Ingredient ing : plate_items){
-            
+            if (ing != null){
+                System.out.println(ing.name);
+                if (salad_ingdredients.contains(ing.name) && ing.status == 1){
+                    salad_ingdredients.remove(ing.name);
+                }
+                if (salad_ingdredients.size() == 0){
+                    plate_items = new ArrayList<>();
+                    plate_items.add(new Ingredient("Salad", 0, 0,0, null));
+                    System.out.println("Made Salad");
+                }
+            }
         }
     }
 }
