@@ -16,7 +16,7 @@ import Ingredients.Ingredient;
 
 
 
-public class InteractiveTileObject {
+public class Station extends InteractiveTileObject{
     
     protected Fixture fixture;
 
@@ -42,8 +42,8 @@ public class InteractiveTileObject {
      * @param bdef The body definition of a tile.
      * @param rectangle Rectangle shape.
      */
-    public InteractiveTileObject(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
-
+    public Station(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
+        super(world, map, bdef, rectangle, type);
         bdefNew = bdef;
         
         Body b2body = world.createBody(bdef);
@@ -53,7 +53,7 @@ public class InteractiveTileObject {
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fixture = b2body.createFixture(fdef);
-        fixture.setUserData(this);
+        
         ingredient = null;
         this.type = type;
         interacting = false;
@@ -62,11 +62,10 @@ public class InteractiveTileObject {
         
 
         plate_items = new ArrayList<>();
-
-        
     }
 
-    public InteractiveTileObject(String type){
+    public Station(String type){
+        super(type);
         this.type = type;
         ingredient = null;
         this.type = type;

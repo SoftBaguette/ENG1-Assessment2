@@ -157,6 +157,7 @@ public class PlayScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.E)){
             //System.out.println(controlledChef.inHandsIng);
                 if(controlledChef.getTouchingTile() != null){
+                    System.out.println(controlledChef.getTouchingTile().getUserData().getClass());
                     InteractiveTileObject tile = (InteractiveTileObject) controlledChef.getTouchingTile().getUserData();
                     String tileName = tile.getClass().getName();
                     System.out.println(tileName);
