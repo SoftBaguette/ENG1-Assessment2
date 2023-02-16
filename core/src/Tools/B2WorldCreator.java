@@ -43,6 +43,7 @@ public class B2WorldCreator {
  * @param world The Box2D World object.
  * @param map The TiledMap object.
  * */
+    ArrayList<InteractiveTileObject> tile_objects;
 
     public B2WorldCreator(World world, TiledMap map, PlayScreen screen) {
         ArrayList<Texture> lettuce_textures = new ArrayList<Texture>();
@@ -67,7 +68,7 @@ public class B2WorldCreator {
         patty_textures.add(new Texture("Food/PattyCooked.png"));
 
         //TODO add objects to array
-        ArrayList<InteractiveTileObject> tile_objects = new ArrayList<InteractiveTileObject>();
+        tile_objects = new ArrayList<InteractiveTileObject>();
 
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
         for (int x = 0; x < layer.getWidth(); x++) {
@@ -98,13 +99,7 @@ public class B2WorldCreator {
                     //new Bin(world, map, bdef, rectangle, "Bin");
                     new InteractiveTileObject(world, map, bdef, rectangle,"Bin");
                     
-                    /*Station something = new Station(world, map, bdef, rectangle,"Bin");
-                    System.out.println(something.getClass().getName());
-                    System.out.println(something instanceof InteractiveTileObject);*/
-                    //new IngredientStation(world, map, bdef, rectangle, new Ingredient("Tomato", 0, 2,0,tomato_textures ), "");
-                    //new InteractiveTileObject("Bin");
-                    //InteractiveTileObject bin = new InteractiveTileObject(world, map, bdef, rectangle,"Bin");
-                    //tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Bin"));
+                    tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Bin"));
 
                 } else if (mapObject.getName().equals("worktop")) {
                     new Worktop(world, map, bdef, rectangle, "Worktop");
@@ -140,5 +135,9 @@ public class B2WorldCreator {
 
             }
         }
+    }
+
+    public ArrayList<InteractiveTileObject> getTiles(){
+        return tile_objects;
     }
 }

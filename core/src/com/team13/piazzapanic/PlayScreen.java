@@ -64,6 +64,8 @@ public class PlayScreen implements Screen {
 
     public PlateStation plateStation;
 
+    public B2WorldCreator b2world;
+    public ArrayList<InteractiveTileObject> tile_objects;
 
     public Boolean scenarioComplete;
     public Boolean createdOrder;
@@ -101,8 +103,12 @@ public class PlayScreen implements Screen {
         gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
 
         world = new World(new Vector2(0,0), true);
-        new B2WorldCreator(world, map, this);
-
+       
+        b2world =  new B2WorldCreator(world, map, this);
+        tile_objects = b2world.getTiles();
+        for (InteractiveTileObject tile : tile_objects){
+            System.out.println(tile.type);
+        }
         chef1 = new Chef(this.world, 31.5F,65);
         chef2 = new Chef(this.world, 128,65);
         controlledChef = chef1;
@@ -157,10 +163,16 @@ public class PlayScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.E)){
             //System.out.println(controlledChef.inHandsIng);
                 if(controlledChef.getTouchingTile() != null){
-                    System.out.println(controlledChef.getTouchingTile().getUserData().getClass());
+                    //System.out.println(controlledChef.getTouchingTile().getUserData().getClass());
                     InteractiveTileObject tile = (InteractiveTileObject) controlledChef.getTouchingTile().getUserData();
                     String tileName = tile.getClass().getName();
                     System.out.println(tileName);
+
+                    if (tileName == "Sprites.InteractiveTileObject"){
+                        System.out.println("play");
+                        tile.interact(chef1);
+                        System.out.println("meh");
+                    }
                     
                     if (tile.ingredient != null){
                         System.out.println(tile.ingredient.name);
@@ -168,6 +180,7 @@ public class PlayScreen implements Screen {
                             controlledChef.setInHandsIng(tile.ingredient);
                             System.out.println(controlledChef.getInHandsIng());
                         }
+                        
                         
                         if (tile.ingredient.name == "Lettuce"){
                             ArrayList<Texture> lettuce_textures = new ArrayList<Texture>();
@@ -275,7 +288,7 @@ public class PlayScreen implements Screen {
     */
     public void update(float dt){
         handleInput(dt);
-
+        System.out.println();
         gamecam.update();
         renderer.setView(gamecam);
         chef1.update(dt);
