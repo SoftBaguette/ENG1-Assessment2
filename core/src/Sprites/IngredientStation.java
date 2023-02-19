@@ -25,10 +25,12 @@ public class IngredientStation extends InteractiveTileObject{
         this.type = "IngredientSource";
     }
 
+    
     public void interact(Chef chef){
         System.out.println("Interacted with ingredient source");
         if (chef.inHandsIng == null){
-            chef.setInHandsIng(ingredient);
+            Ingredient tempIngredient = new Ingredient(ingredient.name, 0, ingredient.prepareTime, ingredient.cookTime, ingredient.tex);
+            chef.setInHandsIng(tempIngredient);
         }
     }
     

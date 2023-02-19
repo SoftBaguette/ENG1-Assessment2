@@ -1,21 +1,24 @@
 package Sprites;
 
+
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+
 
 public class ProgressBar extends Actor{
     ShapeRenderer shapeRenderer;
     int progress;
     float x;
     float y;
-    int width;
-    int height;
+    float width;
+    float height;
     Texture back;
     Texture loading;
 
-    public ProgressBar(float f, float g, int width, int height){
+
+    public ProgressBar(float f, float g, float width, float height){
         this.x = f;
         this.y = g;
         this.width = width;
@@ -27,7 +30,8 @@ public class ProgressBar extends Actor{
         loading = new Texture("ProgressBarFull.png");
     }
 
-    //The progress bar is 2 imgs and the green progress bar 
+
+    //The progress bar is 2 imgs and the green progress bar
     //changes in width depending on progress
     public void draw(Batch batch, float parentAlpha){
         super.draw(batch, parentAlpha);
@@ -35,8 +39,20 @@ public class ProgressBar extends Actor{
         batch.draw(loading, x,y,(float) width * progress/100f,height);
     }
 
+
     // Set the progress of the progress bar
     public void setProgress (int progress){
         this.progress = progress;
     }
+
+
+    public void change_pos (float x, float y){
+        this.x = x;
+        this.y = y + 0.2f;
+
+
+    }
 }
+
+
+

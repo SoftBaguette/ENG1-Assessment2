@@ -14,9 +14,9 @@ import Sprites.AllTextures;
 public class SaladRecipe extends Recipe {
     public SaladRecipe(){
         super.ingredients = new ArrayList<>();
-        ingredients.add(new Lettuce("Lettuce", 1,0,0, AllTextures.getLettuceTextures()));
-        ingredients.add(new Tomato("Tomato", 1,0,0, AllTextures.getTomatoTextures()));
-        ingredients.add(new Onion("Onion", 1, 0,0, AllTextures.getOnionTextures()));
+        ingredients.add(new Ingredient("Lettuce", 1,0,0, AllTextures.getLettuceTextures()));
+        ingredients.add(new Ingredient("Tomato", 1,0,0, AllTextures.getTomatoTextures()));
+        ingredients.add(new Ingredient("Onion", 1, 0,0, AllTextures.getOnionTextures()));
         completedImg = new Texture("Food/Salad.png");
     }
 }

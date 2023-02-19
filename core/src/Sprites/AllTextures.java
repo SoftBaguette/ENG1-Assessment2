@@ -1,6 +1,9 @@
 package Sprites;
 
 import java.util.ArrayList;
+
+import org.w3c.dom.Text;
+
 import com.badlogic.gdx.graphics.Texture;
 
 public class AllTextures {
@@ -63,6 +66,42 @@ public class AllTextures {
         patty_textures.add(new Texture("Food/Patty.png"));
         patty_textures.add(new Texture("Food/PattyCooked.png"));
         return patty_textures;
+    }
+
+    public static ArrayList<Texture> getSaladTextures(){
+        ArrayList<Texture> salad_textures = new ArrayList<Texture>();
+        salad_textures.add(new Texture("Food/Salad.png"));
+        return salad_textures;
+    }
+
+    public static ArrayList<Texture> getBurgerTextures(){
+        ArrayList<Texture> burger_textures = new ArrayList<Texture>();
+        burger_textures.add(new Texture("Food/Salad.png"));
+        return burger_textures;
+    }
+
+
+    public static ArrayList<Texture> getTextures(String item){
+        if (item == "Burger_buns"){
+            return getBurgerBunsTextures();
+        }
+        else if (item == "Steak"){
+            return getPattyTextures();
+        }
+        else if (item == "Tomato"){
+            return getTomatoTextures();
+        }else if (item == "Lettuce"){
+            return getLettuceTextures();
+        }else if (item == "Onion"){
+            return getOnionTextures();
+        }else if (item == "Salad"){
+            return getSaladTextures();
+        }else if (item == "Burger"){
+            return getBurgerTextures();
+        }
+        else{
+            return null;
+        }
     }
 
     /*

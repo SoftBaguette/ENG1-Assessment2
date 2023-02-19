@@ -28,7 +28,7 @@ public class TestingTest {
 
         
       //Making Salad
-      /*
+      
       tomato_box.interact(chef1);
       chopping_station.interact(chef1);
       wait(2000);
@@ -44,9 +44,10 @@ public class TestingTest {
       wait(2000);
       chopping_station.update(chef1);
       plate.interact(chef1);
-      bin.interact(chef1);*/
+      bin.interact(chef1);
 
       //Make burger
+      /*
       burger_bun_box.interact(chef1);
       pan.interact(chef1);
       wait(2000);
@@ -60,6 +61,6 @@ public class TestingTest {
       wait(2000);
       pan.update(chef1);
       plate.interact(chef1);
-
+*/
     }
 }

@@ -1,8 +1,11 @@
 package Tools;
 
+
 import Sprites.*;
 
+
 import java.util.ArrayList;
+
 
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.maps.MapObject;
@@ -15,7 +18,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.team13.piazzapanic.MainGame;
 import com.team13.piazzapanic.PlayScreen;
 
+
 import Ingredients.Ingredient;
+
+
 
 
 /**
@@ -31,6 +37,7 @@ import Ingredients.Ingredient;
  */
 public class B2WorldCreator {
 
+
 /**
  * Constructor method for B2WorldCreator. It accepts a World, TiledMap and PlayScreen
  * objects. The method then iterates over the cells in the first layer of the TiledMap and
@@ -45,30 +52,37 @@ public class B2WorldCreator {
  * */
     ArrayList<InteractiveTileObject> tile_objects;
 
+
     public B2WorldCreator(World world, TiledMap map, PlayScreen screen) {
         ArrayList<Texture> lettuce_textures = new ArrayList<Texture>();
         lettuce_textures.add(new Texture("Food/Lettuce.png"));
         lettuce_textures.add(new Texture("Food/LettuceChopped.png"));
 
+
         ArrayList<Texture> tomato_textures = new ArrayList<Texture>();
         tomato_textures.add(new Texture("Food/Tomato.png"));
         tomato_textures.add(new Texture("Food/TomatoChopped.png"));
+
 
         ArrayList<Texture> onion_textures = new ArrayList<Texture>();
         onion_textures.add(new Texture("Food/Onion.png"));
         onion_textures.add(new Texture("Food/OnionChopped.png"));
 
+
         ArrayList<Texture> burger_buns_textures = new ArrayList<Texture>();
         burger_buns_textures.add(new Texture("Food/Burger_buns.png"));
         burger_buns_textures.add(new Texture("Food/Burger_bunsToasted.png"));
+
 
         ArrayList<Texture> patty_textures = new ArrayList<Texture>();
         patty_textures.add(new Texture("Food/Meat.png"));
         patty_textures.add(new Texture("Food/Patty.png"));
         patty_textures.add(new Texture("Food/PattyCooked.png"));
 
+
         //TODO add objects to array
         tile_objects = new ArrayList<InteractiveTileObject>();
+
 
         TiledMapTileLayer layer = (TiledMapTileLayer) map.getLayers().get(0);
         for (int x = 0; x < layer.getWidth(); x++) {
@@ -78,13 +92,16 @@ public class B2WorldCreator {
                     continue;
                 }
 
+
                 MapObjects cellObjects = cell.getTile().getObjects();
                 if (cellObjects.getCount() != 1)
                     continue;
 
+
                 MapObject mapObject = cellObjects.get(0);
                 RectangleMapObject rectangleObject = (RectangleMapObject) mapObject;
                 Rectangle rectangle = rectangleObject.getRectangle();
+
 
                 BodyDef bdef = new BodyDef();
                 float position_x = x * MainGame.TILE_SIZE + MainGame.TILE_SIZE / 2f + rectangle.getX()
@@ -94,17 +111,22 @@ public class B2WorldCreator {
                 bdef.position.set(position_x / MainGame.PPM, position_y / MainGame.PPM);
                 bdef.type = BodyDef.BodyType.StaticBody;
 
+
                 if (mapObject.getName().equals("bin")) {
                     //System.out.println("Thing");
                     //new Bin(world, map, bdef, rectangle, "Bin");
                     new InteractiveTileObject(world, map, bdef, rectangle,"Bin");
-                    
+                   
                     tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Bin"));
+
 
                 } else if (mapObject.getName().equals("worktop")) {
                     new Worktop(world, map, bdef, rectangle, "Worktop");
                 } else if (mapObject.getName().equals("chopping_board")) {
-                    new ChoppingBoard(world, map, bdef, rectangle,"ChoppingBoard");
+                    //new ChoppingBoard(world, map, bdef, rectangle,"ChoppingBoard");
+                    new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard");
+                   
+                    tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard"));
                 } else if (mapObject.getName().equals("plate")) {
                     screen.plateStation = new PlateStation(world, map, bdef, rectangle, "Plate");
                 } else if (mapObject.getName().equals("tomato")) {
@@ -133,11 +155,16 @@ public class B2WorldCreator {
                     PlayScreen.trayY = rectangle.y;
                 }
 
+
             }
         }
     }
+
 
     public ArrayList<InteractiveTileObject> getTiles(){
         return tile_objects;
     }
 }
+
+
+

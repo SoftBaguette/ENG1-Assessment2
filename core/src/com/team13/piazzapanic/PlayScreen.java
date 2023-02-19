@@ -1,7 +1,6 @@
 package com.team13.piazzapanic;
 
 import Ingredients.Ingredient;
-import Ingredients.Lettuce;
 import Recipe.Recipe;
 import Sprites.*;
 import Recipe.Order;
@@ -171,17 +170,18 @@ public class PlayScreen implements Screen {
                     if (tileName == "Sprites.InteractiveTileObject"){
                         System.out.println("play");
                         tile.interact(chef1);
-                        System.out.println("meh");
+    
                     }
                     
                     if (tile.ingredient != null){
                         System.out.println(tile.ingredient.name);
                         if (tileName == "Sprites.IngredientStation"){
-                            controlledChef.setInHandsIng(tile.ingredient);
-                            System.out.println(controlledChef.getInHandsIng());
+                            tile.interact(controlledChef);
+                            //controlledChef.setInHandsIng(tile.ingredient);
+                            //System.out.println(controlledChef.getInHandsIng());
                         }
                         
-                        
+                        /*
                         if (tile.ingredient.name == "Lettuce"){
                             ArrayList<Texture> lettuce_textures = new ArrayList<Texture>();
                             lettuce_textures.add(new Texture("Food/Lettuce.png"));
@@ -192,38 +192,16 @@ public class PlayScreen implements Screen {
                             controlledChef.setChefSkin(controlledChef.getInHandsIng());
                             controlledChef.setChefSkin(temp);
                             System.out.println(controlledChef.getInHandsIng().tex.get(0));
-                        }
+                        }*/
                     }
                     if (tileName == "Sprites.ChoppingBoard"){
                         tile.interact(controlledChef);
                     }
+
+                    
                     if (controlledChef.getInHandsIng() == null && controlledChef.getInHandsRecipe() == null) {
                         switch (tileName) {
-                            case "Sprites.TomatoStation":
-                                TomatoStation tomatoTile = (TomatoStation) tile;
-                                controlledChef.setInHandsIng(tomatoTile.getIngredient());
-                                controlledChef.setChefSkin(controlledChef.getInHandsIng());
-                                break;
-                            case "Sprites.BunsStation":
-                                BunsStation bunTile = (BunsStation) tile;
-                                controlledChef.setInHandsIng(bunTile.getIngredient());
-                                controlledChef.setChefSkin(controlledChef.getInHandsIng());
-                                break;
-                            case "Sprites.OnionStation":
-                                OnionStation onionTile = (OnionStation) tile;
-                                controlledChef.setInHandsIng(onionTile.getIngredient());
-                                controlledChef.setChefSkin(controlledChef.getInHandsIng());
-                                break;
-                            case "Sprites.SteakStation":
-                                SteakStation steakTile = (SteakStation) tile;
-                                controlledChef.setInHandsIng(steakTile.getIngredient());
-                                controlledChef.setChefSkin(controlledChef.getInHandsIng());
-                                break;
-                            case "Sprites.LettuceStation":
-                                LettuceStation lettuceTile = (LettuceStation) tile;
-                                controlledChef.setInHandsIng(lettuceTile.getIngredient());
-                                controlledChef.setChefSkin(controlledChef.getInHandsIng());
-                                break;
+                            
                             case "Sprites.PlateStation":
                                 if(plateStation.getPlate().size() > 0 || plateStation.getCompletedRecipe() != null){
                                     controlledChef.pickUpItemFrom(tile);
@@ -233,12 +211,7 @@ public class PlayScreen implements Screen {
                         }
                     } else {
                         switch (tileName) {
-                            case "Sprites.Bin":
-                                controlledChef.setInHandsRecipe(null);
-                                controlledChef.setInHandsIng(null);
-                                controlledChef.setChefSkin(null);
-                                break;
-                            /*
+                            
                             case "Sprites.ChoppingBoard":
                                 System.out.println("Here");
                                 if(controlledChef.getInHandsIng() != null){
@@ -246,7 +219,7 @@ public class PlayScreen implements Screen {
                                         controlledChef.setUserControlChef(false);
                                     }
                                 }
-                               break;*/
+                               break;
                             case "Sprites.PlateStation":
                                 if (controlledChef.getInHandsRecipe() == null){
                                 controlledChef.dropItemOn(tile, controlledChef.getInHandsIng());
@@ -288,7 +261,6 @@ public class PlayScreen implements Screen {
     */
     public void update(float dt){
         handleInput(dt);
-        System.out.println();
         gamecam.update();
         renderer.setView(gamecam);
         chef1.update(dt);
@@ -297,10 +269,13 @@ public class PlayScreen implements Screen {
             if (chef1.getTouchingTile().getUserData().getClass().getName() == "Sprites.ChoppingBoard"){
                 InteractiveTileObject tile = (InteractiveTileObject) controlledChef.getTouchingTile().getUserData();
                 tile.update(chef1);
-                tile.draw_progress_bar(game.batch);
+                //tile.draw_progress_bar(game.batch);
             }
         }
         
+        for (InteractiveTileObject tile : tile_objects){
+            tile.update(controlledChef);
+        }
         world.step(1/60f, 6, 2);
 
     }
@@ -421,6 +396,10 @@ public class PlayScreen implements Screen {
         }
         if (chef2.previousInHandRecipe != null){
             chef2.displayIngDynamic(game.batch);
+        }
+        for (InteractiveTileObject tile : tile_objects){
+            //System.out.println(tile.type);
+            tile.draw_progress_bar(game.batch, controlledChef);
         }
         //game.batch.draw(new Texture ("Chef/Chef_holding_buns.png"), 50, 60, 200, 100);
         game.batch.end();

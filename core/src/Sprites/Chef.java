@@ -1,5 +1,6 @@
 package Sprites;
 
+
 import Ingredients.*;
 import Recipe.BurgerRecipe;
 import Recipe.Recipe;
@@ -15,7 +16,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.team13.piazzapanic.MainGame;
 
+import java.util.ArrayList;
 import java.util.Objects;
+
 
 /**
  * Chef class extends {@link Sprite} and represents a chef in the game.
@@ -26,21 +29,28 @@ import java.util.Objects;
  * and completed dish station.
  */
 
+
 public class Chef extends Sprite {
     public World world;
     public Body b2body;
+
 
     private final float initialX;
     private final float initialY;
 
 
+
+
     public Vector2 startVector;
     private float waitTimer;
+
 
     private float putDownWaitTimer;
     public boolean chefOnChefCollision;
     private final Texture normalChef;
     private final Texture holdingChef;
+
+
 
 
     private final Texture bunsChef;
@@ -57,35 +67,47 @@ public class Chef extends Sprite {
     private final Texture meatChef;
     private Texture saladChef;
 
+
     public enum State {UP, DOWN, LEFT, RIGHT}
+
 
     public State currentState;
     private TextureRegion currentSkin;
 
+
     private Texture skinNeeded;
 
+
     private Fixture whatTouching;
+
 
     public Ingredient inHandsIng;
     private Recipe inHandsRecipe;
 
+
     private Boolean userControlChef;
 
+
     private final Sprite circleSprite;
+
 
     private float notificationX;
     private float notificationY;
     private float notificationWidth;
     private float notificationHeight;
 
+
     private CompletedDishStation completedStation;
+
 
     public int nextOrderAppearTime;
     public Recipe previousInHandRecipe;
 
+
     public Chef(){
         initialX = 2 / MainGame.PPM;
         initialY = 2 / MainGame.PPM;
+
 
         normalChef = null;
         holdingChef = null;
@@ -124,11 +146,16 @@ public class Chef extends Sprite {
         saladChef = new Texture("Chef/Chef_holding_salad.png");
 
 
+
+
         skinNeeded = normalChef;*/
+
 
         currentState = State.DOWN;
 
+
         //defineChef();
+
 
         float chefWidth = 13 / MainGame.PPM;
         float chefHeight = 20 / MainGame.PPM;
@@ -142,11 +169,13 @@ public class Chef extends Sprite {
         inHandsRecipe = null;
         userControlChef = true;
 
+
         //Texture circleTexture = new Texture("Chef/chefIdentifier.png");
         //circleSprite = new Sprite(circleTexture);
         nextOrderAppearTime = 3;
         completedStation = null;
     }
+
 
     /**
      * Chef class constructor that initializes all the fields
@@ -155,9 +184,11 @@ public class Chef extends Sprite {
      * @param startY starting Y position
      */
 
+
     public Chef(World world, float startX, float startY) {
         initialX = startX / MainGame.PPM;
         initialY = startY / MainGame.PPM;
+
 
         normalChef = new Texture("Chef/Chef_normal.png");
         holdingChef = new Texture("Chef/Chef_holding.png");
@@ -177,12 +208,17 @@ public class Chef extends Sprite {
         saladChef = new Texture("Chef/Chef_holding_salad.png");
 
 
+
+
         skinNeeded = normalChef;
+
 
         this.world = world;
         currentState = State.DOWN;
 
+
         defineChef();
+
 
         float chefWidth = 13 / MainGame.PPM;
         float chefHeight = 20 / MainGame.PPM;
@@ -201,7 +237,10 @@ public class Chef extends Sprite {
         completedStation = null;
     }
 
-    
+
+   
+
+
 
 
     /**
@@ -252,6 +291,7 @@ public class Chef extends Sprite {
                 break;
         }
 
+
         //TODO change this
         if (!userControlChef && chefOnChefCollision) {
             waitTimer += dt;
@@ -286,28 +326,33 @@ public class Chef extends Sprite {
         }
     }
 
+
     public void move(Chef chef){
         if (!chef.getUserControlChef()){
             if (chef.getUserControlChef()){
                 chef.b2body.setLinearVelocity(0, 0);
                 //controlledChef = chef1;
-            } 
+            }
         }
         if (chef.getUserControlChef()) {
                 float xVelocity = 0;
                 float yVelocity = 0;
 
+
+                float speed_multiplier = 1;
+
+
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
-                    yVelocity += 0.5f;
+                    yVelocity += 0.5f * speed_multiplier;
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.A)) {
-                    xVelocity -= 0.5f;
+                    xVelocity -= 0.5f* speed_multiplier;
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.S)) {
-                    yVelocity -= 0.5f;
+                    yVelocity -= 0.5f* speed_multiplier;
                 }
                 if (Gdx.input.isKeyPressed(Input.Keys.D)) {
-                    xVelocity += 0.5f;
+                    xVelocity += 0.5f* speed_multiplier;
                 }
                 chef.b2body.setLinearVelocity(xVelocity, yVelocity);
             }
@@ -328,11 +373,13 @@ public class Chef extends Sprite {
         }
     }
 
+
     /**
      * This method sets the bounds for the notification based on the given direction.
      * @param direction - A string representing the direction of the notification.
      *                   Can be "Left", "Right", "Up", or "Down".
      */
+
 
     public void notificationSetBounds(String direction) {
         switch (direction) {
@@ -352,6 +399,7 @@ public class Chef extends Sprite {
         }
     }
 
+
     /**
      Draws a notification to help the user understand what chef they are controlling.
      The notification is a sprite that looks like at "C" on the controlled chef.
@@ -364,6 +412,7 @@ public class Chef extends Sprite {
         }
     }
 
+
     /**
      * Get the texture region for the current state of the player.
      *
@@ -371,8 +420,10 @@ public class Chef extends Sprite {
      * @return the texture region for the player's current state
      */
 
+
     private TextureRegion getSkin(float dt) {
         currentState = getState();
+
 
         TextureRegion region;
         switch (currentState) {
@@ -394,10 +445,13 @@ public class Chef extends Sprite {
         return region;
     }
 
+
     public void draw_chef(Batch batch){
        
         batch.draw(new Texture ("Chef/Chef_holding_buns.png"), 50, 60, 200, 100);
     }
+
+
 
 
     /**
@@ -417,6 +471,7 @@ public class Chef extends Sprite {
             return currentState;
     }
 
+
     /**
      * Define the body and fixture of the chef object.
      *
@@ -427,11 +482,13 @@ public class Chef extends Sprite {
      * of the chef object.
      */
 
+
     public void defineChef() {
         BodyDef bdef = new BodyDef();
         bdef.position.set(initialX, initialY);
         bdef.type = BodyDef.BodyType.DynamicBody;
         b2body = world.createBody(bdef);
+
 
         FixtureDef fdef = new FixtureDef();
         CircleShape shape = new CircleShape();
@@ -439,9 +496,13 @@ public class Chef extends Sprite {
         shape.setPosition(new Vector2(shape.getPosition().x + (0.5f / MainGame.PPM), shape.getPosition().y - (5.5f / MainGame.PPM)));
 
 
+
+
         fdef.shape = shape;
         b2body.createFixture(fdef).setUserData(this);
     }
+
+
 
 
     /**
@@ -471,6 +532,7 @@ public class Chef extends Sprite {
      * - if item is a SaladRecipe, then the skin is set to saladChef
      */
 
+
     public void setChefSkin(Object item) {
         if (item == null) {
             skinNeeded = normalChef;
@@ -478,7 +540,7 @@ public class Chef extends Sprite {
         else{
             skinNeeded = holdingChef;
         }
-        
+       
         /*
          else if (item instanceof Lettuce) {
             if (inHandsIng.isPrepared()) {
@@ -519,22 +581,29 @@ public class Chef extends Sprite {
         }*/
     }
 
+
     public void draw_item(Batch batch){
         Ingredient chefs_ingredient = this.getInHandsIng();
         if (chefs_ingredient != null){
-            batch.draw(chefs_ingredient.tex.get(this.getInHandsIng().status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
+            ArrayList<Texture> texture = AllTextures.getTextures(chefs_ingredient.name);
+            batch.draw(texture.get(chefs_ingredient.status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
+            //batch.draw(chefs_ingredient.tex.get(this.getInHandsIng().status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
         }
     }
+
 
     /**
      * Method to display the ingredient on the specific interactive tile objects (ChoppingBoard/Pan)
      * @param batch the SpriteBatch used to render the texture.
      */
 
+
     public void displayIngStatic(SpriteBatch batch) {
         Gdx.app.log("", inHandsIng.toString());
         if (whatTouching != null && !chefOnChefCollision) {
             InteractiveTileObject tile = (InteractiveTileObject) whatTouching.getUserData();
+            
+            /*
             if (tile instanceof ChoppingBoard) {
                 ChoppingBoard tileNew = (ChoppingBoard) tile;
                 inHandsIng.create(tileNew.getX() - (0.5f / MainGame.PPM), tileNew.getY() - (0.2f / MainGame.PPM), batch);
@@ -543,9 +612,10 @@ public class Chef extends Sprite {
                 Pan tileNew = (Pan) tile;
                 inHandsIng.create(tileNew.getX(), tileNew.getY() - (0.01f / MainGame.PPM), batch);
                 setChefSkin(null);
-            }
+            }*/
         }
     }
+
 
     /**
      * The method creates an instance of the recipe and sets its position on the completed station coordinates.
@@ -553,6 +623,7 @@ public class Chef extends Sprite {
      *
      * @param batch The batch used for drawing the sprite on the screen
      */
+
 
     public void displayIngDynamic(SpriteBatch batch){
         putDownWaitTimer += 1/60f;
@@ -563,7 +634,9 @@ public class Chef extends Sprite {
         }
     }
 
+
     /**
+
 
       * This method updates the state of the chef when it is in a collision with another chef.
       * The method sets the userControlChef to false, meaning the user cannot control the chef while it's in collision.
@@ -576,6 +649,7 @@ public class Chef extends Sprite {
             setStartVector();
         }
 
+
     /**
      * Set the starting velocity vector of the chef
      * when the chef collides with another chef
@@ -585,6 +659,7 @@ public class Chef extends Sprite {
         startVector = new Vector2(b2body.getLinearVelocity().x, b2body.getLinearVelocity().y);
     }
 
+
     /**
      * Set the touching tile fixture
      *
@@ -593,6 +668,7 @@ public class Chef extends Sprite {
     public void setTouchingTile (Fixture obj){
         this.whatTouching = obj;
     }
+
 
     /**
      * Get the fixture that the chef is touching
@@ -607,6 +683,7 @@ public class Chef extends Sprite {
         }
     }
 
+
     /**
      * Get the ingredient that the chef is holding
      *
@@ -616,6 +693,7 @@ public class Chef extends Sprite {
         return inHandsIng;
     }
 
+
     /**
      * Get the recipe that the chef is holding
      *
@@ -624,6 +702,7 @@ public class Chef extends Sprite {
     public Recipe getInHandsRecipe () {
         return inHandsRecipe;
     }
+
 
     /**
      * Set the ingredient that the chef is holding
@@ -635,6 +714,7 @@ public class Chef extends Sprite {
         inHandsRecipe = null;
     }
 
+
     /**
      * Set the recipe that the chef is holding
      *
@@ -645,6 +725,7 @@ public class Chef extends Sprite {
         inHandsIng = null;
     }
 
+
     /**
      * Set the chef's control by the user
      *
@@ -653,9 +734,12 @@ public class Chef extends Sprite {
     public void setUserControlChef ( boolean value){
         userControlChef = value;
 
+
     }
 
+
     /**
+
 
      * Returns a boolean value indicating whether the chef is under user control.
      * If not specified, returns false.
@@ -667,11 +751,14 @@ public class Chef extends Sprite {
         }
 
 
+
+
     /**
       * Drops the given ingredient on a plate station.
       * @param station The plate station to drop the ingredient on.
       * @param ing The ingredient to be dropped.
      */
+
 
     public void dropItemOn (InteractiveTileObject station, Ingredient ing){
         if (station instanceof PlateStation) {
@@ -679,6 +766,7 @@ public class Chef extends Sprite {
         }
         setInHandsRecipe(null);
     }
+
 
     /**
      * Drops the in-hand recipe on a completed dish station and saves the previous in-hand recipe.
@@ -692,6 +780,7 @@ public class Chef extends Sprite {
             }
             setInHandsRecipe(null);
         }
+
 
     /**
      * Picks up an item from a plate station and sets it as in-hand ingredient or recipe.
@@ -712,6 +801,12 @@ public class Chef extends Sprite {
         }
     }
 }
+
+
+
+
+
+
 
 
 
