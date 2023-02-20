@@ -13,7 +13,6 @@ public class IngredientStation extends InteractiveTileObject{
     
     public IngredientStation(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, Ingredient ingredient, String type) {
         super(world, map, bdef, rectangle, type);
-        //TODO Auto-generated constructor stub
         fixture.setUserData(this);
         this.ingredient  = ingredient;
         this.type = "IngredientSource";

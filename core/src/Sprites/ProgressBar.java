@@ -48,7 +48,7 @@ public class ProgressBar extends Actor{
 
     public void change_pos (float x, float y){
         this.x = x;
-        this.y = y + 0.2f;
+        this.y = y + 0.05f;
 
 
     }

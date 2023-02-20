@@ -56,7 +56,6 @@ public class Ingredient extends Sprite {
      *
      */
     public void setPrepared() {
-        status += 1;
         amIPrepared = true;
     }
 
@@ -74,7 +73,6 @@ public class Ingredient extends Sprite {
      *
      */
     public void setCooked() {
-        status += 1;
         amICooked= true;
     }
 
@@ -95,7 +93,12 @@ public class Ingredient extends Sprite {
      * @param batch The SpriteBatch object used to draw the ingredient.
      */
     public void create(float x, float y, SpriteBatch batch){
-        Sprite sprite = new Sprite(tex.get(findCorrectSkin()));
+        Sprite sprite;
+        if (findCorrectSkin() >= tex.size()){
+            sprite = new Sprite(tex.get(tex.size()-1));
+        }else{
+            sprite = new Sprite(tex.get(findCorrectSkin()));
+        }
         float adjustedX =  x - (5/MainGame.PPM);
         float adjustedY =  y - (4.95f / MainGame.PPM);
         sprite.setBounds(adjustedX,adjustedY,10/ MainGame.PPM,10/ MainGame.PPM);

@@ -2,8 +2,6 @@ package Sprites;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.Text;
-
 import com.badlogic.gdx.graphics.Texture;
 
 public class AllTextures {
@@ -25,6 +23,7 @@ public class AllTextures {
 
         ArrayList<Texture> burger_buns_textures = new ArrayList<Texture>();
         burger_buns_textures.add(new Texture("Food/Burger_buns.png"));
+        burger_buns_textures.add(new Texture("Food/Burger_bunsToasted.png"));
         burger_buns_textures.add(new Texture("Food/Burger_bunsToasted.png"));
 
         ArrayList<Texture> patty_textures = new ArrayList<Texture>();
@@ -57,6 +56,8 @@ public class AllTextures {
         ArrayList<Texture> burger_buns_textures = new ArrayList<Texture>();
         burger_buns_textures.add(new Texture("Food/Burger_buns.png"));
         burger_buns_textures.add(new Texture("Food/Burger_bunsToasted.png"));
+        burger_buns_textures.add(new Texture("Food/Burger_bunsToasted.png"));
+        burger_buns_textures.add(new Texture("Food/Burger_bunsToasted.png"));
         return burger_buns_textures;
     }
 
@@ -76,7 +77,7 @@ public class AllTextures {
 
     public static ArrayList<Texture> getBurgerTextures(){
         ArrayList<Texture> burger_textures = new ArrayList<Texture>();
-        burger_textures.add(new Texture("Food/Salad.png"));
+        burger_textures.add(new Texture("Food/Burger.png"));
         return burger_textures;
     }
 

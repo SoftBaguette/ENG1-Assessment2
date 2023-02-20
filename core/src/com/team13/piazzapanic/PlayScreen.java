@@ -157,7 +157,7 @@ public class PlayScreen implements Screen {
             }
         }
        
-        controlledChef.move(controlledChef);
+        controlledChef.move();
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.E)){
             //System.out.println(controlledChef.inHandsIng);
@@ -168,9 +168,7 @@ public class PlayScreen implements Screen {
                     System.out.println(tileName);
 
                     if (tileName == "Sprites.InteractiveTileObject"){
-                        System.out.println("play");
                         tile.interact(chef1);
-    
                     }
                     
                     if (tile.ingredient != null){
@@ -368,6 +366,12 @@ public class PlayScreen implements Screen {
         game.batch.draw(new Texture("Food/Lettuce.png"), (chef1.getX()*1.01f), chef1.getY(), chef1.getWidth()/2,chef1.getHeight()/2);
         chef2.draw(game.batch);
         controlledChef.drawNotification(game.batch);
+
+        //TODO check this section about drawing on plate station
+        for (InteractiveTileObject tile : tile_objects){
+            tile.draw_item_on_station(game.batch);;
+        }
+        /*
         if (plateStation.getPlate().size() > 0){
             for(Object ing : plateStation.getPlate()){
                 Ingredient ingNew = (Ingredient) ing;
@@ -376,7 +380,8 @@ public class PlayScreen implements Screen {
         } else if (plateStation.getCompletedRecipe() != null){
             Recipe recipeNew = plateStation.getCompletedRecipe();
             recipeNew.create(plateStation.getX(), plateStation.getY(), game.batch);
-        }
+        }*/
+
         if (!chef1.getUserControlChef()) {
             if (chef1.getTouchingTile() != null && chef1.getInHandsIng() != null){
                 if (chef1.getTouchingTile().getUserData() instanceof InteractiveTileObject){

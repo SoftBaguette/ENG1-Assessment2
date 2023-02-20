@@ -7,12 +7,15 @@ import java.util.Set;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Array;
+//import com.badlogic.gdx.utils.Array;
 import com.team13.piazzapanic.MainGame;
 
+import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.World;
 
 import Ingredients.Ingredient;
 
@@ -28,7 +31,7 @@ public class InteractiveTileObject {
     protected Fixture fixture;
 
 
-    protected BodyDef bdefNew;
+    public BodyDef bdefNew;
     public Ingredient ingredient;
     public String type;
 
@@ -122,23 +125,25 @@ public class InteractiveTileObject {
             progress = (int) (percent*100);
             //progressBar.setProgress((int) (percent*100));
             if (System.currentTimeMillis() - start_time_interaction > (item_on_station.prepareTime*1000)){
-                if (item_on_station.isPrepared() == false){
-                    item_on_station.setPrepared();
-                }
-                else if (item_on_station.isCooked() == false && item_on_station.isPrepared() == true){
+                if (item_on_station.isCooked() == false && item_on_station.isPrepared() == true){
                     item_on_station.setCooked();
                 }
-                item_on_station.status =1;
+                else if (item_on_station.isPrepared() == false){
+                    item_on_station.setPrepared();
+                }
+                item_on_station.status +=1;
                 /*
                 if (item_on_station.status >= item_on_station.tex.size()){
                     item_on_station.status = item_on_station.tex.size()-1;
                 }*/
                 System.out.println(item_on_station.status);
                 chef.setInHandsIng(item_on_station);
+                chef.chefMove = true;
                 interacting = false;
+                item_on_station = null;
                 progress = 0;
                 System.out.println("Finished");
-
+                
 
                 //TODO implement Burning
             }
@@ -147,7 +152,8 @@ public class InteractiveTileObject {
     }
     public void draw_progress_bar(Batch batch, Chef chef){
         if (interacting == true){
-            progressBar.change_pos(chef.getX(), chef.getY());
+            //progressBar.change_pos(chef.getX(), chef.getY());
+            progressBar.change_pos(getX(), getY());
             progressBar.setProgress(progress);
             progressBar.draw(batch, progress);
         }
@@ -172,6 +178,7 @@ public class InteractiveTileObject {
                 item_on_station = chef.getInHandsIng();
                 chef.setInHandsIng(null);
                 //Stop the chef from moving
+                chef.chefMove = false;
                 start_time_interaction = System.currentTimeMillis();
                 interacting = true;
             }
@@ -185,6 +192,7 @@ public class InteractiveTileObject {
         if (chef.getInHandsIng() != null){
             if (chef.getInHandsIng().name == "Burger_buns"){
                 chef.getInHandsIng().setPrepared();
+                System.out.println("burger buns");
             }
 
 
@@ -204,11 +212,17 @@ public class InteractiveTileObject {
         if (chef.getInHandsIng() != null){
             plate_items.add(chef.getInHandsIng());
             chef.setInHandsIng(null);
-            checkRecipeCreated();
+            if (checkRecipeCreated()){
+                chef.setInHandsIng(plate_items.get(0));
+                System.out.println(chef.getInHandsIng().name);
+                plate_items = new ArrayList<>();
+            }
         }
+        
     }  
    
-    public void checkRecipeCreated(){
+    public Boolean checkRecipeCreated(){
+        Boolean item_made = false;
         System.out.println("CheckingRecipe");
         Set<String> salad_ingdredients = new HashSet<String>();
         salad_ingdredients.add("Tomato");
@@ -227,6 +241,7 @@ public class InteractiveTileObject {
                 if (salad_ingdredients.size() == 0){
                     plate_items = new ArrayList<>();
                     plate_items.add(new Ingredient("Salad", 0, 0,0, null));
+                    item_made = true;
                     System.out.println("Made Salad");
                 }
 
@@ -237,10 +252,12 @@ public class InteractiveTileObject {
                 if(burger_ingredients.size() == 0){
                     plate_items = new ArrayList<>();
                     plate_items.add(new Ingredient("Burger", 0,0,0, null));
+                    item_made = true;
                     System.out.println("Made Burger");
                 }            
             }
         }
+        return item_made;
     }
 
 
@@ -249,8 +266,35 @@ public class InteractiveTileObject {
         available_dishes.add("Burger");
         available_dishes.add("Salad");
 
+    }
 
-       
+    public void draw_item_on_station(SpriteBatch batch){
+        if (plate_items.size() > 0){
+            for(Object ing : plate_items){
+                Ingredient ingNew = (Ingredient) ing;
+                ingNew.create(getX(), getY(),batch);
+            }
+        }
+        if (item_on_station != null){
+            item_on_station.create(getX(), getY(), batch);
+        }
+    }
+    /**
+     * Gets the x-coordinate of the plate station.
+     *
+     * @return The x-coordinate of the plate station.
+     */
+    public float getX(){
+        return bdefNew.position.x;
+    }
+
+    /**
+     * Gets the y-coordinate of the plate station.
+     *
+     * @return The y-coordinate of the plate station.
+     */
+    public float getY(){
+        return bdefNew.position.y;
     }
 }
 

@@ -65,7 +65,7 @@ public class PlateStation extends InteractiveTileObject {
      * Check if the ingredients on the plate match any of the two recipes (burger or salad) then clear the plate
      * if a recipe is found and set the recipeDone
      */
-    public void checkRecipeCreated(){
+    public Boolean checkRecipeCreated(){
         if (plate.size() == burgerRecipe.getIngredients().size()) {
             boolean burgerSame = true;
             boolean burgerIngFound;
@@ -112,6 +112,7 @@ public class PlateStation extends InteractiveTileObject {
                 recipeDone = saladRecipe;
             }
         }
+        return null;
     }
 
     /**
