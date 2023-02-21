@@ -78,6 +78,7 @@ public class B2WorldCreator {
         patty_textures.add(new Texture("Food/Meat.png"));
         patty_textures.add(new Texture("Food/Patty.png"));
         patty_textures.add(new Texture("Food/PattyCooked.png"));
+        patty_textures.add(new Texture("Food/PattyBurnt.png"));
 
 
         //TODO add objects to array

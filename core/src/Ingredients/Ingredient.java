@@ -17,6 +17,7 @@ public class Ingredient extends Sprite {
 
     public Integer status;
 
+    public boolean burnt;
 
     /**
      * The time required to cook the ingredient.
@@ -48,6 +49,7 @@ public class Ingredient extends Sprite {
         this.cookTime = cookTime;
         this.amICooked = false;
         this.amIPrepared = false;
+        burnt = false;
         this.tex = tex;
     }
 
@@ -96,8 +98,10 @@ public class Ingredient extends Sprite {
         Sprite sprite;
         if (findCorrectSkin() >= tex.size()){
             sprite = new Sprite(tex.get(tex.size()-1));
+            
         }else{
-            sprite = new Sprite(tex.get(findCorrectSkin()));
+            //sprite = new Sprite(tex.get(findCorrectSkin()));
+            sprite = new Sprite(tex.get(status));
         }
         float adjustedX =  x - (5/MainGame.PPM);
         float adjustedY =  y - (4.95f / MainGame.PPM);

@@ -42,6 +42,10 @@ public class InteractiveTileObject {
     ProgressBar progressBar;
     int progress;
 
+    long start_time_burning;
+    boolean burning;
+    float burn_time = 5000f;
+
 
     ArrayList<Ingredient> plate_items;
 
@@ -74,6 +78,7 @@ public class InteractiveTileObject {
         ingredient = null;
         this.type = type;
         interacting = false;
+        burning = false;
         item_on_station = null;
        
         progressBar = new ProgressBar(0.5f, 0.5f, 0.25f,0.075f);
@@ -100,27 +105,26 @@ public class InteractiveTileObject {
 
     public void interact(Chef chef){
         System.out.println("Interacted with station");
-        if (type == "Bin"){
+        System.out.println(item_on_station);
+
+
+        if (item_on_station  != null && interacting == false){
+            System.out.println("Picked up");
+            pickUpItem(chef);
+        }else if (type == "Bin"){
             bin_interact(chef);
-        }
-        if (type == "ChoppingBoard"){
+        }else if (type == "ChoppingBoard"){
             chopping_board_interact(chef);
-        }
-
-
-        if (type == "Plate"){
+        }else if (type == "Plate"){
             plate_interact(chef);
-        }
-
-
-        if (type == "Pan"){
+        } else if (type == "Pan"){
             pan_interact(chef);
         }
     }
    
     public void update(Chef chef){
         if (interacting == true){
-            System.out.println("Updating");
+            //System.out.println("Updating");
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
             //progressBar.setProgress((int) (percent*100));
@@ -136,18 +140,35 @@ public class InteractiveTileObject {
                 if (item_on_station.status >= item_on_station.tex.size()){
                     item_on_station.status = item_on_station.tex.size()-1;
                 }*/
-                System.out.println(item_on_station.status);
-                chef.setInHandsIng(item_on_station);
+                
+                //chef.setInHandsIng(item_on_station);
                 chef.chefMove = true;
                 interacting = false;
-                item_on_station = null;
+                //item_on_station = null;
                 progress = 0;
                 System.out.println("Finished");
-                
 
                 //TODO implement Burning
+                if (item_on_station.isCooked() && item_on_station.name == "Steak"){
+                    burning = true;  
+                    progress = 0;
+                    start_time_burning = System.currentTimeMillis();
+                }
+
+                
+            }    
+        }
+        if (burning == true){
+            float burn_percent = (float) (System.currentTimeMillis() - start_time_burning+1)/(5000);
+            progress = (int) (burn_percent*100);
+            System.out.println(System.currentTimeMillis() - start_time_burning);
+            if (System.currentTimeMillis() - start_time_burning > (5000)){
+                item_on_station.status +=1;
+                burning = false;
+                item_on_station.burnt = true;
+                
             }
-               
+        
         }
     }
     public void draw_progress_bar(Batch batch, Chef chef){
@@ -155,7 +176,13 @@ public class InteractiveTileObject {
             //progressBar.change_pos(chef.getX(), chef.getY());
             progressBar.change_pos(getX(), getY());
             progressBar.setProgress(progress);
-            progressBar.draw(batch, progress);
+            progressBar.draw(batch, progress, "Green");
+        }
+        else if (burning == true){
+            //progressBar.change_pos(chef.getX(), chef.getY());
+            progressBar.change_pos(getX(), getY());
+            progressBar.setProgress(progress);
+            progressBar.draw(batch, progress, "Red");
         }
        
     }
@@ -192,7 +219,6 @@ public class InteractiveTileObject {
         if (chef.getInHandsIng() != null){
             if (chef.getInHandsIng().name == "Burger_buns"){
                 chef.getInHandsIng().setPrepared();
-                System.out.println("burger buns");
             }
 
 
@@ -246,7 +272,7 @@ public class InteractiveTileObject {
                 }
 
 
-                if (burger_ingredients.contains(ing.name) && ing.isPrepared() && ing.isCooked()){
+                if (burger_ingredients.contains(ing.name) && ing.isPrepared() && ing.isCooked() && ing.burnt == false){
                     burger_ingredients.remove(ing.name);
                 }
                 if(burger_ingredients.size() == 0){
@@ -260,6 +286,12 @@ public class InteractiveTileObject {
         return item_made;
     }
 
+    public void pickUpItem(Chef chef){
+        chef.setInHandsIng(item_on_station);
+        item_on_station = null;
+        burning = false;
+        
+    }
 
     public void completed_dish(){
         Set<String> available_dishes = new HashSet<>();

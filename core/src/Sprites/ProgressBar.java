@@ -16,7 +16,7 @@ public class ProgressBar extends Actor{
     float height;
     Texture back;
     Texture loading;
-
+    Texture burning;
 
     public ProgressBar(float f, float g, float width, float height){
         this.x = f;
@@ -28,15 +28,21 @@ public class ProgressBar extends Actor{
         this.setPosition(f, g);
         back = new Texture("ProgressBarBack.png");
         loading = new Texture("ProgressBarFull.png");
+        burning = new Texture("ProgressBarBurning.png");
     }
 
 
     //The progress bar is 2 imgs and the green progress bar
     //changes in width depending on progress
-    public void draw(Batch batch, float parentAlpha){
+    public void draw(Batch batch, float parentAlpha, String colour){
         super.draw(batch, parentAlpha);
         batch.draw(back, x,y, width,height);
-        batch.draw(loading, x,y,(float) width * progress/100f,height);
+        if (colour == "Green"){
+            batch.draw(loading, x,y,(float) width * progress/100f,height);
+        }else{
+            batch.draw(burning, x,y,(float) width * progress/100f,height);
+        }
+        
     }
 
 
