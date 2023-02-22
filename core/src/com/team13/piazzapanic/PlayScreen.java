@@ -23,6 +23,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 /**
@@ -75,6 +76,10 @@ public class PlayScreen implements Screen {
     private float timeSeconds = 0f;
 
     private float timeSecondsCount = 0f;
+    public Customer customer1;
+    public Customer[] customers = new Customer[5];
+    public static int current_customer = 0;
+    public int last_customer;
 
     /**
      * PlayScreen constructor initializes the game instance, sets initial conditions for scenarioComplete and createdOrder,
@@ -110,6 +115,10 @@ public class PlayScreen implements Screen {
         }
         chef1 = new Chef(this.world, 31.5F,65);
         chef2 = new Chef(this.world, 128,65);
+        customers[0] = new Customer(145,15, null, 60);
+        customers[1] = new Customer(145,10, null, 60);
+        last_customer = 1;
+        customer1 = new Customer(145,15, null, 100);
         controlledChef = chef1;
         world.setContactListener(new WorldContactListener());
         controlledChef.notificationSetBounds("Down");
@@ -168,8 +177,20 @@ public class PlayScreen implements Screen {
                     System.out.println(tileName);
 
                     if (tileName == "Sprites.InteractiveTileObject"){
+                        if (tile.type == "Serving"){
+                            if (customers[current_customer] != null){
+                                tile.serving_interact(controlledChef, customers[current_customer], 0, current_customer);
+                                System.out.println(current_customer);
+                            }
+                            
+                        }else{
+
+                        
                         tile.interact(chef1);
+                        }
                     }
+
+                    
                     
                     if (tile.ingredient != null){
                         System.out.println(tile.ingredient.name);
@@ -338,6 +359,12 @@ public class PlayScreen implements Screen {
         timeSeconds +=Gdx.graphics.getRawDeltaTime();
         timeSecondsCount += Gdx.graphics.getDeltaTime();
 
+        //TODO every so often add a new customer
+        if (HUD.worldTimerS == 59){
+            System.out.println("Created customer");
+            create_customer();
+        }
+
         if(Math.round(timeSecondsCount) == 5 && createdOrder == Boolean.FALSE){
             createdOrder = Boolean.TRUE;
             createOrder();
@@ -365,8 +392,24 @@ public class PlayScreen implements Screen {
         chef1.draw_item(game.batch);
         game.batch.draw(new Texture("Food/Lettuce.png"), (chef1.getX()*1.01f), chef1.getY(), chef1.getWidth()/2,chef1.getHeight()/2);
         chef2.draw(game.batch);
-        controlledChef.drawNotification(game.batch);
 
+        //System.out.println(chef1.getWidth());
+        controlledChef.drawNotification(game.batch);
+        
+        for (int i = 0; i < customers.length; i++) {
+            if (customers[i] != null){
+                customers[i].draw(game.batch);
+                customers[i].move(i - current_customer, current_customer);
+
+                if (customers[i].status == "destroy"){
+                    customers[i] = null;
+                }
+                //System.out.println(current_customer);
+            }
+        }
+        
+        //customer1.draw(game.batch);
+        //customer1.move(1, current_customer);
         //TODO check this section about drawing on plate station
         for (InteractiveTileObject tile : tile_objects){
             tile.draw_item_on_station(game.batch);;
@@ -408,6 +451,36 @@ public class PlayScreen implements Screen {
         }
         //game.batch.draw(new Texture ("Chef/Chef_holding_buns.png"), 50, 60, 200, 100);
         game.batch.end();
+    }
+
+
+    public void create_customer(){
+        if (current_customer >= customers.length){
+            System.out.println("AHAHHAHH");
+
+        }else{
+            Random r = new Random();
+            int random_num = r.nextInt(100);
+            customers[last_customer] = new Customer(145,15, null, 60);
+            last_customer += 1;
+            if (last_customer == customers.length){
+                last_customer = customers.length - 1;
+            }
+            if (random_num > 90 && last_customer != customers.length -1){
+                customers[last_customer] = new Customer(145,-5, null, 60);
+                last_customer += 1;
+                if (last_customer == customers.length){
+                    last_customer = customers.length - 1;
+                }
+            }else if (random_num > 95 && last_customer != customers.length -1){
+                customers[last_customer] = new Customer(145,-25, null, 60);
+                last_customer += 1;
+                if (last_customer == customers.length){
+                    last_customer = customers.length - 1;
+                }
+            }
+        }
+        
     }
 
     @Override

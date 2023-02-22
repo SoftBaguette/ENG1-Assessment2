@@ -17,7 +17,7 @@ public class HUD implements Disposable {
     private Boolean scenarioComplete;
 
     private Integer worldTimerM;
-    private Integer worldTimerS;
+    static Integer worldTimerS;
 
     private Integer score;
 

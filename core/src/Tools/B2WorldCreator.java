@@ -158,7 +158,12 @@ public class B2WorldCreator {
                     tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan"));
 
                 } else if (mapObject.getName().equals("completed_dish")) {
-                    new CompletedDishStation(world, map, bdef, rectangle, "CompletedDish");
+                    //new CompletedDishStation(world, map, bdef, rectangle, "CompletedDish");
+
+
+                    new InteractiveTileObject(world, map, bdef, rectangle,"Serving");
+                   
+                    tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Serving"));
                 } else if (mapObject.getName().equals("order_top")) {
                     PlayScreen.trayX = rectangle.x;
                     PlayScreen.trayY = rectangle.y;

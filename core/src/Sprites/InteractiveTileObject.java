@@ -119,6 +119,8 @@ public class InteractiveTileObject {
             plate_interact(chef);
         } else if (type == "Pan"){
             pan_interact(chef);
+        } else if (type == "Oven"){
+
         }
     }
    
@@ -199,6 +201,7 @@ public class InteractiveTileObject {
 
 
     public void chopping_board_interact(Chef chef){
+        //TODO add choppping board ingredients set (string)
         //ChoppingBoardIngredeints:
         if (chef.getInHandsIng() != null){
             if (chef.getInHandsIng().isPrepared() == false){
@@ -215,6 +218,7 @@ public class InteractiveTileObject {
 
 
     public void pan_interact(Chef chef){
+        //TODO add pan incredients set
         //Pan ingredients:
         if (chef.getInHandsIng() != null){
             if (chef.getInHandsIng().name == "Burger_buns"){
@@ -310,6 +314,13 @@ public class InteractiveTileObject {
         if (item_on_station != null){
             item_on_station.create(getX(), getY(), batch);
         }
+    }
+
+
+    public void serving_interact(Chef chef, Customer customer, int reputation, int current_customer){
+        reputation += customer.served(chef.getInHandsIng(), current_customer);
+        chef.setInHandsIng(null);
+
     }
     /**
      * Gets the x-coordinate of the plate station.
