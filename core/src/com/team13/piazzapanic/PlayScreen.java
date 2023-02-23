@@ -81,6 +81,10 @@ public class PlayScreen implements Screen {
     public static int current_customer = 0;
     public int last_customer;
 
+    public static Boolean endless = false;
+    public String difficulty = "";
+
+    public Boolean one_customer = true;
     /**
      * PlayScreen constructor initializes the game instance, sets initial conditions for scenarioComplete and createdOrder,
      * creates and initializes game camera and viewport,
@@ -115,9 +119,9 @@ public class PlayScreen implements Screen {
         }
         chef1 = new Chef(this.world, 31.5F,65);
         chef2 = new Chef(this.world, 128,65);
-        customers[0] = new Customer(145,15, null, 60);
-        customers[1] = new Customer(145,10, null, 60);
-        last_customer = 1;
+        customers[0] = new Customer(145,15, difficulty, 60);
+        customers[1] = new Customer(145,10, difficulty, 60);
+        last_customer = 2;
         customer1 = new Customer(145,15, null, 100);
         controlledChef = chef1;
         world.setContactListener(new WorldContactListener());
@@ -359,11 +363,32 @@ public class PlayScreen implements Screen {
         timeSeconds +=Gdx.graphics.getRawDeltaTime();
         timeSecondsCount += Gdx.graphics.getDeltaTime();
 
-        //TODO every so often add a new customer
-        if (HUD.worldTimerS == 59){
-            System.out.println("Created customer");
-            create_customer();
+        if (endless == false){
+            if (HUD.worldTimerS == 59 && one_customer == true  && last_customer < 4){
+                //TODO determine if scenario mode is over
+                System.out.println("Created customer");
+                System.out.println(last_customer);
+                create_customer();
+                
+                one_customer = false;
+            }else if (HUD.worldTimerS != 59){
+                one_customer = true;
+            }
+        }else{
+            if (HUD.worldTimerS == 59 && one_customer == true){
+                System.out.println("Created customer");
+                System.out.println(last_customer);
+                if (last_customer == 4){
+                    last_customer = 0;
+                }
+                create_customer();
+                
+                one_customer = false;
+            }else if (HUD.worldTimerS != 59){
+                one_customer = true;
+            }
         }
+        
 
         if(Math.round(timeSecondsCount) == 5 && createdOrder == Boolean.FALSE){
             createdOrder = Boolean.TRUE;
@@ -407,6 +432,10 @@ public class PlayScreen implements Screen {
                 //System.out.println(current_customer);
             }
         }
+        if (customers[current_customer] != null){
+            customers[current_customer].draw_order(game.batch);
+        }
+        
         
         //customer1.draw(game.batch);
         //customer1.move(1, current_customer);
@@ -461,19 +490,19 @@ public class PlayScreen implements Screen {
         }else{
             Random r = new Random();
             int random_num = r.nextInt(100);
-            customers[last_customer] = new Customer(145,15, null, 60);
+            customers[last_customer] = new Customer(145,15, difficulty, 60);
             last_customer += 1;
             if (last_customer == customers.length){
                 last_customer = customers.length - 1;
             }
             if (random_num > 90 && last_customer != customers.length -1){
-                customers[last_customer] = new Customer(145,-5, null, 60);
+                customers[last_customer] = new Customer(145,-5, difficulty, 60);
                 last_customer += 1;
                 if (last_customer == customers.length){
                     last_customer = customers.length - 1;
                 }
             }else if (random_num > 95 && last_customer != customers.length -1){
-                customers[last_customer] = new Customer(145,-25, null, 60);
+                customers[last_customer] = new Customer(145,-25, difficulty, 60);
                 last_customer += 1;
                 if (last_customer == customers.length){
                     last_customer = customers.length - 1;

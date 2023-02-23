@@ -69,20 +69,23 @@ public class Customer {
     public void calculate_start_time(){
         
 
-        leave_time = System.currentTimeMillis();
+        //leave_time = System.currentTimeMillis();
         if (difficulty == "Easy"){
             leave_time = leave_time * 2;
         }
         else if (difficulty == "Hard"){
             leave_time = leave_time / 2;
         }
+        System.out.println("Changed");
+        System.out.println(leave_time);
 
     }
     public void move(int queue_position, int current_customer){
         if (queue_position == 0 && now_serving == false){
             now_serving = true;
+            calculate_start_time();
             start_time = System.currentTimeMillis();
-
+            System.out.println("reset timer");
         }
         if (status == "started"){
             //System.out.println(y);
@@ -111,11 +114,9 @@ public class Customer {
             leaving = true;
 
             //TODO fix this thing!!!!
-            System.out.println(current_customer);
             served(null, current_customer);
             System.out.println("Leaving" + current_customer);
 
-            System.out.println(current_customer);
 
 
         }
@@ -131,6 +132,9 @@ public class Customer {
         
         status = "served";
         PlayScreen.current_customer +=1;
+        if (PlayScreen.endless == true && PlayScreen.current_customer == 4){
+            PlayScreen.current_customer = 0;
+        }
         current_customer += 1;
         System.out.println(current_customer);
         return 0;
@@ -141,6 +145,12 @@ public class Customer {
             batch.draw(customer_texture, this.x, this.y, 0.1f, 0.1f);
         }
         
+        
+        
+       
+    }
+
+    public void draw_order(Batch batch){
         if (status != "served"){
             if (desired_ingredient.name == "Salad"){
                 batch.draw(salad_recipe_texture, 1,1.3f, 0.4f, 0.3f);
@@ -148,12 +158,6 @@ public class Customer {
                 batch.draw(burger_recipe_texture, 1,1.3f, 0.4f, 0.3f);
             }
         }
-        
-       
-    }
-
-    public void draw_order(){
-        
     }
     
 }

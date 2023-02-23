@@ -54,6 +54,7 @@ public class MainGame extends Game {
 		}
 		if (isPlayScreen) {
 			setScreen(playScreen);
+			
 		} else {
 			setScreen(startScreen);
 		}
