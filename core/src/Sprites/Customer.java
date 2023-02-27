@@ -153,9 +153,9 @@ public class Customer {
     public void draw_order(Batch batch){
         if (status != "served"){
             if (desired_ingredient.name == "Salad"){
-                batch.draw(salad_recipe_texture, 1,1.3f, 0.4f, 0.3f);
+                batch.draw(salad_recipe_texture, 1.1f,1.5f, 0.4f, 0.3f);
             } else if (desired_ingredient.name == "Burger"){
-                batch.draw(burger_recipe_texture, 1,1.3f, 0.4f, 0.3f);
+                batch.draw(burger_recipe_texture, 1.1f,1.5f, 0.4f, 0.3f);
             }
         }
     }

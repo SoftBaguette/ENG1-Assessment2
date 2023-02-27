@@ -104,7 +104,7 @@ public class InteractiveTileObject {
 
 
     public void interact(Chef chef){
-        System.out.println("Interacted with station");
+        System.out.println("Interacted with " + type + " station");
         System.out.println(item_on_station);
 
 
@@ -129,6 +129,7 @@ public class InteractiveTileObject {
             //System.out.println("Updating");
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
+            System.out.println("Time: " + item_on_station.cookTime);
             //progressBar.setProgress((int) (percent*100));
             if (System.currentTimeMillis() - start_time_interaction > (item_on_station.prepareTime*1000)){
                 if (item_on_station.isCooked() == false && item_on_station.isPrepared() == true){
@@ -228,6 +229,9 @@ public class InteractiveTileObject {
     public void pan_interact(Chef chef){
         //TODO add pan incredients set
         //Pan ingredients:
+        ArrayList<String> pan_items = new ArrayList<>();
+        pan_items.add("Steak");
+        pan_items.add("Burger_buns");
 
         if (chef.getInHandsIng() != null){
             if (chef.getInHandsIng().name == "Burger_buns"){
@@ -235,7 +239,7 @@ public class InteractiveTileObject {
             }
 
 
-            if (chef.getInHandsIng().isPrepared()){
+            if (chef.getInHandsIng().isPrepared() && chef.getInHandsIng().burnt == false && pan_items.contains(chef.getInHandsIng().name)){
                 item_on_station = chef.getInHandsIng();
                 chef.setInHandsIng(null);
                 start_time_interaction = System.currentTimeMillis();
@@ -248,7 +252,7 @@ public class InteractiveTileObject {
     public void oven_interact(Chef chef){
         if (chef.getInHandsIng() != null){
             item_on_station = chef.getInHandsIng();
-            item_on_station.isPrepared();
+            item_on_station.setPrepared();
             chef.setInHandsIng(null);
             start_time_interaction = System.currentTimeMillis();
             interacting = true;

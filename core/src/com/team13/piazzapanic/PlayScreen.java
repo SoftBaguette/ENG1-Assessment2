@@ -119,8 +119,8 @@ public class PlayScreen implements Screen {
         }
         chef1 = new Chef(this.world, 31.5F,65);
         chef2 = new Chef(this.world, 128,65);
-        customers[0] = new Customer(145,15, difficulty, 60);
-        customers[1] = new Customer(145,10, difficulty, 60);
+        customers[0] = new Customer(167,15, difficulty, 60);
+        customers[1] = new Customer(167,10, difficulty, 60);
         last_customer = 2;
         customer1 = new Customer(145,15, null, 100);
         controlledChef = chef1;
@@ -392,7 +392,7 @@ public class PlayScreen implements Screen {
 
         if(Math.round(timeSecondsCount) == 5 && createdOrder == Boolean.FALSE){
             createdOrder = Boolean.TRUE;
-            createOrder();
+            //createOrder();
         }
         float period = 1f;
         if(timeSeconds > period) {
@@ -499,13 +499,13 @@ public class PlayScreen implements Screen {
                 last_customer = customers.length - 1;
             }
             if (random_num > 90 && last_customer != customers.length -1){
-                customers[last_customer] = new Customer(145,-5, difficulty, 60);
+                customers[last_customer] = new Customer(167,-5, difficulty, 60);
                 last_customer += 1;
                 if (last_customer == customers.length){
                     last_customer = customers.length - 1;
                 }
             }else if (random_num > 95 && last_customer != customers.length -1){
-                customers[last_customer] = new Customer(145,-25, difficulty, 60);
+                customers[last_customer] = new Customer(167,-25, difficulty, 60);
                 last_customer += 1;
                 if (last_customer == customers.length){
                     last_customer = customers.length - 1;
