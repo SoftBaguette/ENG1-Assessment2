@@ -33,16 +33,19 @@ public class TestingTest {
       chopping_station.interact(chef1);
       wait(2000);
       chopping_station.update(chef1);
+      chopping_station.interact(chef1);
       plate.interact(chef1);
       lettuce_box.interact(chef1);
       chopping_station.interact(chef1);
       wait(2000);
       chopping_station.update(chef1);
+      chopping_station.interact(chef1);
       plate.interact(chef1);
       onion_box.interact(chef1);
       chopping_station.interact(chef1);
       wait(2000);
       chopping_station.update(chef1);
+      chopping_station.interact(chef1);
       plate.interact(chef1);
       bin.interact(chef1);
 
