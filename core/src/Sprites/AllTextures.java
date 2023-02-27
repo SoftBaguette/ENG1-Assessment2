@@ -82,6 +82,32 @@ public class AllTextures {
         return burger_textures;
     }
 
+    public static ArrayList<Texture> getCheeseTextures(){
+        ArrayList<Texture> cheese_textures = new ArrayList<Texture>();
+        cheese_textures.add(new Texture("Food/Cheese.png"));
+        cheese_textures.add(new Texture("Food/CheeseChopped.png"));
+        return cheese_textures;
+    }
+    public static ArrayList<Texture> getPotatoTextures(){
+        ArrayList<Texture> potato_textures = new ArrayList<Texture>();
+        potato_textures.add(new Texture("Food/Potato.png"));
+        potato_textures.add(new Texture("Food/PotatoCooked.png"));
+        return potato_textures;
+    }
+
+    public static ArrayList<Texture> getDoughTextures(){
+        ArrayList<Texture> dough_textures = new ArrayList<Texture>();
+        dough_textures.add(new Texture("Food/PizzaDough.png"));
+        return dough_textures;
+    }
+
+    public static ArrayList<Texture> getPizzaTextures(){
+        ArrayList<Texture> pizza_textures = new ArrayList<Texture>();
+        pizza_textures.add(new Texture("Food/Pizza.png"));
+        pizza_textures.add(new Texture("Food/PizzaCooked.png"));
+        return pizza_textures;
+
+    }
 
     public static ArrayList<Texture> getTextures(String item){
         if (item == "Burger_buns"){
@@ -100,6 +126,14 @@ public class AllTextures {
             return getSaladTextures();
         }else if (item == "Burger"){
             return getBurgerTextures();
+        }else if (item == "Cheese"){
+            return getCheeseTextures();
+        }else if (item == "PizzaDough"){
+            return getDoughTextures();
+        }else if (item == "Potato"){
+            return getPotatoTextures();
+        }else if (item == "Pizza"){
+            return getPizzaTextures();
         }
         else{
             return null;

@@ -26,8 +26,8 @@ public class MainGame extends Game {
 	 *     render: Renders the StartScreen or PlayScreen based on the value of isPlayScreen flag.
 	 * 	   dispose: Releases resources used by the MainGame class.
 	 */
-	public static final int V_WIDTH = 160;
-	public static final int V_HEIGHT = 160;
+	public static final int V_WIDTH = 184;
+	public static final int V_HEIGHT = 184;
 	public static final int TILE_SIZE = 16;
 
 	public static final float PPM = 100;

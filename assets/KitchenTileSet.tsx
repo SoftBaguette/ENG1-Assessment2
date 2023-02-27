@@ -3,22 +3,22 @@
  <image source="TileSet.png" width="48" height="112"/>
  <tile id="0">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="worktop" x="1.19555" y="1.11015" width="13.6634" height="14.005"/>
+   <object id="1" name="worktop" x="0.139994" y="0.11015" width="16.1634" height="15.9494"/>
   </objectgroup>
  </tile>
  <tile id="1">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="chopping_board" x="1.02476" y="1.11015" width="13.9196" height="13.7488"/>
+   <object id="1" name="chopping_board" x="0.02476" y="-0.000961111" width="15.8085" height="16.0266"/>
   </objectgroup>
  </tile>
  <tile id="2">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="pan1" x="1.02476" y="0.93936" width="13.7488" height="14.0904"/>
+   <object id="1" name="pan1" x="-0.141907" y="-0.171751" width="16.4155" height="16.146"/>
   </objectgroup>
  </tile>
  <tile id="3">
   <objectgroup draworder="index" id="5">
-   <object id="4" name="tomato" x="1.02476" y="1.11015" width="13.8342" height="13.9196"/>
+   <object id="4" name="tomato" x="0.191427" y="-0.0565167" width="15.8342" height="15.7529"/>
   </objectgroup>
  </tile>
  <tile id="4">
@@ -33,32 +33,32 @@
  </tile>
  <tile id="6">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="steak" x="0.93936" y="0.853964" width="14.005" height="14.1758"/>
+   <object id="1" name="steak" x="-0.171751" y="-0.0904804" width="16.4494" height="16.3425"/>
   </objectgroup>
  </tile>
  <tile id="7">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="buns" x="1.02476" y="0.93936" width="13.9196" height="14.1758"/>
+   <object id="1" name="buns" x="-0.0307956" y="-0.00508444" width="15.864" height="15.7869"/>
   </objectgroup>
  </tile>
  <tile id="8">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="pan2" x="1.19555" y="1.02476" width="13.6634" height="14.005"/>
+   <object id="1" name="pan2" x="0.251106" y="0.246982" width="15.7745" height="15.6717"/>
   </objectgroup>
  </tile>
  <tile id="12">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="plate" x="1.02476" y="1.02476" width="13.8342" height="14.005"/>
+   <object id="1" name="plate" x="0.0803156" y="0.135871" width="15.7786" height="15.7272"/>
   </objectgroup>
  </tile>
  <tile id="13">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="bin" x="1.02476" y="1.19555" width="14.005" height="13.8342"/>
+   <object id="1" name="bin" x="-0.246073" y="0.0288833" width="16.3939" height="16.2231"/>
   </objectgroup>
  </tile>
  <tile id="14">
   <objectgroup draworder="index" id="2">
-   <object id="1" name="completed_dish" x="0.93936" y="1.02476" width="14.005" height="13.9196"/>
+   <object id="1" name="completed_dish" x="-0.00508444" y="0.02476" width="15.9494" height="15.864"/>
   </objectgroup>
  </tile>
  <tile id="15">

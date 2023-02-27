@@ -106,7 +106,7 @@ public class PlayScreen implements Screen {
         Orders orders = new Orders(game.batch);
         // create map
         TmxMapLoader mapLoader = new TmxMapLoader(new InternalFileHandleResolver());
-        map = mapLoader.load("Kitchen.tmx");
+        map = mapLoader.load("NewKitchen.tmx");
         renderer = new OrthogonalTiledMapRenderer(map, 1 / MainGame.PPM);
         gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
 
@@ -441,7 +441,10 @@ public class PlayScreen implements Screen {
         //customer1.move(1, current_customer);
         //TODO check this section about drawing on plate station
         for (InteractiveTileObject tile : tile_objects){
-            tile.draw_item_on_station(game.batch);;
+            if (tile.type != "Oven"){
+                tile.draw_item_on_station(game.batch);
+            }
+            
         }
         /*
         if (plateStation.getPlate().size() > 0){

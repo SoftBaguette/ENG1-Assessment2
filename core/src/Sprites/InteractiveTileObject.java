@@ -120,7 +120,7 @@ public class InteractiveTileObject {
         } else if (type == "Pan"){
             pan_interact(chef);
         } else if (type == "Oven"){
-
+            oven_interact(chef);
         }
     }
    
@@ -203,8 +203,16 @@ public class InteractiveTileObject {
     public void chopping_board_interact(Chef chef){
         //TODO add choppping board ingredients set (string)
         //ChoppingBoardIngredeints:
+        ArrayList<String> chopping_items = new ArrayList<>();
+        chopping_items.add("Tomato");
+        chopping_items.add("Lettuce");
+        chopping_items.add("Onion");
+        chopping_items.add("Cheese");
+        chopping_items.add("Steak");
+        
+        
         if (chef.getInHandsIng() != null){
-            if (chef.getInHandsIng().isPrepared() == false){
+            if (chef.getInHandsIng().isPrepared() == false && chopping_items.contains(chef.getInHandsIng().name)){
                 item_on_station = chef.getInHandsIng();
                 chef.setInHandsIng(null);
                 //Stop the chef from moving
@@ -220,6 +228,7 @@ public class InteractiveTileObject {
     public void pan_interact(Chef chef){
         //TODO add pan incredients set
         //Pan ingredients:
+
         if (chef.getInHandsIng() != null){
             if (chef.getInHandsIng().name == "Burger_buns"){
                 chef.getInHandsIng().setPrepared();
@@ -235,6 +244,16 @@ public class InteractiveTileObject {
         }
     }
 
+
+    public void oven_interact(Chef chef){
+        if (chef.getInHandsIng() != null){
+            item_on_station = chef.getInHandsIng();
+            item_on_station.isPrepared();
+            chef.setInHandsIng(null);
+            start_time_interaction = System.currentTimeMillis();
+            interacting = true;
+        }
+    }
 
 
 
@@ -262,6 +281,11 @@ public class InteractiveTileObject {
         Set<String> burger_ingredients = new HashSet<String>();
         burger_ingredients.add("Burger_buns");
         burger_ingredients.add("Steak");
+
+        Set<String> pizza_ingredients = new HashSet<String>();
+        pizza_ingredients.add("PizzaDough");
+        pizza_ingredients.add("Cheese");
+        pizza_ingredients.add("Tomato");
         for (Ingredient ing : plate_items){
             if (ing != null){
                 System.out.println(ing.name);
@@ -284,7 +308,24 @@ public class InteractiveTileObject {
                     plate_items.add(new Ingredient("Burger", 0,0,0, null));
                     item_made = true;
                     System.out.println("Made Burger");
-                }            
+                }    
+                
+                if (pizza_ingredients.contains(ing.name)){
+                    if (ing.name == "Cheese" || ing.name == "Tomato"){
+                        if (ing.isPrepared()){
+                            pizza_ingredients.remove(ing.name);
+                        }
+                    }else if (ing.name == "PizzaDough"){
+                        pizza_ingredients.remove(ing.name);
+                    }
+                }
+
+                if (pizza_ingredients.size()==0){
+                    plate_items = new ArrayList<>();
+                    plate_items.add(new Ingredient("Pizza", 0, 0, 3, null));
+                    item_made = true;
+                }
+                
             }
         }
         return item_made;
