@@ -105,8 +105,7 @@ public class InteractiveTileObject {
 
     public void interact(Chef chef){
         System.out.println("Interacted with " + type + " station");
-        System.out.println(item_on_station);
-
+        System.out.println("Item on station: " + item_on_station);
 
         if (item_on_station  != null && interacting == false){
             System.out.println("Picked up");
@@ -121,16 +120,26 @@ public class InteractiveTileObject {
             pan_interact(chef);
         } else if (type == "Oven"){
             oven_interact(chef);
+            System.out.println(interacting);
         }
     }
    
     public void update(Chef chef){
+        if (type == "Oven"){
+            System.out.println(interacting);
+            if (interacting == false){
+                if (item_on_station != null){
+                    if (item_on_station.isCooked() == false){
+
+                    }
+                }
+                interacting = true;
+                System.out.println("Interacting:" + interacting);
+            }
+        }
         if (interacting == true){
-            //System.out.println("Updating");
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
-            System.out.println("Time: " + item_on_station.cookTime);
-            //progressBar.setProgress((int) (percent*100));
             if (System.currentTimeMillis() - start_time_interaction > (item_on_station.prepareTime*1000)){
                 if (item_on_station.isCooked() == false && item_on_station.isPrepared() == true){
                     item_on_station.setCooked();
@@ -139,11 +148,6 @@ public class InteractiveTileObject {
                     item_on_station.setPrepared();
                 }
                 item_on_station.status +=1;
-                /*
-                if (item_on_station.status >= item_on_station.tex.size()){
-                    item_on_station.status = item_on_station.tex.size()-1;
-                }*/
-                
                 //chef.setInHandsIng(item_on_station);
                 chef.chefMove = true;
                 interacting = false;
@@ -164,7 +168,6 @@ public class InteractiveTileObject {
         if (burning == true){
             float burn_percent = (float) (System.currentTimeMillis() - start_time_burning+1)/(5000);
             progress = (int) (burn_percent*100);
-            System.out.println(System.currentTimeMillis() - start_time_burning);
             if (System.currentTimeMillis() - start_time_burning > (5000)){
                 item_on_station.status +=1;
                 burning = false;
@@ -182,7 +185,6 @@ public class InteractiveTileObject {
             progressBar.draw(batch, progress, "Green");
         }
         else if (burning == true){
-            //progressBar.change_pos(chef.getX(), chef.getY());
             progressBar.change_pos(getX(), getY());
             progressBar.setProgress(progress);
             progressBar.draw(batch, progress, "Red");
@@ -250,12 +252,16 @@ public class InteractiveTileObject {
 
 
     public void oven_interact(Chef chef){
-        if (chef.getInHandsIng() != null){
+        ArrayList<String> oven_items = new ArrayList<>();
+        oven_items.add("Potato");
+        oven_items.add("Pizza");
+        if (chef.getInHandsIng() != null && oven_items.contains(chef.getInHandsIng().name) && chef.getInHandsIng().isCooked() == false){
             item_on_station = chef.getInHandsIng();
             item_on_station.setPrepared();
             chef.setInHandsIng(null);
             start_time_interaction = System.currentTimeMillis();
             interacting = true;
+            System.out.println(interacting);
         }
     }
 
@@ -292,7 +298,6 @@ public class InteractiveTileObject {
         pizza_ingredients.add("Tomato");
         for (Ingredient ing : plate_items){
             if (ing != null){
-                System.out.println(ing.name);
                 if (salad_ingdredients.contains(ing.name) && ing.status == 1){
                     salad_ingdredients.remove(ing.name);
                 }

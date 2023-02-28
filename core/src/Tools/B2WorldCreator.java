@@ -124,7 +124,6 @@ public class B2WorldCreator {
 
 
                 if (mapObject.getName().equals("bin")) {
-                    //System.out.println("Thing");
                     //new Bin(world, map, bdef, rectangle, "Bin");
                     new InteractiveTileObject(world, map, bdef, rectangle,"Bin");
                    
@@ -163,7 +162,6 @@ public class B2WorldCreator {
                     //new SteakStation(world, map, bdef, rectangle, "");
                     new IngredientStation(world, map, bdef, rectangle, new Ingredient("Steak", 0, 2,2, patty_textures ), "");
                 }else if (mapObject.getName().equals("cheese")){
-                    System.out.println("CheeseMade");
                     new IngredientStation(world, map, bdef, rectangle, new Ingredient("Cheese", 0, 2,2,cheese_textures ), "");
                 } else if (mapObject.getName().equals("potato")){
                     new IngredientStation(world, map, bdef, rectangle, new Ingredient("Potato", 0, 2,2,potato_textures ), "");

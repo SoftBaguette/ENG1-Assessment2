@@ -173,12 +173,10 @@ public class PlayScreen implements Screen {
         controlledChef.move();
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.E)){
-            //System.out.println(controlledChef.inHandsIng);
                 if(controlledChef.getTouchingTile() != null){
-                    //System.out.println(controlledChef.getTouchingTile().getUserData().getClass());
                     InteractiveTileObject tile = (InteractiveTileObject) controlledChef.getTouchingTile().getUserData();
                     String tileName = tile.getClass().getName();
-                    System.out.println(tileName);
+                    //System.out.println(tileName);
 
                     if (tileName == "Sprites.InteractiveTileObject"){
                         if (tile.type == "Serving"){
@@ -188,9 +186,7 @@ public class PlayScreen implements Screen {
                             }
                             
                         }else{
-
-                        
-                        tile.interact(chef1);
+                            tile.interact(chef1);
                         }
                     }
 
@@ -200,22 +196,8 @@ public class PlayScreen implements Screen {
                         System.out.println(tile.ingredient.name);
                         if (tileName == "Sprites.IngredientStation"){
                             tile.interact(controlledChef);
-                            //controlledChef.setInHandsIng(tile.ingredient);
-                            //System.out.println(controlledChef.getInHandsIng());
                         }
-                        
-                        /*
-                        if (tile.ingredient.name == "Lettuce"){
-                            ArrayList<Texture> lettuce_textures = new ArrayList<Texture>();
-                            lettuce_textures.add(new Texture("Food/Lettuce.png"));
-                            lettuce_textures.add(new Texture("Food/LettuceChopped.png"));
-                            Lettuce temp = new Lettuce("Lettuce", 0, 2,0, AllTextures.getLettuceTextures());
-                            temp.tex = lettuce_textures;
-                            controlledChef.setInHandsIng(temp);
-                            controlledChef.setChefSkin(controlledChef.getInHandsIng());
-                            controlledChef.setChefSkin(temp);
-                            System.out.println(controlledChef.getInHandsIng().tex.get(0));
-                        }*/
+
                     }
                     if (tileName == "Sprites.ChoppingBoard"){
                         tile.interact(controlledChef);
@@ -418,7 +400,6 @@ public class PlayScreen implements Screen {
         game.batch.draw(new Texture("Food/Lettuce.png"), (chef1.getX()*1.01f), chef1.getY(), chef1.getWidth()/2,chef1.getHeight()/2);
         chef2.draw(game.batch);
 
-        //System.out.println(chef1.getWidth());
         controlledChef.drawNotification(game.batch);
         
         for (int i = 0; i < customers.length; i++) {
@@ -441,9 +422,10 @@ public class PlayScreen implements Screen {
         //customer1.move(1, current_customer);
         //TODO check this section about drawing on plate station
         for (InteractiveTileObject tile : tile_objects){
-            if (tile.type != "Oven"){
-                tile.draw_item_on_station(game.batch);
-            }
+            // if (tile.type != "Oven"){
+            //     tile.draw_item_on_station(game.batch);
+            // }
+            tile.draw_item_on_station(game.batch);
             
         }
         /*
@@ -478,10 +460,8 @@ public class PlayScreen implements Screen {
             chef2.displayIngDynamic(game.batch);
         }
         for (InteractiveTileObject tile : tile_objects){
-            //System.out.println(tile.type);
             tile.draw_progress_bar(game.batch, controlledChef);
         }
-        //game.batch.draw(new Texture ("Chef/Chef_holding_buns.png"), 50, 60, 200, 100);
         game.batch.end();
     }
 
@@ -493,7 +473,7 @@ public class PlayScreen implements Screen {
         }else{
             Random r = new Random();
             int random_num = r.nextInt(100);
-            customers[last_customer] = new Customer(145,15, difficulty, 60);
+            customers[last_customer] = new Customer(167,15, difficulty, 60);
             last_customer += 1;
             if (last_customer == customers.length){
                 last_customer = customers.length - 1;

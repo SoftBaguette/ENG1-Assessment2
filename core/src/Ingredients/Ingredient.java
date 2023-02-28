@@ -96,6 +96,7 @@ public class Ingredient extends Sprite {
      */
     public void create(float x, float y, SpriteBatch batch){
         Sprite sprite;
+        //TODO change tex thing
         if (findCorrectSkin() >= tex.size()){
             sprite = new Sprite(tex.get(tex.size()-1));
             

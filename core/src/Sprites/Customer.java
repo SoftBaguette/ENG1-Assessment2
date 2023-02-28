@@ -28,6 +28,7 @@ public class Customer {
     public Texture customer_texture;
     public Texture salad_recipe_texture;
     public Texture burger_recipe_texture;
+    public Texture pizza_recipe_texture;
     public Boolean leaving = false;
     public Boolean now_serving = false;
 
@@ -49,8 +50,9 @@ public class Customer {
         //Meal Options
         Ingredient salad = new Ingredient("Salad", null, 0, 0, null);
         Ingredient burger = new Ingredient("Burger", null, 0, 0, null);
+        Ingredient pizza = new Ingredient("Pizza", null, 0,0,null);
 
-        Ingredient[] meal_options = new Ingredient[] {salad, burger};
+        Ingredient[] meal_options = new Ingredient[] {salad, burger, pizza};
 
         desired_ingredient = meal_options[(int)(Math.random() * meal_options.length)];
 
@@ -61,7 +63,7 @@ public class Customer {
         customer_texture = new Texture("Customer.png");
         salad_recipe_texture = new Texture("Food/salad_recipe.png");
         burger_recipe_texture = new Texture("Food/burger_recipe.png");
-
+        pizza_recipe_texture = new Texture("Food/pizza_recipe.png");
 
 
     }
@@ -69,15 +71,14 @@ public class Customer {
     public void calculate_start_time(){
         
 
-        //leave_time = System.currentTimeMillis();
         if (difficulty == "Easy"){
             leave_time = leave_time * 2;
         }
         else if (difficulty == "Hard"){
             leave_time = leave_time / 2;
         }
-        System.out.println("Changed");
-        System.out.println(leave_time);
+        System.out.println("Changed leave time to: " + leave_time);
+
 
     }
     public void move(int queue_position, int current_customer){
@@ -88,10 +89,8 @@ public class Customer {
             System.out.println("reset timer");
         }
         if (status == "started"){
-            //System.out.println(y);
 
             if (y < 0.65f - (0.2f * queue_position)){
-                //System.out.println(queue_position);
                 y += 0.001;
             }
             //move up TO 0.65
@@ -130,13 +129,14 @@ public class Customer {
             }
         }
         
+        //TODO change this to be different
         status = "served";
         PlayScreen.current_customer +=1;
         if (PlayScreen.endless == true && PlayScreen.current_customer == 4){
             PlayScreen.current_customer = 0;
         }
         current_customer += 1;
-        System.out.println(current_customer);
+        System.out.println("Current customer: " + current_customer);
         return 0;
     }
 
@@ -156,6 +156,9 @@ public class Customer {
                 batch.draw(salad_recipe_texture, 1.1f,1.5f, 0.4f, 0.3f);
             } else if (desired_ingredient.name == "Burger"){
                 batch.draw(burger_recipe_texture, 1.1f,1.5f, 0.4f, 0.3f);
+            }
+            else if (desired_ingredient.name == "Pizza"){
+                batch.draw(pizza_recipe_texture, 1.1f,1.5f, 0.4f, 0.3f);
             }
         }
     }

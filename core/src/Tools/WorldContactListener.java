@@ -30,7 +30,6 @@ public class WorldContactListener implements ContactListener {
             Fixture objectFixt = fixA.getUserData() instanceof Chef ? fixB: fixA;
 
             // if both fixtures are Chef objects
-            //System.out.println(objectFixt.getUserData().getClass().getName());
             if(fixA.getUserData() instanceof Chef && fixB.getUserData() instanceof Chef){
                 // call the chefsColliding method on both Chef objects
                 Chef chef = ((Chef) fixA.getUserData());
@@ -42,7 +41,6 @@ public class WorldContactListener implements ContactListener {
             else if(objectFixt.getUserData() != null && objectFixt.getUserData() instanceof InteractiveTileObject){
                 // set the InteractiveTileObject for the Chef
                 ((Chef) chefFixt.getUserData()).setTouchingTile(objectFixt);
-                //System.out.println("something");
             }
         }
     }
