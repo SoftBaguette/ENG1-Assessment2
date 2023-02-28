@@ -91,9 +91,18 @@ public class AllTextures {
     public static ArrayList<Texture> getPotatoTextures(){
         ArrayList<Texture> potato_textures = new ArrayList<Texture>();
         potato_textures.add(new Texture("Food/Potato.png"));
-        potato_textures.add(new Texture("Food/PotatoCooked.png"));
+        //potato_textures.add(new Texture("Food/PotatoCooked.png"));
         return potato_textures;
     }
+
+    public static ArrayList<Texture> getPotatoCheeseTextures(){
+        ArrayList<Texture> potatoCheese_textures = new ArrayList<Texture>();
+        potatoCheese_textures.add(new Texture("Food/PotatoCheese.png"));
+        potatoCheese_textures.add(new Texture("Food/PotatoCheeseCooked.png"));
+        return potatoCheese_textures;
+    }
+
+
 
     public static ArrayList<Texture> getDoughTextures(){
         ArrayList<Texture> dough_textures = new ArrayList<Texture>();
@@ -132,6 +141,8 @@ public class AllTextures {
             return getDoughTextures();
         }else if (item == "Potato"){
             return getPotatoTextures();
+        }else if (item == "PotatoCheese"){
+            return getPotatoCheeseTextures();
         }else if (item == "Pizza"){
             return getPizzaTextures();
         }

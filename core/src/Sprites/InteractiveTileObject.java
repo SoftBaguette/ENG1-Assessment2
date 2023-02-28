@@ -125,21 +125,11 @@ public class InteractiveTileObject {
     }
    
     public void update(Chef chef){
-        if (type == "Oven"){
-            System.out.println(interacting);
-            if (interacting == false){
-                if (item_on_station != null){
-                    if (item_on_station.isCooked() == false){
-
-                    }
-                }
-                interacting = true;
-                System.out.println("Interacting:" + interacting);
-            }
-        }
+        
         if (interacting == true){
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
+            //System.out.println(progress);
             if (System.currentTimeMillis() - start_time_interaction > (item_on_station.prepareTime*1000)){
                 if (item_on_station.isCooked() == false && item_on_station.isPrepared() == true){
                     item_on_station.setCooked();
@@ -253,13 +243,14 @@ public class InteractiveTileObject {
 
     public void oven_interact(Chef chef){
         ArrayList<String> oven_items = new ArrayList<>();
-        oven_items.add("Potato");
+        oven_items.add("PotatoCheese");
         oven_items.add("Pizza");
         if (chef.getInHandsIng() != null && oven_items.contains(chef.getInHandsIng().name) && chef.getInHandsIng().isCooked() == false){
             item_on_station = chef.getInHandsIng();
             item_on_station.setPrepared();
             chef.setInHandsIng(null);
             start_time_interaction = System.currentTimeMillis();
+            //System.out.println("Start time: " + start_time_interaction " ");
             interacting = true;
             System.out.println(interacting);
         }
@@ -296,6 +287,10 @@ public class InteractiveTileObject {
         pizza_ingredients.add("PizzaDough");
         pizza_ingredients.add("Cheese");
         pizza_ingredients.add("Tomato");
+
+        Set<String> potato_ingredients = new HashSet<String>();
+        potato_ingredients.add("Potato");
+        potato_ingredients.add("Cheese");
         for (Ingredient ing : plate_items){
             if (ing != null){
                 if (salad_ingdredients.contains(ing.name) && ing.status == 1){
@@ -331,8 +326,22 @@ public class InteractiveTileObject {
 
                 if (pizza_ingredients.size()==0){
                     plate_items = new ArrayList<>();
-                    plate_items.add(new Ingredient("Pizza", 0, 0, 3, null));
+                    plate_items.add(new Ingredient("Pizza", 0, 3, 3, null));
                     item_made = true;
+                }
+                if (potato_ingredients.contains(ing.name)){
+                    if ((ing.name == "Cheese" && ing.isPrepared()) || ing.name == "Potato"){
+                        potato_ingredients.remove(ing.name);
+                        System.out.println(ing.name);
+                        System.out.println(potato_ingredients.size());
+                    }
+                }
+                
+                if (potato_ingredients.size() == 0){
+                    plate_items = new ArrayList<>();
+                    plate_items.add(new Ingredient("PotatoCheese", 0, 3, 3, null));
+                    item_made = true;
+                    System.out.println("Potato made");
                 }
                 
             }

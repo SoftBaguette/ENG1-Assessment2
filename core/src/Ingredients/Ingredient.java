@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.team13.piazzapanic.MainGame;
 
+import Sprites.AllTextures;
+
 import java.util.ArrayList;
 
 public class Ingredient extends Sprite {
@@ -97,12 +99,12 @@ public class Ingredient extends Sprite {
     public void create(float x, float y, SpriteBatch batch){
         Sprite sprite;
         //TODO change tex thing
-        if (findCorrectSkin() >= tex.size()){
-            sprite = new Sprite(tex.get(tex.size()-1));
+        if (findCorrectSkin() >= AllTextures.getTextures(name).size()){
+            sprite = new Sprite(AllTextures.getTextures(name).get(AllTextures.getTextures(name).size()-1));
             
         }else{
             //sprite = new Sprite(tex.get(findCorrectSkin()));
-            sprite = new Sprite(tex.get(status));
+            sprite = new Sprite(AllTextures.getTextures(name).get(status));
         }
         float adjustedX =  x - (5/MainGame.PPM);
         float adjustedY =  y - (4.95f / MainGame.PPM);
