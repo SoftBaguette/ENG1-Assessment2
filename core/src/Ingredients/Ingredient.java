@@ -52,6 +52,7 @@ public class Ingredient extends Sprite {
         this.amICooked = false;
         this.amIPrepared = false;
         burnt = false;
+                //TODO change tex thing
         this.tex = tex;
     }
 
@@ -98,12 +99,11 @@ public class Ingredient extends Sprite {
      */
     public void create(float x, float y, SpriteBatch batch){
         Sprite sprite;
-        //TODO change tex thing
+
         if (findCorrectSkin() >= AllTextures.getTextures(name).size()){
             sprite = new Sprite(AllTextures.getTextures(name).get(AllTextures.getTextures(name).size()-1));
             
         }else{
-            //sprite = new Sprite(tex.get(findCorrectSkin()));
             sprite = new Sprite(AllTextures.getTextures(name).get(status));
         }
         float adjustedX =  x - (5/MainGame.PPM);

@@ -120,7 +120,6 @@ public class InteractiveTileObject {
             pan_interact(chef);
         } else if (type == "Oven"){
             oven_interact(chef);
-            System.out.println(interacting);
         }
     }
    
@@ -129,7 +128,6 @@ public class InteractiveTileObject {
         if (interacting == true){
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
-            //System.out.println(progress);
             if (System.currentTimeMillis() - start_time_interaction > (item_on_station.prepareTime*1000)){
                 if (item_on_station.isCooked() == false && item_on_station.isPrepared() == true){
                     item_on_station.setCooked();
@@ -138,14 +136,11 @@ public class InteractiveTileObject {
                     item_on_station.setPrepared();
                 }
                 item_on_station.status +=1;
-                //chef.setInHandsIng(item_on_station);
                 chef.chefMove = true;
                 interacting = false;
-                //item_on_station = null;
                 progress = 0;
                 System.out.println("Finished");
 
-                //TODO implement Burning
                 if (item_on_station.isCooked() && item_on_station.name == "Steak"){
                     burning = true;  
                     progress = 0;
@@ -169,7 +164,6 @@ public class InteractiveTileObject {
     }
     public void draw_progress_bar(Batch batch, Chef chef){
         if (interacting == true){
-            //progressBar.change_pos(chef.getX(), chef.getY());
             progressBar.change_pos(getX(), getY());
             progressBar.setProgress(progress);
             progressBar.draw(batch, progress, "Green");
@@ -194,7 +188,6 @@ public class InteractiveTileObject {
 
 
     public void chopping_board_interact(Chef chef){
-        //TODO add choppping board ingredients set (string)
         //ChoppingBoardIngredeints:
         ArrayList<String> chopping_items = new ArrayList<>();
         chopping_items.add("Tomato");
@@ -219,7 +212,6 @@ public class InteractiveTileObject {
 
 
     public void pan_interact(Chef chef){
-        //TODO add pan incredients set
         //Pan ingredients:
         ArrayList<String> pan_items = new ArrayList<>();
         pan_items.add("Steak");
@@ -250,9 +242,7 @@ public class InteractiveTileObject {
             item_on_station.setPrepared();
             chef.setInHandsIng(null);
             start_time_interaction = System.currentTimeMillis();
-            //System.out.println("Start time: " + start_time_interaction " ");
             interacting = true;
-            System.out.println(interacting);
         }
     }
 
@@ -332,8 +322,6 @@ public class InteractiveTileObject {
                 if (potato_ingredients.contains(ing.name)){
                     if ((ing.name == "Cheese" && ing.isPrepared()) || ing.name == "Potato"){
                         potato_ingredients.remove(ing.name);
-                        System.out.println(ing.name);
-                        System.out.println(potato_ingredients.size());
                     }
                 }
                 

@@ -91,7 +91,6 @@ public class B2WorldCreator {
         ArrayList<Texture> dough_textures = new ArrayList<Texture>();
         dough_textures.add(new Texture("Food/PizzaDough.png"));
 
-        //TODO add objects to array
         tile_objects = new ArrayList<InteractiveTileObject>();
 
 
