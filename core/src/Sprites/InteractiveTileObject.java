@@ -1,9 +1,8 @@
 package Sprites;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.lang.String;
 
 
 import com.badlogic.gdx.graphics.g2d.Batch;
@@ -29,7 +28,7 @@ import Ingredients.Ingredient;
 public class InteractiveTileObject {
    
     protected Fixture fixture;
-
+    Map<String, ArrayList<String>> IngredientsToStations;
 
     public BodyDef bdefNew;
     public Ingredient ingredient;
@@ -85,20 +84,27 @@ public class InteractiveTileObject {
        
         plate_items = new ArrayList<>();
 
+        this.IngredientsToStations = new HashMap<String, ArrayList<String>>();
+        IngredientsToStations.put("Chop", new ArrayList<String>(Arrays.asList("Tomato", "Lettuce", "Onion", "Cheese", "Steak")));
+        IngredientsToStations.put("Pan", new ArrayList<String>(Arrays.asList("Steak", "Burger_buns")));
+        IngredientsToStations.put("Oven", new ArrayList<String>(Arrays.asList("PotatoCheese", "Pizza")));
+
 
        
     }
 
 
     public InteractiveTileObject(String type){
-        this.type = type;
         ingredient = null;
         this.type = type;
         interacting = false;
         item_on_station = null;
         progress = 0;
 
-
+        this.IngredientsToStations = new HashMap<String, ArrayList<String>>();
+        IngredientsToStations.put("Chop", new ArrayList<String>(Arrays.asList("Steak", "Burger_buns")));
+        IngredientsToStations.put("Pan", new ArrayList<String>(Arrays.asList("Steak", "Burger_buns")));
+        IngredientsToStations.put("Oven", new ArrayList<String>(Arrays.asList("PotatoCheese", "Pizza")));
         plate_items = new ArrayList<>();
     }
 
@@ -189,16 +195,8 @@ public class InteractiveTileObject {
 
     public void chopping_board_interact(Chef chef){
         //ChoppingBoardIngredeints:
-        ArrayList<String> chopping_items = new ArrayList<>();
-        chopping_items.add("Tomato");
-        chopping_items.add("Lettuce");
-        chopping_items.add("Onion");
-        chopping_items.add("Cheese");
-        chopping_items.add("Steak");
-        
-        
         if (chef.getInHandsIng() != null){
-            if (chef.getInHandsIng().isPrepared() == false && chopping_items.contains(chef.getInHandsIng().name)){
+            if (chef.getInHandsIng().isPrepared() == false && IngredientsToStations.get("Chop").contains(chef.getInHandsIng().name)){
                 item_on_station = chef.getInHandsIng();
                 chef.setInHandsIng(null);
                 //Stop the chef from moving
@@ -213,17 +211,14 @@ public class InteractiveTileObject {
 
     public void pan_interact(Chef chef){
         //Pan ingredients:
-        ArrayList<String> pan_items = new ArrayList<>();
-        pan_items.add("Steak");
-        pan_items.add("Burger_buns");
-
         if (chef.getInHandsIng() != null){
             if (chef.getInHandsIng().name == "Burger_buns"){
                 chef.getInHandsIng().setPrepared();
             }
 
 
-            if (chef.getInHandsIng().isPrepared() && chef.getInHandsIng().burnt == false && pan_items.contains(chef.getInHandsIng().name)){
+            if (chef.getInHandsIng().isPrepared() && chef.getInHandsIng().burnt == false &&
+                    IngredientsToStations.get("Pan").contains(chef.getInHandsIng().name)){
                 item_on_station = chef.getInHandsIng();
                 chef.setInHandsIng(null);
                 start_time_interaction = System.currentTimeMillis();
@@ -234,10 +229,8 @@ public class InteractiveTileObject {
 
 
     public void oven_interact(Chef chef){
-        ArrayList<String> oven_items = new ArrayList<>();
-        oven_items.add("PotatoCheese");
-        oven_items.add("Pizza");
-        if (chef.getInHandsIng() != null && oven_items.contains(chef.getInHandsIng().name) && chef.getInHandsIng().isCooked() == false){
+
+        if (chef.getInHandsIng() != null && IngredientsToStations.get("Oven").contains(chef.getInHandsIng().name) && chef.getInHandsIng().isCooked() == false){
             item_on_station = chef.getInHandsIng();
             item_on_station.setPrepared();
             chef.setInHandsIng(null);
@@ -262,79 +255,45 @@ public class InteractiveTileObject {
     }  
    
     public Boolean checkRecipeCreated(){
-        Boolean item_made = false;
-        System.out.println("CheckingRecipe");
-        Set<String> salad_ingdredients = new HashSet<String>();
-        salad_ingdredients.add("Tomato");
-        salad_ingdredients.add("Lettuce");
-        salad_ingdredients.add("Onion");
-       
-        Set<String> burger_ingredients = new HashSet<String>();
-        burger_ingredients.add("Burger_buns");
-        burger_ingredients.add("Steak");
 
-        Set<String> pizza_ingredients = new HashSet<String>();
-        pizza_ingredients.add("PizzaDough");
-        pizza_ingredients.add("Cheese");
-        pizza_ingredients.add("Tomato");
+        Map<String, Set<String>> RecipeIngredients = new HashMap<String, Set<String>>();
+        RecipeIngredients.put("Salad", new HashSet<String>(Arrays.asList("Tomato", "Lettuce", "Onion")));
+        RecipeIngredients.put("Burger", new HashSet<String>(Arrays.asList("Burger_buns", "Steak")));
+        RecipeIngredients.put("Pizza", new HashSet<String>(Arrays.asList("PizzaDough", "Cheese", "Tomato")));
+        RecipeIngredients.put("PotatoCheese", new HashSet<String>(Arrays.asList("Cheese", "Potato")));
+        // Initialises mappings from a recipe name & the name of its ingredients
 
-        Set<String> potato_ingredients = new HashSet<String>();
-        potato_ingredients.add("Potato");
-        potato_ingredients.add("Cheese");
-        for (Ingredient ing : plate_items){
-            if (ing != null){
-                if (salad_ingdredients.contains(ing.name) && ing.status == 1){
-                    salad_ingdredients.remove(ing.name);
-                }
-                if (salad_ingdredients.size() == 0){
-                    plate_items = new ArrayList<>();
-                    plate_items.add(new Ingredient("Salad", 0, 0,0, null));
-                    item_made = true;
-                    System.out.println("Made Salad");
-                }
+        Set<String> plate_itemsAsSet = new HashSet<String>();
+        for (Ingredient plate_item : plate_items) {
+                 if(plate_item.isPrepared()){
+                     plate_itemsAsSet.add(plate_item.name);}
+             }
+        { // Gives us a Set<String> instead of an ArrayList<Ingredient> - easier to check with.
 
-
-                if (burger_ingredients.contains(ing.name) && ing.isPrepared() && ing.isCooked() && ing.burnt == false){
-                    burger_ingredients.remove(ing.name);
-                }
-                if(burger_ingredients.size() == 0){
-                    plate_items = new ArrayList<>();
-                    plate_items.add(new Ingredient("Burger", 0,0,0, null));
-                    item_made = true;
-                    System.out.println("Made Burger");
-                }    
-                
-                if (pizza_ingredients.contains(ing.name)){
-                    if (ing.name == "Cheese" || ing.name == "Tomato"){
-                        if (ing.isPrepared()){
-                            pizza_ingredients.remove(ing.name);
-                        }
-                    }else if (ing.name == "PizzaDough"){
-                        pizza_ingredients.remove(ing.name);
-                    }
-                }
-
-                if (pizza_ingredients.size()==0){
-                    plate_items = new ArrayList<>();
-                    plate_items.add(new Ingredient("Pizza", 0, 3, 3, null));
-                    item_made = true;
-                }
-                if (potato_ingredients.contains(ing.name)){
-                    if ((ing.name == "Cheese" && ing.isPrepared()) || ing.name == "Potato"){
-                        potato_ingredients.remove(ing.name);
-                    }
-                }
-                
-                if (potato_ingredients.size() == 0){
-                    plate_items = new ArrayList<>();
-                    plate_items.add(new Ingredient("PotatoCheese", 0, 3, 3, null));
-                    item_made = true;
-                    System.out.println("Potato made");
-                }
-                
-            }
         }
-        return item_made;
+        String[] allRecipes = new String[]{"Salad","Burger","Pizza","PotatoCheese"};
+
+
+        for(String rec : allRecipes) {
+            // Each recipe is mapped in RecipeIngredients to a HashSet<String>.
+            // This checks each one of those HashSets to see if any are a subset of plate_itemsAsSet.
+           if(plate_itemsAsSet.containsAll(RecipeIngredients.get(rec)))  {
+               plate_items.add(new Ingredient(rec, 0, 0, 0, null));
+               // This is the best way I could think of that'll remove one of each ingredient
+               HashSet<String> removedItems = new HashSet<String>();
+               for(Ingredient ing : plate_items) {
+                   if(RecipeIngredients.get(rec).contains(ing.name) && !removedItems.contains(ing.name)) {
+                        removedItems.add(ing.name);
+                        plate_items.remove(ing);
+                   }
+                   {
+               return true;
+            }}
+        }}
+        // If no completed recipe can be made
+
+
+               return false;
     }
 
     public void pickUpItem(Chef chef){
