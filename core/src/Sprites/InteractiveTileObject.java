@@ -102,7 +102,7 @@ public class InteractiveTileObject {
         progress = 0;
 
         this.IngredientsToStations = new HashMap<String, ArrayList<String>>();
-        IngredientsToStations.put("Chop", new ArrayList<String>(Arrays.asList("Steak", "Burger_buns")));
+        IngredientsToStations.put("Chop", new ArrayList<String>(Arrays.asList("Tomato", "Lettuce", "Onion", "Cheese", "Steak")));
         IngredientsToStations.put("Pan", new ArrayList<String>(Arrays.asList("Steak", "Burger_buns")));
         IngredientsToStations.put("Oven", new ArrayList<String>(Arrays.asList("PotatoCheese", "Pizza")));
         plate_items = new ArrayList<>();
