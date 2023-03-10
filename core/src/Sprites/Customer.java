@@ -32,6 +32,41 @@ public class Customer {
     public Boolean leaving = false;
     public Boolean now_serving = false;
 
+
+    public Customer( String difficulty, float leave_time){
+
+
+        this.difficulty = difficulty;
+
+        this.leave_time = leave_time;
+        if (difficulty == "Easy"){
+            leave_time = leave_time * 2;
+        }
+        else if (difficulty == "Hard"){
+            leave_time = leave_time / 2;
+        }
+
+        //Meal Options
+        Ingredient salad = new Ingredient("Salad", null, 0, 0, null);
+        Ingredient burger = new Ingredient("Burger", null, 0, 0, null);
+        Ingredient pizza = new Ingredient("Pizza", null, 0,0,null);
+
+        Ingredient[] meal_options = new Ingredient[] {salad, burger, pizza};
+
+        desired_ingredient = meal_options[(int)(Math.random() * meal_options.length)];
+
+        start_time = System.currentTimeMillis();
+
+        status = "started";
+
+        /*
+        customer_texture = new Texture("Customer.png");
+        salad_recipe_texture = new Texture("Food/salad_recipe.png");
+        burger_recipe_texture = new Texture("Food/burger_recipe.png");
+        pizza_recipe_texture = new Texture("Food/pizza_recipe.png");*/
+
+
+    }
     public Customer(float startx, float starty, String difficulty, float leave_time){
 
         this.x = startx / MainGame.PPM;
@@ -59,6 +94,7 @@ public class Customer {
         start_time = System.currentTimeMillis();
 
         status = "started";
+
 
         customer_texture = new Texture("Customer.png");
         salad_recipe_texture = new Texture("Food/salad_recipe.png");
@@ -107,7 +143,7 @@ public class Customer {
             //if y > something:
                 //status = "destroy"
         }
-
+        //System.out.println(System.currentTimeMillis() - start_time);
         if (System.currentTimeMillis() - start_time > leave_time * 1000 && leaving==false && queue_position == 0){
             status = "served";
             leaving = true;
