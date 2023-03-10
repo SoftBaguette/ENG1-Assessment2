@@ -125,7 +125,7 @@ public class InteractiveTileObject {
    
     public void update(Chef chef){
         
-        if (interacting == true){
+        if (interacting == true && burning == false){
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
             if (System.currentTimeMillis() - start_time_interaction > (item_on_station.prepareTime*1000)){
@@ -140,24 +140,24 @@ public class InteractiveTileObject {
                 interacting = false;
                 progress = 0;
                 System.out.println("Finished");
-
-                if (item_on_station.isCooked() && item_on_station.name == "Steak"){
-                    burning = true;  
-                    progress = 0;
-                    start_time_burning = System.currentTimeMillis();
-                }
-
-                
+ 
             }    
+            if (item_on_station.isCooked() && item_on_station.name == "Steak"){
+                burning = true;  
+                progress = 0;
+                start_time_burning = System.currentTimeMillis();
+            }
         }
         if (burning == true){
             float burn_percent = (float) (System.currentTimeMillis() - start_time_burning+1)/(5000);
             progress = (int) (burn_percent*100);
+            System.out.println(progress);
+            System.out.println(System.currentTimeMillis() - start_time_burning);
             if (System.currentTimeMillis() - start_time_burning > (5000)){
                 item_on_station.status +=1;
                 burning = false;
                 item_on_station.burnt = true;
-                
+                interacting = false;
             }
         
         }
