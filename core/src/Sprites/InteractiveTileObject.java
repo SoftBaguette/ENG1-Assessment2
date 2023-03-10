@@ -180,10 +180,17 @@ public class InteractiveTileObject {
 
 
     public void bin_interact(Chef chef){
+        if (chef.stack.isEmpty()){
+            System.out.println("Stack Already Empty");
+        }else{
+            chef.stack.pop();
+        }
+
         System.out.println("Binned");
-        chef.setInHandsIng(null);
-        chef.setInHandsRecipe(null); //Check what this does
-        chef.setChefSkin(null);
+
+        // chef.setInHandsIng(null);
+        // chef.setInHandsRecipe(null); //Check what this does
+        // chef.setChefSkin(null);
     }
 
 
@@ -196,18 +203,28 @@ public class InteractiveTileObject {
         chopping_items.add("Cheese");
         chopping_items.add("Steak");
         
-        
-        if (chef.getInHandsIng() != null){
-            if (chef.getInHandsIng().isPrepared() == false && chopping_items.contains(chef.getInHandsIng().name)){
-                item_on_station = chef.getInHandsIng();
-                chef.setInHandsIng(null);
-                //Stop the chef from moving
-                chef.chefMove = false;
+        if (chef.stack.isEmpty()){
+            System.out.println("Stack empty");
+        }else{
+            if (chef.stack.peak().isPrepared() == false && chopping_items.contains(chef.stack.peak().name)){
+                item_on_station = chef.stack.pop();
+                //chef.chefMove = false;
                 start_time_interaction = System.currentTimeMillis();
                 interacting = true;
             }
-           
         }
+        
+        // if (chef.getInHandsIng() != null){
+        //     if (chef.getInHandsIng().isPrepared() == false && chopping_items.contains(chef.getInHandsIng().name)){
+        //         item_on_station = chef.getInHandsIng();
+        //         chef.setInHandsIng(null);
+        //         //Stop the chef from moving
+        //         chef.chefMove = false;
+        //         start_time_interaction = System.currentTimeMillis();
+        //         interacting = true;
+        //     }
+           
+        // }
     }
 
 
@@ -217,19 +234,33 @@ public class InteractiveTileObject {
         pan_items.add("Steak");
         pan_items.add("Burger_buns");
 
-        if (chef.getInHandsIng() != null){
-            if (chef.getInHandsIng().name == "Burger_buns"){
-                chef.getInHandsIng().setPrepared();
+        if (chef.stack.isEmpty()){
+            System.out.println("Stack empty");
+        }else{
+            if (chef.stack.peak().name == "Burger_buns"){
+                chef.stack.arr[chef.stack.top].setPrepared();
             }
-
-
-            if (chef.getInHandsIng().isPrepared() && chef.getInHandsIng().burnt == false && pan_items.contains(chef.getInHandsIng().name)){
-                item_on_station = chef.getInHandsIng();
-                chef.setInHandsIng(null);
+            if (chef.stack.peak().isPrepared() && chef.stack.peak().burnt == false && pan_items.contains(chef.stack.peak().name)){
+                item_on_station = chef.stack.pop();
                 start_time_interaction = System.currentTimeMillis();
                 interacting = true;
             }
         }
+
+
+        // if (chef.getInHandsIng() != null){
+        //     if (chef.getInHandsIng().name == "Burger_buns"){
+        //         chef.getInHandsIng().setPrepared();
+        //     }
+
+
+        //     if (chef.getInHandsIng().isPrepared() && chef.getInHandsIng().burnt == false && pan_items.contains(chef.getInHandsIng().name)){
+        //         item_on_station = chef.getInHandsIng();
+        //         chef.setInHandsIng(null);
+        //         start_time_interaction = System.currentTimeMillis();
+        //         interacting = true;
+        //     }
+        // }
     }
 
 
@@ -237,27 +268,51 @@ public class InteractiveTileObject {
         ArrayList<String> oven_items = new ArrayList<>();
         oven_items.add("PotatoCheese");
         oven_items.add("Pizza");
-        if (chef.getInHandsIng() != null && oven_items.contains(chef.getInHandsIng().name) && chef.getInHandsIng().isCooked() == false){
-            item_on_station = chef.getInHandsIng();
-            item_on_station.setPrepared();
-            chef.setInHandsIng(null);
-            start_time_interaction = System.currentTimeMillis();
-            interacting = true;
+
+        if (chef.stack.isEmpty()){
+            System.out.println("Stack empty");
+        }else{
+            if (chef.stack.peak().isPrepared() == false && oven_items.contains(chef.stack.peak().name)){
+                item_on_station = chef.stack.pop();
+                item_on_station.setPrepared();
+                start_time_interaction = System.currentTimeMillis();
+                interacting = true;
+            }
         }
+
+        // if (chef.getInHandsIng() != null && oven_items.contains(chef.getInHandsIng().name) && chef.getInHandsIng().isCooked() == false){
+        //     item_on_station = chef.getInHandsIng();
+        //     item_on_station.setPrepared();
+        //     chef.setInHandsIng(null);
+        //     start_time_interaction = System.currentTimeMillis();
+        //     interacting = true;
+        // }
     }
 
 
 
     public void plate_interact(Chef chef){
-        if (chef.getInHandsIng() != null){
-            plate_items.add(chef.getInHandsIng());
-            chef.setInHandsIng(null);
+        if (chef.stack.isEmpty()){
+            System.out.println("Stack empty");
+        }else{
+            plate_items.add(chef.stack.pop());
             if (checkRecipeCreated()){
-                chef.setInHandsIng(plate_items.get(0));
+                chef.stack.push(plate_items.get(0));
                 System.out.println(chef.getInHandsIng().name);
+                //item_on_station = plate_items.get(0);
                 plate_items = new ArrayList<>();
             }
         }
+
+        // if (chef.getInHandsIng() != null){
+        //     plate_items.add(chef.getInHandsIng());
+        //     chef.setInHandsIng(null);
+        //     if (checkRecipeCreated()){
+        //         chef.setInHandsIng(plate_items.get(0));
+        //         System.out.println(chef.getInHandsIng().name);
+        //         plate_items = new ArrayList<>();
+        //     }
+        // }
         
     }  
    
@@ -338,9 +393,16 @@ public class InteractiveTileObject {
     }
 
     public void pickUpItem(Chef chef){
-        chef.setInHandsIng(item_on_station);
-        item_on_station = null;
-        burning = false;
+
+        //chef.setInHandsIng(item_on_station);
+        if (chef.stack.isFull()){
+            System.out.println("stack full");
+        }else{
+            chef.stack.push(item_on_station);
+            item_on_station = null;
+            burning = false;
+        }
+        
         
     }
 
@@ -365,8 +427,8 @@ public class InteractiveTileObject {
 
 
     public void serving_interact(Chef chef, Customer customer, int reputation, int current_customer){
-        reputation += customer.served(chef.getInHandsIng(), current_customer);
-        chef.setInHandsIng(null);
+        reputation += customer.served(chef.stack.pop(), current_customer);
+        //chef.setInHandsIng(null);
 
     }
     /**

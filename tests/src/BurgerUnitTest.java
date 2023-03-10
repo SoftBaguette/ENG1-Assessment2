@@ -46,7 +46,7 @@ public class BurgerUnitTest {
         pan.update(chef1);
         pan.interact(chef1);
         plate.interact(chef1);
-        assertTrue("Makeing a burger", chef1.getInHandsIng().name == "Burger");
+        assertTrue("Makeing a burger", chef1.stack.peak().name == "Burger");
         //assertTrue("This test will only pass if chef sprite exists", Gdx.file.internal("Chef_holding.png"));
     }
 
@@ -71,7 +71,7 @@ public class BurgerUnitTest {
         chopping_station.update(chef1);
         chopping_station.interact(chef1);
         plate.interact(chef1);
-        assertTrue("Making a salad", chef1.getInHandsIng().name == "Salad");
+        assertTrue("Making a salad", chef1.stack.peak().name == "Salad");
     }
 
     @Test
@@ -80,13 +80,13 @@ public class BurgerUnitTest {
         Ingredient steak = new Ingredient("Steak", 0, 2, 2, null);
         steak.setPrepared();
         steak.setCooked();
-        chef1.setInHandsIng(steak);
+        chef1.stack.push(steak);
         pan.interact(chef1);
         pan.update(chef1);
         wait(5000);
         pan.update(chef1);
         pan.interact(chef1);
-        assertTrue("Burning steak", chef1.getInHandsIng().burnt);
+        assertTrue("Burning steak", chef1.stack.peak().burnt);
     }
 
     @Test
@@ -95,7 +95,7 @@ public class BurgerUnitTest {
         Ingredient lettuce = new Ingredient("Lettuce", 0, 2, 2, null);
         chef1.setInHandsIng(lettuce);
         bin.interact(chef1);
-        assertTrue("Binning lettuce", chef1.getInHandsIng() == null);
+        assertTrue("Binning lettuce", chef1.stack.isEmpty());
     }
 
     // @Test

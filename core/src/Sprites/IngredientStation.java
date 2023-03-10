@@ -27,6 +27,13 @@ public class IngredientStation extends InteractiveTileObject{
     
     public void interact(Chef chef){
         System.out.println("Interacted with ingredient source");
+        if (chef.stack.isFull()){
+            System.out.println("Stack Full!");
+        }else{
+            System.out.println("Added to stack");
+            chef.stack.push(new Ingredient(ingredient.name, 0, ingredient.prepareTime, ingredient.cookTime, ingredient.tex));
+        }
+
         if (chef.inHandsIng == null){
             Ingredient tempIngredient = new Ingredient(ingredient.name, 0, ingredient.prepareTime, ingredient.cookTime, ingredient.tex);
             chef.setInHandsIng(tempIngredient);

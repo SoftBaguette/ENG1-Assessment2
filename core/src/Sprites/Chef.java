@@ -32,6 +32,8 @@ public class Chef extends Sprite {
     public World world;
     public Body b2body;
 
+    public Stack stack;
+
     private final float initialX;
     private final float initialY;
 
@@ -87,6 +89,7 @@ public class Chef extends Sprite {
         initialX = 2 / MainGame.PPM;
         initialY = 2 / MainGame.PPM;
 
+        stack = new Stack(3);
 
         normalChef = null;
         holdingChef = null;
@@ -130,6 +133,7 @@ public class Chef extends Sprite {
         initialX = startX / MainGame.PPM;
         initialY = startY / MainGame.PPM;
 
+        stack = new Stack(3);
 
         normalChef = new Texture("Chef/Chef_normal.png");
         holdingChef = new Texture("Chef/Chef_holding.png");
@@ -429,12 +433,22 @@ public class Chef extends Sprite {
 
 
     public void draw_item(Batch batch){
-        Ingredient chefs_ingredient = this.getInHandsIng();
-        if (chefs_ingredient != null){
-            ArrayList<Texture> texture = AllTextures.getTextures(chefs_ingredient.name);
-            batch.draw(texture.get(chefs_ingredient.status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
-            //batch.draw(chefs_ingredient.tex.get(this.getInHandsIng().status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
+        float offset = 0;
+        for (Ingredient chef_ing : stack.arr) {
+            if (chef_ing !=null){
+                ArrayList<Texture> texture = AllTextures.getTextures(chef_ing.name);
+                batch.draw(texture.get(chef_ing.status), this.getX(),(float) this.getY() + offset, this.getWidth(),this.getHeight());
+                offset +=0.1f;
+
+            }
         }
+
+        // Ingredient chefs_ingredient = this.getInHandsIng();
+        // if (chefs_ingredient != null){
+        //     ArrayList<Texture> texture = AllTextures.getTextures(chefs_ingredient.name);
+        //     //batch.draw(texture.get(chefs_ingredient.status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
+        //     //batch.draw(chefs_ingredient.tex.get(this.getInHandsIng().status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
+        // }
     }
 
 
