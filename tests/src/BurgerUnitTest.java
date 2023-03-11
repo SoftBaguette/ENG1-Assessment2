@@ -1,7 +1,5 @@
 import Ingredients.Ingredient;
 import Sprites.*;
-import com.team13.piazzapanic.MainGame;
-import com.team13.piazzapanic.PlayScreen;
 import org.junit.Test;
 
 import static org.junit.Assert.assertTrue;
@@ -46,7 +44,7 @@ public class BurgerUnitTest {
         pan.update(chef1);
         pan.interact(chef1);
         plate.interact(chef1);
-        assertTrue("Makeing a burger", chef1.stack.peak().name == "Burger");
+        assertTrue("Making a burger", chef1.stack.peak().name == "Burger");
         //assertTrue("This test will only pass if chef sprite exists", Gdx.file.internal("Chef_holding.png"));
     }
 
@@ -121,6 +119,25 @@ public class BurgerUnitTest {
 
     //     assertTrue("Serving burger bun instead of burger", (cust1.status != "served"));
     // }
+
+    @Test
+    public void TestServeNothing(){
+        Chef chef1 = new Chef();
+        Customer cust1 = new Customer("Easy",60);
+        InteractiveTileObject plate = new InteractiveTileObject("Plate");
+
+        cust1.desired_ingredient = new Ingredient("Burger", null, 0, 0, null);
+        chef1.setInHandsIng(null);
+        cust1.served(chef1.getInHandsIng(), 0);
+
+        assertTrue("Serve Nothing", (cust1.status != "served"));
+    }
+
+    @Test
+    public void testMakePizza(){
+
+    }
+
 
     @Test
     public void testSwitchChef(){
