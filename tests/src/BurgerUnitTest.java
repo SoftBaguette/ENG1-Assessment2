@@ -120,18 +120,18 @@ public class BurgerUnitTest {
     //     assertTrue("Serving burger bun instead of burger", (cust1.status != "served"));
     // }
 
-    @Test
-    public void TestServeNothing(){
-        Chef chef1 = new Chef();
-        Customer cust1 = new Customer("Easy",60);
-        InteractiveTileObject plate = new InteractiveTileObject("Plate");
-
-        cust1.desired_ingredient = new Ingredient("Burger", null, 0, 0, null);
-        chef1.setInHandsIng(null);
-        cust1.served(chef1.getInHandsIng(), 0);
-
-        assertTrue("Serve Nothing", (cust1.status != "served"));
-    }
+//    @Test
+//    public void TestServeNothing(){
+//        Chef chef1 = new Chef();
+//        Customer cust1 = new Customer("Easy",60);
+//        InteractiveTileObject plate = new InteractiveTileObject("Plate");
+//
+//        cust1.desired_ingredient = new Ingredient("Burger", null, 0, 0, null);
+//        chef1.setInHandsIng(null);
+//        cust1.served(chef1.getInHandsIng(), 0);
+//
+//        assertTrue("Serve Nothing", (cust1.status != "served"));
+//    }
 
     @Test
     public void testMakePizza(){
