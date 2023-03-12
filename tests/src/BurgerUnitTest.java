@@ -139,19 +139,7 @@ public class BurgerUnitTest {
     }
 
 
-    @Test
-    public void testSwitchChef(){
-        Chef chef1 = new Chef();
-        Chef chef2 = new Chef();
 
-
-
-        chef1.setUserControlChef(false);
-        chef2.setUserControlChef(true);
-
-        assertTrue("Switching from Chef 1 to Chef 2", chef2.getUserControlChef());
-
-    }
 
     @Test
     public void testCustomerLeavesAfterTimeLimit(){

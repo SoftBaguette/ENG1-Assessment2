@@ -448,5 +448,11 @@ public class InteractiveTileObject {
     public float getY(){
         return bdefNew.position.y;
     }
+
+
+//    Added for testing purposes :
+    public Ingredient getItem_on_station(){
+        return item_on_station;
+    }
 }
 
