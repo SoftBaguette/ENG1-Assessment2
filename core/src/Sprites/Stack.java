@@ -7,14 +7,24 @@ public class Stack {
     public int top;
     int capacity;
 
-    //Initialize stack
+    
+    /**
+     * Initialize stack with a given size
+     * 
+     * @param size The size of the stackc
+     */
     public Stack(int size){
         arr = new Ingredient[size];
         capacity = size;
         top = -1;
     }
 
-    // push elements to top of stack
+
+    /**
+     * Push an ingredient to the top of the stack
+     * 
+     * @param x Ingredient to push to the top of the stack
+     */
     public void push(Ingredient x){
         // can't push item to stack if the stack is full
         if (isFull()){
@@ -24,7 +34,12 @@ public class Stack {
         arr[++top] = x;
     }
 
-    // pops elements from top of stack
+
+    /**
+     * Remove the item from the top of the stack
+     * 
+     * @return the item that has been popped
+     */
     public Ingredient pop(){
         // if stack is empty, no ellement to pop
         if (isEmpty()){
@@ -37,22 +52,33 @@ public class Stack {
         return topIngredient;
     }
 
-    // return size of stack
+
+    /**
+     * @return size of stack
+     */
     public int getSize(){
         return top +1;
     }
 
-    // check if the stack is empty
+    /**
+     * @return if the stack is empty
+     */
     public boolean isEmpty(){
         return top == -1;
     }
 
-    // check if the stack is full
+    /**
+     * 
+     * @return if the stack is full
+     */
     public boolean isFull(){
         return top == capacity -1;
     }
 
-    // display elements of stack
+
+    /**
+     * display elements of stack
+     */
     public void printStack(){
         System.out.print( "\n Items: ");
         for (int i = 0; i <= top; i++) {
@@ -60,7 +86,10 @@ public class Stack {
         }
     }
 
-    // look at top item in the stack
+    /**
+     * 
+     * @return the ingredient at the top of the stack
+     */
     public Ingredient peak(){
         return arr[top];
     }

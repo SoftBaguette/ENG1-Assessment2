@@ -60,6 +60,11 @@ public class InteractiveTileObject {
      * @param map The tiled map.
      * @param bdef The body definition of a tile.
      * @param rectangle Rectangle shape.
+     * @param type The type of interactibeTileObject:
+     *             - Chopping - Chopping board
+     *             - Pan - Frying Pan
+     *             - Oven - Oven
+     *             - Plate - Place to assemble the food
      */
     public InteractiveTileObject(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
 
@@ -89,7 +94,15 @@ public class InteractiveTileObject {
        
     }
 
-
+    /**
+     * Constructor for the class without b2bodies and textures which causes issues when testing.
+     *
+     * @param type The type of interactibeTileObject:
+     *             - Chopping - Chopping board
+     *             - Pan - Frying Pan
+     *             - Oven - Oven
+     *             - Plate - Place to assemble the food
+     */
     public InteractiveTileObject(String type){
         this.type = type;
         ingredient = null;
@@ -102,10 +115,14 @@ public class InteractiveTileObject {
         plate_items = new ArrayList<>();
     }
 
-
+    /**
+     * Method that allows the chef to interact with a tile object. 
+     * Depending on what type of interactive tile object it is will result in a different function being called
+     * 
+     * @param chef the chef that interacted with the station
+     */
     public void interact(Chef chef){
         System.out.println("Interacted with " + type + " station");
-        System.out.println("Item on station: " + item_on_station);
 
         if (item_on_station  != null && interacting == false){
             System.out.println("Picked up");
@@ -122,7 +139,14 @@ public class InteractiveTileObject {
             oven_interact(chef);
         }
     }
-   
+
+
+   /**
+    * Updates the station if it is either burning or interacting. 
+    * It is responsible for the progress bar and changing the status of the ingredient.
+    * 
+    * @param chef TODO is this needed
+    */
     public void update(Chef chef){
         
         if (interacting == true && burning == false){
@@ -136,7 +160,7 @@ public class InteractiveTileObject {
                     item_on_station.setPrepared();
                 }
                 item_on_station.status +=1;
-                chef.chefMove = true;
+                //chef.chefMove = true;
                 interacting = false;
                 progress = 0;
                 System.out.println("Finished");
@@ -162,7 +186,15 @@ public class InteractiveTileObject {
         
         }
     }
-    public void draw_progress_bar(Batch batch, Chef chef){
+
+    /**
+     * Draws the progress bar above the object.
+     * If it is interacting, it will be green.
+     * If it is burning, it will be red (indicating to the player that it is burning)
+     * 
+     * @param batch The batch used for drawing sprites to the screen
+     */
+    public void draw_progress_bar(Batch batch){
         if (interacting == true){
             progressBar.change_pos(getX(), getY());
             progressBar.setProgress(progress);
@@ -178,7 +210,12 @@ public class InteractiveTileObject {
 
 
 
-
+    /**
+     * This will bin the item that is at the top of the chef's stack. 
+     * If the chef's stack is empty, nothing will happen
+     * 
+     * @param chef the chef that interacted with the station
+     */
     public void bin_interact(Chef chef){
         if (chef.stack.isEmpty()){
             System.out.println("Stack Already Empty");
@@ -188,12 +225,17 @@ public class InteractiveTileObject {
 
         System.out.println("Binned");
 
-        // chef.setInHandsIng(null);
-        // chef.setInHandsRecipe(null); //Check what this does
-        // chef.setChefSkin(null);
     }
 
-
+    /**
+     * Responsibe for Chopping the set of items that need to be chopped for each recipe
+     * Only raw things can be chopped (not chopped and not cooked)
+     * 
+     * The code will set interacting to true which is responsible for the progress bar and the timer determining when the item will be done.
+     * 
+     * 
+     * @param chef the chef that interacted with the station
+     */
     public void chopping_board_interact(Chef chef){
         //ChoppingBoardIngredeints:
         ArrayList<String> chopping_items = new ArrayList<>();
@@ -214,20 +256,16 @@ public class InteractiveTileObject {
             }
         }
         
-        // if (chef.getInHandsIng() != null){
-        //     if (chef.getInHandsIng().isPrepared() == false && chopping_items.contains(chef.getInHandsIng().name)){
-        //         item_on_station = chef.getInHandsIng();
-        //         chef.setInHandsIng(null);
-        //         //Stop the chef from moving
-        //         chef.chefMove = false;
-        //         start_time_interaction = System.currentTimeMillis();
-        //         interacting = true;
-        //     }
-           
-        // }
+
     }
 
-
+    /**
+     * Responsibe for Cooking the set of items that need to be cooked for each recipe
+     * 
+     * The code will set interacting to true which is responsible for the progress bar and the timer determining when the item will be done.
+     * 
+     * @param chef the chef that interacted with the station
+     */
     public void pan_interact(Chef chef){
         //Pan ingredients:
         ArrayList<String> pan_items = new ArrayList<>();
@@ -247,23 +285,15 @@ public class InteractiveTileObject {
             }
         }
 
-
-        // if (chef.getInHandsIng() != null){
-        //     if (chef.getInHandsIng().name == "Burger_buns"){
-        //         chef.getInHandsIng().setPrepared();
-        //     }
-
-
-        //     if (chef.getInHandsIng().isPrepared() && chef.getInHandsIng().burnt == false && pan_items.contains(chef.getInHandsIng().name)){
-        //         item_on_station = chef.getInHandsIng();
-        //         chef.setInHandsIng(null);
-        //         start_time_interaction = System.currentTimeMillis();
-        //         interacting = true;
-        //     }
-        // }
     }
 
-
+    /**
+     * Responsibe for cooking the set of items that need to be cooked for each recipe
+     * 
+     * The code will set interacting to true which is responsible for the progress bar and the timer determining when the item will be done.
+     * 
+     * @param chef the chef that interacted with the station
+     */
     public void oven_interact(Chef chef){
         ArrayList<String> oven_items = new ArrayList<>();
         oven_items.add("PotatoCheese");
@@ -280,17 +310,15 @@ public class InteractiveTileObject {
             }
         }
 
-        // if (chef.getInHandsIng() != null && oven_items.contains(chef.getInHandsIng().name) && chef.getInHandsIng().isCooked() == false){
-        //     item_on_station = chef.getInHandsIng();
-        //     item_on_station.setPrepared();
-        //     chef.setInHandsIng(null);
-        //     start_time_interaction = System.currentTimeMillis();
-        //     interacting = true;
-        // }
+
     }
 
 
-
+    /**
+     * Assembles ingredients together.
+     * 
+     * @param chef the chef that interacted with the station
+     */
     public void plate_interact(Chef chef){
         if (chef.stack.isEmpty()){
             System.out.println("Stack empty");
@@ -304,18 +332,14 @@ public class InteractiveTileObject {
             }
         }
 
-        // if (chef.getInHandsIng() != null){
-        //     plate_items.add(chef.getInHandsIng());
-        //     chef.setInHandsIng(null);
-        //     if (checkRecipeCreated()){
-        //         chef.setInHandsIng(plate_items.get(0));
-        //         System.out.println(chef.getInHandsIng().name);
-        //         plate_items = new ArrayList<>();
-        //     }
-        // }
         
     }  
    
+    /**
+     * Checks if all the ingredients on the plate tile object can make a recipe
+     * 
+     * @return true if a recipe has been made, false otherwise
+     */
     public Boolean checkRecipeCreated(){
         Boolean item_made = false;
         System.out.println("CheckingRecipe");
@@ -392,6 +416,11 @@ public class InteractiveTileObject {
         return item_made;
     }
 
+    /**
+     * Items can be picked up and added to the chef's stack if it isn't interacting 
+     * 
+     * @param chef the chef that interacted with the station
+     */
     public void pickUpItem(Chef chef){
 
         //chef.setInHandsIng(item_on_station);
@@ -413,6 +442,11 @@ public class InteractiveTileObject {
 
     }
 
+    /**
+     * This will draw the item (or items) currently on the station
+     * 
+     * @param batch The batch used for drawing sprites to the screen
+     */
     public void draw_item_on_station(SpriteBatch batch){
         if (plate_items.size() > 0){
             for(Object ing : plate_items){
@@ -450,7 +484,11 @@ public class InteractiveTileObject {
     }
 
 
-//    Added for testing purposes :
+    /**
+     * Added for testing purposes
+     * 
+     * @return the ingredient on the station
+     */
     public Ingredient getItem_on_station(){
         return item_on_station;
     }

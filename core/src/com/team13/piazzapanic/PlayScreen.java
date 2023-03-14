@@ -460,7 +460,7 @@ public class PlayScreen implements Screen {
             chef2.displayIngDynamic(game.batch);
         }
         for (InteractiveTileObject tile : tile_objects){
-            tile.draw_progress_bar(game.batch, controlledChef);
+            tile.draw_progress_bar(game.batch);
         }
         game.batch.end();
     }

@@ -57,6 +57,7 @@ public class TestInteractiveTileObject {
 //      Does not pass because item_on_station variable is never updated in the plate_interact function,
 //      maybe because line 302 was commented out in Interactive Tile Object class
 
+        //need plate.plate_items i think
         assertTrue("Placing salad on plate", plate.getItem_on_station() == test_salad);
 
     }

@@ -39,12 +39,7 @@ public class Customer {
         this.difficulty = difficulty;
 
         this.leave_time = leave_time;
-        if (difficulty == "Easy"){
-            leave_time = leave_time * 2;
-        }
-        else if (difficulty == "Hard"){
-            leave_time = leave_time / 2;
-        }
+        calculate_start_time();
 
         //Meal Options
         Ingredient salad = new Ingredient("Salad", null, 0, 0, null);
@@ -75,12 +70,7 @@ public class Customer {
         this.difficulty = difficulty;
 
         this.leave_time = leave_time;
-        if (difficulty == "Easy"){
-            leave_time = leave_time * 2;
-        }
-        else if (difficulty == "Hard"){
-            leave_time = leave_time / 2;
-        }
+        calculate_start_time();
 
         //Meal Options
         Ingredient salad = new Ingredient("Salad", null, 0, 0, null);
@@ -104,9 +94,11 @@ public class Customer {
 
     }
 
+    /**
+     * Calculates a the start time that the customer arrived
+     * Used later for checking if the customer needs to leave
+     */
     public void calculate_start_time(){
-        
-
         if (difficulty == "Easy"){
             leave_time = leave_time * 2;
         }
@@ -115,8 +107,15 @@ public class Customer {
         }
         System.out.println("Changed leave time to: " + leave_time);
 
-
     }
+
+    /**
+     * Will move the chef up determining on its status:
+     *  - 
+     * 
+     * @param queue_position will move the chef depending on where it is in the queue
+     * @param current_customer TODO is this needed?
+     */
     public void move(int queue_position, int current_customer){
         if (queue_position == 0 && now_serving == false){
             now_serving = true;
@@ -152,12 +151,16 @@ public class Customer {
             served(null, current_customer);
             System.out.println("Leaving" + current_customer);
 
-
-
         }
     
     }
 
+    /**
+     * 
+     * @param recipe_ingredient
+     * @param current_customer
+     * @return
+     */
     public int served(Ingredient recipe_ingredient, int current_customer){
         if (recipe_ingredient != null){
             if (recipe_ingredient.name == desired_ingredient.name){
@@ -176,16 +179,22 @@ public class Customer {
         return 0;
     }
 
+    /**
+     * Draws the customer to the screen
+     * 
+     * @param batch The batch used for drawing sprites to the screen
+     */
     public void draw(Batch batch){
         if (y < 1.2f){
             batch.draw(customer_texture, this.x, this.y, 0.1f, 0.1f);
-        }
-        
-        
-        
-       
+        }   
     }
 
+    /**
+     * Draws the desired food item that the customer wants and its instructions
+     * 
+     * @param batch The batch used for drawing sprites to the screen
+     */
     public void draw_order(Batch batch){
         if (status != "served"){
             if (desired_ingredient.name == "Salad"){

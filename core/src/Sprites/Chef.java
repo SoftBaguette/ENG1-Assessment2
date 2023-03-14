@@ -432,6 +432,12 @@ public class Chef extends Sprite {
     }
 
 
+    /**
+     * Method to draw the stack of items that the chef is carrying. The top of the stack will be displayed at the top and
+     * every subsequent item will be displayed below
+     * 
+     * @param batch The batch used for drawing sprites to the screen
+     */
     public void draw_item(Batch batch){
         float offset = 0;
         for (Ingredient chef_ing : stack.arr) {
@@ -443,6 +449,7 @@ public class Chef extends Sprite {
             }
         }
 
+        //OLD CODE
         // Ingredient chefs_ingredient = this.getInHandsIng();
         // if (chefs_ingredient != null){
         //     ArrayList<Texture> texture = AllTextures.getTextures(chefs_ingredient.name);
@@ -657,12 +664,5 @@ public class Chef extends Sprite {
         }
     }
 }
-
-
-
-
-
-
-
 
 
