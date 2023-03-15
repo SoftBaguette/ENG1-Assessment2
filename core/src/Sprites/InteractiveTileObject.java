@@ -492,5 +492,9 @@ public class InteractiveTileObject {
     public Ingredient getItem_on_station(){
         return item_on_station;
     }
+
+    public ArrayList<Ingredient> get_plate_ingredients(){
+        return plate_items;
+    }
 }
 

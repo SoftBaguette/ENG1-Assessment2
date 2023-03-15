@@ -58,7 +58,7 @@ public class TestInteractiveTileObject {
 //      maybe because line 302 was commented out in Interactive Tile Object class
 
         //need plate.plate_items i think
-        assertTrue("Placing salad on plate", plate.getItem_on_station() == test_salad);
+        assertTrue("Placing salad on plate", plate.get_plate_ingredients().get(0) == test_salad);
 
     }
 
