@@ -496,5 +496,8 @@ public class InteractiveTileObject {
     public ArrayList<Ingredient> get_plate_ingredients(){
         return plate_items;
     }
+
+//    Added for testing purposes
+    public Boolean getInteractingStatus() {return interacting;}
 }
 

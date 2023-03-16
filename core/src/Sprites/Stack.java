@@ -94,4 +94,8 @@ public class Stack {
         return arr[top];
     }
 
+//    added for testing purposes
+    public void setStack(Ingredient[] ingredients) {arr = ingredients;}
+
+
 }

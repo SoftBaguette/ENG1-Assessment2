@@ -54,8 +54,6 @@ public class TestInteractiveTileObject {
         plate.interact(chef1);
         plate.update(chef1);
 
-//      Does not pass because item_on_station variable is never updated in the plate_interact function,
-//      maybe because line 302 was commented out in Interactive Tile Object class
 
         //need plate.plate_items i think
         assertTrue("Placing salad on plate", plate.get_plate_ingredients().get(0) == test_salad);
@@ -74,6 +72,43 @@ public class TestInteractiveTileObject {
 
     }
 
+    @Test
+    public void testEmptyHandInteract_Oven(){
+        Chef chef1 = new Chef();
+        chef1.stack = new Stack(1);
+        oven.interact(chef1);
+        oven.update(chef1);
+
+        assertTrue("Interacting with oven while holding no ingredients", oven.getInteractingStatus() == false);
+
+    }
+    @Test
+    public void testEmptyHandInteract_Plate(){
+        Chef chef1 = new Chef();
+        chef1.stack = new Stack(1);
+        plate.interact(chef1);
+        plate.update(chef1);
+
+        assertTrue("Interacting with plate while holding no ingredients", plate.getInteractingStatus() == false);
+    }
+    @Test
+    public void testEmptyHandInteract_Pan(){
+        Chef chef1 = new Chef();
+        chef1.stack = new Stack(1);
+        pan.interact(chef1);
+        pan.update(chef1);
+
+        assertTrue("Interacting with pan while holding no ingredients", pan.getInteractingStatus() == false);
+    }
+    @Test
+    public void testEmptyHandInteract_Bin(){
+        Chef chef1 = new Chef();
+        chef1.stack = new Stack(1);
+        bin.interact(chef1);
+        bin.update(chef1);
+
+        assertTrue("Interacting with bin while holding no ingredients", bin.getInteractingStatus() == false);
+    }
 
 
 }
