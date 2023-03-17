@@ -29,9 +29,11 @@ public class Stack {
         // can't push item to stack if the stack is full
         if (isFull()){
             System.out.println("Stack OverFlow");
+        }else{
+            // increments top after adding x to stack
+            arr[++top] = x;
         }
-        // increments top after adding x to stack
-        arr[++top] = x;
+        
     }
 
 
@@ -44,6 +46,7 @@ public class Stack {
         // if stack is empty, no ellement to pop
         if (isEmpty()){
             System.out.println("Stack Empty");
+            return null;
         }
         // decrements top after popping
         Ingredient topIngredient = arr[top];

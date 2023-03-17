@@ -10,10 +10,14 @@ public class BurgerUnitTest {
     IngredientStation onion_box = new IngredientStation(new Ingredient("Onion", 0, 2, 0, null), "");
     IngredientStation burger_bun_box = new IngredientStation(new Ingredient("Burger_buns", 0, 0, 2, null), "");
     IngredientStation steak_box = new IngredientStation(new Ingredient("Steak", 0, 2, 2, null), "");
+    IngredientStation dough_box = new IngredientStation(new Ingredient("PizzaDough", 0, 2, 2, null), "");
+    IngredientStation cheese_box = new IngredientStation(new Ingredient("Cheese", 0, 2, 2, null), "");
+    IngredientStation potato_box = new IngredientStation(new Ingredient("Potato", 0, 2, 2, null), "");
     InteractiveTileObject chopping_station = new InteractiveTileObject("ChoppingBoard");
     InteractiveTileObject bin = new InteractiveTileObject("Bin");
     InteractiveTileObject plate = new InteractiveTileObject("Plate");
     InteractiveTileObject pan = new InteractiveTileObject("Pan");
+    InteractiveTileObject oven = new InteractiveTileObject("Oven");
     Ingredient testSalad = new Ingredient("Salad", null, 0, 0, null);
     Customer cust1;
 
@@ -45,7 +49,6 @@ public class BurgerUnitTest {
         pan.interact(chef1);
         plate.interact(chef1);
         assertTrue("Making a burger", chef1.stack.peak().name == "Burger");
-        //assertTrue("This test will only pass if chef sprite exists", Gdx.file.internal("Chef_holding.png"));
     }
 
     @Test
@@ -70,6 +73,30 @@ public class BurgerUnitTest {
         chopping_station.interact(chef1);
         plate.interact(chef1);
         assertTrue("Making a salad", chef1.stack.peak().name == "Salad");
+    }
+
+    @Test
+    public void testMakePizza(){
+        //Chop tomatoe
+        //Chop cheese
+        //get pizza dough
+        //add to assembly station
+        //put in oven
+    }
+
+    @Test
+    public void testMakePotato(){
+        Chef chef1 = new Chef();
+        cheese_box.interact(chef1);
+        chopping_station.interact(chef1);
+        wait(2000);
+        chopping_station.update(chef1);
+        chopping_station.interact(chef1);
+        plate.interact(chef1);
+        potato_box.interact(chef1);
+        plate.interact(chef1);
+        oven.interact(chef1);
+
     }
 
     @Test
@@ -133,10 +160,7 @@ public class BurgerUnitTest {
 //        assertTrue("Serve Nothing", (cust1.status != "served"));
 //    }
 
-    @Test
-    public void testMakePizza(){
-
-    }
+    
 
 
 
