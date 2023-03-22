@@ -1,7 +1,6 @@
 package com.team13.piazzapanic;
 
-import Ingredients.Ingredient;
-import Recipe.Recipe;
+
 import Sprites.*;
 import Recipe.Order;
 import Tools.B2WorldCreator;
@@ -197,65 +196,17 @@ public class PlayScreen implements Screen {
                         if (tileName == "Sprites.IngredientStation"){
                             tile.interact(controlledChef);
                         }
-
-                    }
-                    if (tileName == "Sprites.ChoppingBoard"){
-                        tile.interact(controlledChef);
                     }
 
                     
-                    if (controlledChef.getInHandsIng() == null && controlledChef.getInHandsRecipe() == null) {
-                        switch (tileName) {
-                            
-                            case "Sprites.PlateStation":
-                                if(plateStation.getPlate().size() > 0 || plateStation.getCompletedRecipe() != null){
-                                    controlledChef.pickUpItemFrom(tile);
-
-                                }
-
-                        }
-                    } else {
-                        switch (tileName) {
-                            
-                            case "Sprites.ChoppingBoard":
-                                System.out.println("Here");
-                                if(controlledChef.getInHandsIng() != null){
-                                    if(controlledChef.getInHandsIng().prepareTime > 0){
-                                        controlledChef.setUserControlChef(false);
-                                    }
-                                }
-                               break;
-                            case "Sprites.PlateStation":
-                                if (controlledChef.getInHandsRecipe() == null){
-                                controlledChef.dropItemOn(tile, controlledChef.getInHandsIng());
-                                controlledChef.setChefSkin(null);
-                            }
-                                break;
-                            case "Sprites.Pan":
-                                if(controlledChef.getInHandsIng() != null) {
-                                    if (controlledChef.getInHandsIng().isPrepared() && controlledChef.getInHandsIng().cookTime > 0){
-                                        controlledChef.setUserControlChef(false);
-                                        
-                                    }
-                                }
-
-                                break;
-                            case "Sprites.CompletedDishStation":
-                                if (controlledChef.getInHandsRecipe() != null){
-                                    if(controlledChef.getInHandsRecipe().getClass().equals(ordersArray.get(0).recipe.getClass())){
-                                        controlledChef.dropItemOn(tile);
-                                        ordersArray.get(0).orderComplete = true;
-                                        controlledChef.setChefSkin(null);
-                                        if(ordersArray.size()==1){
-                                            scenarioComplete = Boolean.TRUE;
-                                        }
-                                    }
-                                }
-                                break;
-                        }
-                    }
 
                 }
+                if (controlledChef.stack.getSize() == 0){
+                    controlledChef.setChefSkin(null);
+                }else{
+                    controlledChef.setChefSkin(null);
+                }
+
             }
         }
 
@@ -453,12 +404,12 @@ public class PlayScreen implements Screen {
                 }
             }
         }
-        if (chef1.previousInHandRecipe != null){
-            chef1.displayIngDynamic(game.batch);
-        }
-        if (chef2.previousInHandRecipe != null){
-            chef2.displayIngDynamic(game.batch);
-        }
+        // if (chef1.previousInHandRecipe != null){
+        //     chef1.displayIngDynamic(game.batch);
+        // }
+        // if (chef2.previousInHandRecipe != null){
+        //     chef2.displayIngDynamic(game.batch);
+        // }
         for (InteractiveTileObject tile : tile_objects){
             tile.draw_progress_bar(game.batch);
         }

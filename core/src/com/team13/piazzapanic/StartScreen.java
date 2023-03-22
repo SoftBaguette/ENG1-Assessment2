@@ -141,11 +141,7 @@ public class StartScreen implements Screen {
             }
         }
 
-        for (int[] button : buttons) {
-            //System.err.println(MainGame.V_WIDTH);
 
-            //System.out.println(Gdx.input.getX());
-        }
     }
 
     /**

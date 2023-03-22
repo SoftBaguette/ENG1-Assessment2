@@ -1,5 +1,4 @@
 import Ingredients.Ingredient;
-import Sprites.AllTextures;
 import Sprites.Chef;
 import org.junit.Test;
 

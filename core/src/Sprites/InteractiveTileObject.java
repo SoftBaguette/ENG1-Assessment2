@@ -145,7 +145,7 @@ public class InteractiveTileObject {
     * Updates the station if it is either burning or interacting. 
     * It is responsible for the progress bar and changing the status of the ingredient.
     * 
-    * @param chef TODO is this needed
+    * @param chef TODO is this param needed
     */
     public void update(Chef chef){
         

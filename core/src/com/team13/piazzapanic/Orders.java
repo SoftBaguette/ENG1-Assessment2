@@ -1,6 +1,6 @@
 package com.team13.piazzapanic;
 
-import Recipe.Order;
+//mport Recipe.Order;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -13,7 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 public class Orders implements Disposable {
     public Stage stage;
 
-    private Order[] orders[];
+    //private Order[] orders[];
 
     Label timeLabelT;
     Label timeLabel;
