@@ -19,6 +19,12 @@ public class StartScreen implements Screen {
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
+
+    public String difficulty = "Easy";
+    public Boolean endless = false;
+    public Boolean load = false;
+    public Boolean start = false;
+
     //button 1 = Easy
     //Button 2 = Medium
     //button 3 = hard
@@ -28,7 +34,7 @@ public class StartScreen implements Screen {
     //Button 7 = Start
 
 
-    int[][] buttons = {{80,130,25,25,0},{80,100,25,25,0}, {80,70,25,25,0}, {20,30,25,25,0}, {80,30,25,25,0}, {140,30,25,25,0}};
+    int[][] buttons = {{80,130,25,25,1},{80,100,25,25,0}, {80,70,25,25,0}, {20,30,25,25,1}, {80,30,25,25,0}, {140,30,25,25,0}};
     int current_button = 0;
 
     /**
@@ -71,7 +77,7 @@ public class StartScreen implements Screen {
         game.batch.begin();
         backgroundSprite.draw(game.batch);
 
-        game.batch.draw(new Texture("GreenButton.png"),buttons[current_button][0], buttons[current_button][1],buttons[current_button][2]+5, buttons[current_button][3]+5);
+        
 
         for (int[] button : buttons) {
             if (button[4] == 1){
@@ -79,6 +85,8 @@ public class StartScreen implements Screen {
             }
             game.batch.draw(new Texture("BlackButton.png"),button[0]+2.5f, button[1]+2.5f,button[2], button[3]);
         }
+        game.batch.draw(new Texture("RedButton.png"),buttons[current_button][0], buttons[current_button][1],buttons[current_button][2]+5, buttons[current_button][3]+5);
+        game.batch.draw(new Texture("BlackButton.png"),buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
 
         game.batch.end();
         update();
@@ -87,15 +95,18 @@ public class StartScreen implements Screen {
     
     public void update(){
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) ){
-            if(current_button >0){
-                current_button --;
+            current_button --;
+            if (current_button < 0){
+                current_button = buttons.length -1;
             }
         }
 
         if (Gdx.input.isKeyJustPressed(Input.Keys.S) ){
-            if(current_button < buttons.length-1 ){
-                current_button ++;
+            current_button ++;
+            if (current_button > buttons.length -1){
+                current_button = 0;
             }
+
         }
 
 
@@ -112,6 +123,22 @@ public class StartScreen implements Screen {
                 buttons[current_button][4] = 1;
             }
             
+
+            if (current_button == 0){
+                difficulty = "Easy";
+            }else if (current_button == 1){
+                difficulty = "Medium";
+            }else if (current_button == 2){
+                difficulty = "Hard";
+            }else if (current_button == 3){
+                endless = false;
+            }else if (current_button == 4){
+                endless = true;
+            }else if (current_button == 5){
+                load = true;
+            }else if (current_button == 6){
+                start = true;
+            }
         }
 
         for (int[] button : buttons) {
