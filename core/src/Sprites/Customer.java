@@ -100,10 +100,10 @@ public class Customer {
      */
     public void calculate_start_time(){
         if (difficulty == "Easy"){
-            leave_time = leave_time * 2;
+            leave_time = leave_time * 1.2f;
         }
         else if (difficulty == "Hard"){
-            leave_time = leave_time / 2;
+            leave_time = leave_time *0.8f;
         }
         System.out.println("Changed leave time to: " + leave_time);
 
@@ -146,6 +146,7 @@ public class Customer {
         if (System.currentTimeMillis() - start_time > leave_time * 1000 && leaving==false && queue_position == 0){
             status = "served";
             leaving = true;
+            PlayScreen.reputation --;
 
             //TODO fix this thing!!!!
             served(null, current_customer);
@@ -164,7 +165,9 @@ public class Customer {
     public int served(Ingredient recipe_ingredient, int current_customer){
         if (recipe_ingredient != null){
             if (recipe_ingredient.name == desired_ingredient.name){
-
+                PlayScreen.reputation ++;
+            }else{
+                PlayScreen.reputation ++;
             }
         }
         

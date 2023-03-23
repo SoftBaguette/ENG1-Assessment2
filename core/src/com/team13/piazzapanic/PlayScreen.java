@@ -82,6 +82,7 @@ public class PlayScreen implements Screen {
 
     public static Boolean endless = false;
     public String difficulty = "";
+    public static Integer reputation = 2;
 
     public Boolean one_customer = true;
     /**
@@ -127,6 +128,8 @@ public class PlayScreen implements Screen {
         controlledChef.notificationSetBounds("Down");
 
         ordersArray = new ArrayList<>();
+
+        reputation = 2;
 
     }
 
@@ -233,7 +236,7 @@ public class PlayScreen implements Screen {
             tile.update(controlledChef);
         }
         world.step(1/60f, 6, 2);
-
+        hud.updateOrder(Boolean.FALSE, reputation);
     }
 
     /**

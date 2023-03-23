@@ -3,6 +3,8 @@ package com.team13.piazzapanic;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+
 import com.badlogic.gdx.Game;
 
 public class MainGame extends Game {
@@ -54,6 +56,8 @@ public class MainGame extends Game {
 		}
 		if (isPlayScreen) {
 			setScreen(playScreen);
+			playScreen.difficulty = startScreen.difficulty;
+			PlayScreen.endless = startScreen.endless;
 			
 		} else {
 			setScreen(startScreen);
