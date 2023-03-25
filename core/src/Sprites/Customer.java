@@ -167,7 +167,7 @@ public class Customer {
             if (recipe_ingredient.name == desired_ingredient.name){
                 PlayScreen.reputation ++;
             }else{
-                PlayScreen.reputation ++;
+                PlayScreen.reputation --;
             }
         }
         

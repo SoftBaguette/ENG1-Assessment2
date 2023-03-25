@@ -37,6 +37,7 @@ public class MainGame extends Game {
 	public boolean isPlayScreen;
 	private PlayScreen playScreen;
 	private StartScreen startScreen;
+	private EndScreen endScreen;
 
 	public MainGame(){
 		isPlayScreen = false;
@@ -46,6 +47,7 @@ public class MainGame extends Game {
 		batch = new SpriteBatch();
 		startScreen = new StartScreen(this);
 		playScreen = new PlayScreen(this);
+		endScreen = new EndScreen(this);
 	}
 
 	@Override
@@ -54,14 +56,19 @@ public class MainGame extends Game {
 		if (Gdx.input.isKeyJustPressed(Input.Keys.TAB)){
 			isPlayScreen = !isPlayScreen;
 		}
-		if (isPlayScreen) {
+		if ((isPlayScreen || startScreen.start == true)&& PlayScreen.reputation != 0) {
 			setScreen(playScreen);
 			playScreen.difficulty = startScreen.difficulty;
 			PlayScreen.endless = startScreen.endless;
 			
-		} else {
+		}else if (PlayScreen.reputation == 0){
+			setScreen(endScreen);
+		}
+		 else {
 			setScreen(startScreen);
 		}
+
+		
 	}
 
 	@Override

@@ -12,7 +12,7 @@ import com.badlogic.gdx.utils.viewport.*;
 /**
  * This class implements the `Screen` interface and represents the start screen of the game.
  */
-public class StartScreen implements Screen {
+public class EndScreen implements Screen {
     private final MainGame game;
     private final Texture backgroundImage;
     private final Sprite backgroundSprite;
@@ -20,21 +20,12 @@ public class StartScreen implements Screen {
     private final Viewport viewport;
 
 
-    public String difficulty = "Easy";
-    public Boolean endless = false;
-    public Boolean load = false;
-    public Boolean start = false;
+    public Boolean restart = false;
 
-    //button 1 = Easy
-    //Button 2 = Medium
-    //button 3 = hard
-    //Button 4 = Scenario
-    //Button 5 = Endless
-    //Button 6 = load
-    //Button 7 = Start
+    //button 1 = restart
+    //button 2 = quit
 
-
-    int[][] buttons = {{80,130,25,25,1},{80,100,25,25,0}, {80,70,25,25,0}, {20,30,25,25,1}, {80,30,25,25,0}, {140,30,25,25,0}, {80,10,20,10,0}};
+    int[][] buttons = {{80,130,25,25,1},{80,100,25,25,0}};
     int current_button = 0;
 
     /**
@@ -42,9 +33,9 @@ public class StartScreen implements Screen {
      *
      * @param game the game object.
      */
-    public StartScreen(MainGame game) {
+    public EndScreen(MainGame game) {
         this.game = game;
-        backgroundImage = new Texture("startImage.png");
+        backgroundImage = new Texture("GameoverScreen.png");
         backgroundSprite = new Sprite(backgroundImage);
         camera = new OrthographicCamera();
         viewport = new FitViewport(MainGame.V_WIDTH, MainGame.V_HEIGHT, camera);
@@ -76,17 +67,13 @@ public class StartScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         backgroundSprite.draw(game.batch);
-
         
-
         for (int[] button : buttons) {
-            if (button[4] == 1){
-                game.batch.draw(new Texture("GreenButton.png"),button[0], button[1],button[2]+5, button[3]+5);
-            }
             game.batch.draw(new Texture("BlackButton.png"),button[0]+2.5f, button[1]+2.5f,button[2], button[3]);
         }
         game.batch.draw(new Texture("RedButton.png"),buttons[current_button][0], buttons[current_button][1],buttons[current_button][2]+5, buttons[current_button][3]+5);
         game.batch.draw(new Texture("BlackButton.png"),buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
+
 
         game.batch.end();
         update();
@@ -108,41 +95,21 @@ public class StartScreen implements Screen {
             }
 
         }
-
-
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ){
-            if (current_button >=0 && current_button < 3){
-                buttons[0][4] = 0;
-                buttons[1][4] = 0;
-                buttons[2][4] = 0;
-                buttons[current_button][4] = 1;
-            }else if (current_button >=3 && current_button < 6){
-                buttons[3][4] = 0;
-                buttons[4][4] = 0;
-                buttons[5][4] = 0;
-                buttons[current_button][4] = 1;
-            }
-            
-
             if (current_button == 0){
-                difficulty = "Easy";
-            }else if (current_button == 1){
-                difficulty = "Medium";
-            }else if (current_button == 2){
-                difficulty = "Hard";
-            }else if (current_button == 3){
-                endless = false;
-            }else if (current_button == 4){
-                endless = true;
-            }else if (current_button == 5){
-                load = true;
-            }else if (current_button == 6){
-                start = true;
+                restart = true;
+            }
+            else{
+
             }
         }
 
 
+        
+
+
     }
+
 
     /**
      * Method called when the screen is resized.
