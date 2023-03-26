@@ -165,7 +165,10 @@ public class Customer {
     public int served(Ingredient recipe_ingredient, int current_customer){
         if (recipe_ingredient != null){
             if (recipe_ingredient.name == desired_ingredient.name){
-                PlayScreen.reputation ++;
+                if (PlayScreen.reputation < 3){
+                    PlayScreen.reputation ++;
+                }
+                
             }else{
                 PlayScreen.reputation --;
             }
