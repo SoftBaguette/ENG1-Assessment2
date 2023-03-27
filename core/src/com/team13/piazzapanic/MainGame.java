@@ -64,11 +64,20 @@ public class MainGame extends Game {
 		}else if (PlayScreen.reputation == 0){
 			setScreen(endScreen);
 		}
+		
+
 		 else {
 			setScreen(startScreen);
 		}
-
 		
+		if (EndScreen.restart == true){
+			System.out.println("KJhksajhdakjdhakj");
+			isPlayScreen = !isPlayScreen;
+			EndScreen.restart = false;
+			startScreen.start = false;
+			playScreen = new PlayScreen(this);
+			PlayScreen.reputation = 2;
+		}
 	}
 
 	@Override

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -20,13 +21,14 @@ public class EndScreen implements Screen {
     private final Viewport viewport;
 
 
-    public Boolean restart = false;
+    public static Boolean restart = false;
 
     //button 1 = restart
     //button 2 = quit
 
     int[][] buttons = {{80,130,25,25,1},{80,100,25,25,0}};
     int current_button = 0;
+    String[] button_text = {"RESTART", "QUIT"};
 
     /**
      * Constructor for StartScreen.
@@ -67,13 +69,18 @@ public class EndScreen implements Screen {
         game.batch.setProjectionMatrix(camera.combined);
         game.batch.begin();
         backgroundSprite.draw(game.batch);
+
+        BitmapFont button_font = new BitmapFont();
         
-        for (int[] button : buttons) {
-            game.batch.draw(new Texture("BlackButton.png"),button[0]+2.5f, button[1]+2.5f,button[2], button[3]);
+        for (int i = 0; i < button_text.length; i++) {
+            game.batch.draw(new Texture("BlackButton.png"),buttons[i][0]+2.5f, buttons[i][1]+2.5f,buttons[i][2], buttons[i][3]);
+            
+            button_font.draw(game.batch, button_text[i], buttons[i][0], buttons[i][1]+buttons[i][3]);
         }
+
         game.batch.draw(new Texture("RedButton.png"),buttons[current_button][0], buttons[current_button][1],buttons[current_button][2]+5, buttons[current_button][3]+5);
         game.batch.draw(new Texture("BlackButton.png"),buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
-
+        button_font.draw(game.batch, button_text[current_button], buttons[current_button][0], buttons[current_button][1]+buttons[current_button][3]);
 
         game.batch.end();
         update();
