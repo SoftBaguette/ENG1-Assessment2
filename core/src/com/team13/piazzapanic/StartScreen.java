@@ -39,6 +39,13 @@ public class StartScreen implements Screen {
     int current_button = 0;
     String[] button_text = {"EASY", "MEDIUM", "HARD", "SCENARIO", "ENDLESS", "LOAD", "START"};
 
+    BitmapFont button_font = new BitmapFont();
+
+    Texture GreenButton = new Texture("GreenButton.png");
+    Texture BlackButton = new Texture("BlackButton.png");
+    Texture RedButton = new Texture("RedButton.png");
+
+    
 
     /**
      * Constructor for StartScreen.
@@ -51,6 +58,7 @@ public class StartScreen implements Screen {
         backgroundSprite = new Sprite(backgroundImage);
         camera = new OrthographicCamera();
         viewport = new FitViewport(MainGame.V_WIDTH, MainGame.V_HEIGHT, camera);
+        
     }
 
     /**
@@ -73,6 +81,7 @@ public class StartScreen implements Screen {
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0, 0.5f, 0, 1);
+        Gdx.gl.glClear(1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         camera.update();
@@ -80,19 +89,19 @@ public class StartScreen implements Screen {
         game.batch.begin();
         backgroundSprite.draw(game.batch);
 
-        BitmapFont button_font = new BitmapFont();
+        
 
         for (int i = 0; i < button_text.length; i++) {
             if (buttons[i][4] == 1){
-                game.batch.draw(new Texture("GreenButton.png"),buttons[i][0], buttons[i][1],buttons[i][2]+5, buttons[i][3]+5);
+                game.batch.draw(GreenButton,buttons[i][0], buttons[i][1],buttons[i][2]+5, buttons[i][3]+5);
             }
-            game.batch.draw(new Texture("BlackButton.png"),buttons[i][0]+2.5f, buttons[i][1]+2.5f,buttons[i][2], buttons[i][3]);
+            game.batch.draw(BlackButton,buttons[i][0]+2.5f, buttons[i][1]+2.5f,buttons[i][2], buttons[i][3]);
             
             button_font.draw(game.batch, button_text[i], buttons[i][0], buttons[i][1]+buttons[i][3]);
         }
 
-        game.batch.draw(new Texture("RedButton.png"),buttons[current_button][0], buttons[current_button][1],buttons[current_button][2]+5, buttons[current_button][3]+5);
-        game.batch.draw(new Texture("BlackButton.png"),buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
+        game.batch.draw(RedButton,buttons[current_button][0], buttons[current_button][1],buttons[current_button][2]+5, buttons[current_button][3]+5);
+        game.batch.draw(BlackButton,buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
         button_font.draw(game.batch, button_text[current_button], buttons[current_button][0], buttons[current_button][1]+buttons[current_button][3]);
 
         game.batch.end();
