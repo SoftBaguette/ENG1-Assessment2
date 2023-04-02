@@ -45,6 +45,9 @@ public class StartScreen implements Screen {
     Texture BlackButton = new Texture("BlackButton.png");
     Texture RedButton = new Texture("RedButton.png");
 
+
+    Boolean show_instruction;
+    Long startTime;
     
 
     /**
@@ -58,7 +61,7 @@ public class StartScreen implements Screen {
         backgroundSprite = new Sprite(backgroundImage);
         camera = new OrthographicCamera();
         viewport = new FitViewport(MainGame.V_WIDTH, MainGame.V_HEIGHT, camera);
-        
+        show_instruction = false;
     }
 
     /**
@@ -104,12 +107,22 @@ public class StartScreen implements Screen {
         game.batch.draw(BlackButton,buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
         button_font.draw(game.batch, button_text[current_button], buttons[current_button][0], buttons[current_button][1]+buttons[current_button][3]);
 
+        if (show_instruction){
+            backgroundSprite.draw(game.batch);
+        }
+
         game.batch.end();
         update();
     }
 
     
     public void update(){
+        if (show_instruction){
+            if (System.currentTimeMillis() - startTime > 3000){
+                start = true;
+            }
+        }
+
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) ){
             current_button --;
             if (current_button < 0){
@@ -126,7 +139,7 @@ public class StartScreen implements Screen {
         }
 
 
-        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ){
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER) && show_instruction == false){
             if (current_button >=0 && current_button < 3){
                 buttons[0][4] = 0;
                 buttons[1][4] = 0;
@@ -153,7 +166,9 @@ public class StartScreen implements Screen {
             }else if (current_button == 5){
                 load = true;
             }else if (current_button == 6){
-                start = true;
+                show_instruction = true;
+                startTime = System.currentTimeMillis();
+                //start = true;
             }
         }
 
