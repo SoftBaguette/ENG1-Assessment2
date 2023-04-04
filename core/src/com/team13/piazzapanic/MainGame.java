@@ -71,7 +71,6 @@ public class MainGame extends Game {
 		}
 		
 		if (EndScreen.restart == true){
-			System.out.println("KJhksajhdakjdhakj");
 			isPlayScreen = !isPlayScreen;
 			EndScreen.restart = false;
 			startScreen.start = false;

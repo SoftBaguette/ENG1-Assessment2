@@ -26,13 +26,14 @@ public class EndScreen implements Screen {
     //button 1 = restart
     //button 2 = quit
 
-    int[][] buttons = {{80,130,25,25,1},{80,100,25,25,0}};
+    int[][] buttons = {{100,50,70,20,1},{100,20,35,20,0}};
     int current_button = 0;
     String[] button_text = {"RESTART", "QUIT"};
 
     BitmapFont button_font = new BitmapFont();
 
     Texture GreenButton = new Texture("GreenButton.png");
+    Texture GreyButton = new Texture("GreyButton.png");
     Texture BlackButton = new Texture("BlackButton.png");
     Texture RedButton = new Texture("RedButton.png");
 
@@ -79,14 +80,14 @@ public class EndScreen implements Screen {
         BitmapFont button_font = new BitmapFont();
         
         for (int i = 0; i < button_text.length; i++) {
-            game.batch.draw(BlackButton,buttons[i][0]+2.5f, buttons[i][1]+2.5f,buttons[i][2], buttons[i][3]);
+            game.batch.draw(GreyButton,buttons[i][0]+2.5f, buttons[i][1]+2.5f,buttons[i][2], buttons[i][3]);
             
-            button_font.draw(game.batch, button_text[i], buttons[i][0], buttons[i][1]+buttons[i][3]);
+            button_font.draw(game.batch, button_text[i], buttons[i][0]+2.5f, buttons[i][1]+buttons[i][3]-1);
         }
 
         game.batch.draw(RedButton,buttons[current_button][0], buttons[current_button][1],buttons[current_button][2]+5, buttons[current_button][3]+5);
-        game.batch.draw(BlackButton,buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
-        button_font.draw(game.batch, button_text[current_button], buttons[current_button][0], buttons[current_button][1]+buttons[current_button][3]);
+        game.batch.draw(GreyButton,buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
+        button_font.draw(game.batch, button_text[current_button], buttons[current_button][0]+2.5f, buttons[current_button][1]+buttons[current_button][3]-1);
 
         game.batch.end();
         update();

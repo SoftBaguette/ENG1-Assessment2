@@ -117,6 +117,18 @@ public class PlayScreen implements Screen {
         for (InteractiveTileObject tile : tile_objects){
             System.out.println(tile.type);
         }
+
+        timeSeconds = 0f;
+
+        timeSecondsCount = 0f;
+        customers = new Customer[5];
+        current_customer = 0;
+        reputation = 2;
+
+        one_customer = true;
+
+
+
         chef1 = new Chef(this.world, 31.5F,65);
         chef2 = new Chef(this.world, 128,65);
         customers[0] = new Customer(167,15, difficulty, 60);

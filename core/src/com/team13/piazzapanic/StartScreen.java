@@ -17,6 +17,8 @@ public class StartScreen implements Screen {
     private final MainGame game;
     private final Texture backgroundImage;
     private final Sprite backgroundSprite;
+    private final Texture instructionImage;
+    private final Sprite instructionSprite;
     private final OrthographicCamera camera;
     private final Viewport viewport;
 
@@ -35,13 +37,14 @@ public class StartScreen implements Screen {
     //Button 7 = Start
 
 
-    int[][] buttons = {{80,130,25,25,1},{80,100,25,25,0}, {80,70,25,25,0}, {20,30,25,25,1}, {80,30,25,25,0}, {140,30,25,25,0}, {80,10,20,10,0}};
+    int[][] buttons = {{15,100,40,20,1},{65,100,55,20,0}, {130,100,40,20,0}, {10,65,80,20,1}, {100,65,75,20,0}, {80,40,45,20,0}, {100,10,50,20,0}};
     int current_button = 0;
     String[] button_text = {"EASY", "MEDIUM", "HARD", "SCENARIO", "ENDLESS", "LOAD", "START"};
 
     BitmapFont button_font = new BitmapFont();
 
     Texture GreenButton = new Texture("GreenButton.png");
+    Texture GreyButton = new Texture("GreyButton.png");
     Texture BlackButton = new Texture("BlackButton.png");
     Texture RedButton = new Texture("RedButton.png");
 
@@ -57,8 +60,10 @@ public class StartScreen implements Screen {
      */
     public StartScreen(MainGame game) {
         this.game = game;
-        backgroundImage = new Texture("startImage.png");
+        backgroundImage = new Texture("StartMenuImage.png");
         backgroundSprite = new Sprite(backgroundImage);
+        instructionImage = new Texture("startImage.png");
+        instructionSprite = new Sprite(instructionImage);
         camera = new OrthographicCamera();
         viewport = new FitViewport(MainGame.V_WIDTH, MainGame.V_HEIGHT, camera);
         show_instruction = false;
@@ -98,17 +103,19 @@ public class StartScreen implements Screen {
             if (buttons[i][4] == 1){
                 game.batch.draw(GreenButton,buttons[i][0], buttons[i][1],buttons[i][2]+5, buttons[i][3]+5);
             }
-            game.batch.draw(BlackButton,buttons[i][0]+2.5f, buttons[i][1]+2.5f,buttons[i][2], buttons[i][3]);
+            game.batch.draw(GreyButton,buttons[i][0]+2.5f, buttons[i][1]+2.5f,buttons[i][2], buttons[i][3]);
+           
             
-            button_font.draw(game.batch, button_text[i], buttons[i][0], buttons[i][1]+buttons[i][3]);
+            button_font.draw(game.batch, button_text[i], buttons[i][0]+2.5f, buttons[i][1]+buttons[i][3]-1);
         }
 
         game.batch.draw(RedButton,buttons[current_button][0], buttons[current_button][1],buttons[current_button][2]+5, buttons[current_button][3]+5);
-        game.batch.draw(BlackButton,buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
-        button_font.draw(game.batch, button_text[current_button], buttons[current_button][0], buttons[current_button][1]+buttons[current_button][3]);
-
+        game.batch.draw(GreyButton,buttons[current_button][0]+2.5f, buttons[current_button][1]+2.5f,buttons[current_button][2], buttons[current_button][3]);
+        button_font.draw(game.batch, button_text[current_button], buttons[current_button][0]+2.5f, buttons[current_button][1]+buttons[current_button][3]-1);
+        
         if (show_instruction){
-            backgroundSprite.draw(game.batch);
+            //instructionSprite.draw(game.batch);
+            game.batch.draw(instructionImage, 0, 0, backgroundImage.getWidth()+30, backgroundImage.getHeight()+30);
         }
 
         game.batch.end();
