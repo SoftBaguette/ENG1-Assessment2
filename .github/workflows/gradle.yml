@@ -50,7 +50,7 @@ jobs:
         arguments: build
 
     - name: Execute Gradle build
-      run: ./gradlew build
+      run: ./gradlew desktop::dist
 
       
       #run: ./gradlew desktop::dist
