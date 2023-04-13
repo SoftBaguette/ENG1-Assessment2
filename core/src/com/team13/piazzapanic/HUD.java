@@ -53,8 +53,8 @@ public class HUD implements Disposable {
 
         timeLabel = new Label(String.format("%d", worldTimerM, ":", "%i", worldTimerS), new Label.LabelStyle(font, Color.WHITE));
         timeLabelT = new Label("TIME", new Label.LabelStyle(font, Color.BLACK));
-        orderNumLT = new Label("ORDER", new Label.LabelStyle(font, Color.BLACK));
-        orderNumL = new Label(String.format("%d", 0), new Label.LabelStyle(font, Color.WHITE));
+        orderNumLT = new Label("REPUTATION", new Label.LabelStyle(font, Color.BLACK));
+        orderNumL = new Label(String.format("%d", PlayScreen.reputation), new Label.LabelStyle(font, Color.WHITE));
 
         scoreLabel = new Label(String.format("%d", score), new Label.LabelStyle(font, Color.WHITE));
         scoreLabelT = new Label("MONEY", new Label.LabelStyle(font, Color.BLACK));
@@ -166,8 +166,8 @@ public class HUD implements Disposable {
         }
 
         table.left().top();
-        orderNumL.setText(String.format("%d", orderNum));
-        orderNumLT.setText("ORDER");
+        orderNumL.setText(String.format("%d", PlayScreen.reputation));
+        orderNumLT.setText("Reputation");
         stage.addActor(table);
 
     }

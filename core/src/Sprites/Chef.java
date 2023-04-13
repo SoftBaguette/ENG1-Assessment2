@@ -32,6 +32,8 @@ public class Chef extends Sprite {
     public World world;
     public Body b2body;
 
+    public Stack stack;
+
     private final float initialX;
     private final float initialY;
 
@@ -40,7 +42,6 @@ public class Chef extends Sprite {
     private float waitTimer;
 
 
-    private float putDownWaitTimer;
     public boolean chefOnChefCollision;
 
     private final Texture normalChef;
@@ -75,8 +76,6 @@ public class Chef extends Sprite {
     private float notificationHeight;
 
 
-    private CompletedDishStation completedStation;
-
 
     public int nextOrderAppearTime;
     public Recipe previousInHandRecipe;
@@ -87,6 +86,7 @@ public class Chef extends Sprite {
         initialX = 2 / MainGame.PPM;
         initialY = 2 / MainGame.PPM;
 
+        stack = new Stack(3);
 
         normalChef = null;
         holdingChef = null;
@@ -97,24 +97,20 @@ public class Chef extends Sprite {
         holdingChef = new Texture("Chef/Chef_holding.png");
         skinNeeded = normalChef;*/
         currentState = State.DOWN;
-        //defineChef();
         float chefWidth = 13 / MainGame.PPM;
         float chefHeight = 20 / MainGame.PPM;
         setBounds(0, 0, chefWidth, chefHeight);
         chefOnChefCollision = false;
         waitTimer = 0;
-        putDownWaitTimer = 0;
         startVector = new Vector2(0, 0);
         whatTouching = null;
         inHandsIng = null;
         inHandsRecipe = null;
         userControlChef = true;
         chefMove = true;
-
         //Texture circleTexture = new Texture("Chef/chefIdentifier.png");
         //circleSprite = new Sprite(circleTexture);
         nextOrderAppearTime = 3;
-        completedStation = null;
     }
 
 
@@ -130,6 +126,7 @@ public class Chef extends Sprite {
         initialX = startX / MainGame.PPM;
         initialY = startY / MainGame.PPM;
 
+        stack = new Stack(3);
 
         normalChef = new Texture("Chef/Chef_normal.png");
         holdingChef = new Texture("Chef/Chef_holding.png");
@@ -146,7 +143,6 @@ public class Chef extends Sprite {
         setBounds(0, 0, chefWidth, chefHeight);
         chefOnChefCollision = false;
         waitTimer = 0;
-        putDownWaitTimer = 0;
         startVector = new Vector2(0, 0);
         whatTouching = null;
         inHandsIng = null;
@@ -156,7 +152,6 @@ public class Chef extends Sprite {
         Texture circleTexture = new Texture("Chef/chefIdentifier.png");
         circleSprite = new Sprite(circleTexture);
         nextOrderAppearTime = 3;
-        completedStation = null;
     }
 
 
@@ -221,9 +216,7 @@ public class Chef extends Sprite {
                 chefOnChefCollision = false;
                 userControlChef = true;
                 waitTimer = 0;
-                if (inHandsIng != null) {
-                    setChefSkin(inHandsIng);
-                }
+
             }
         } else if (!userControlChef && getInHandsIng().prepareTime > 0) {
             waitTimer += dt;
@@ -232,7 +225,6 @@ public class Chef extends Sprite {
                 inHandsIng.setPrepared();
                 userControlChef = true;
                 waitTimer = 0;
-                setChefSkin(inHandsIng);
             }
         } else if (!userControlChef && !chefOnChefCollision && getInHandsIng().isPrepared() && inHandsIng.cookTime > 0) {
             waitTimer += dt;
@@ -241,7 +233,6 @@ public class Chef extends Sprite {
                 inHandsIng.setCooked();
                 userControlChef = true;
                 waitTimer = 0;
-                setChefSkin(inHandsIng);
             }
         }
     }
@@ -255,7 +246,13 @@ public class Chef extends Sprite {
             }
         }
 
-        setChefSkin(getInHandsIng());
+
+
+        if (stack.getSize() == 0){
+            setChefSkin(null);
+        }else{
+            setChefSkin(1);
+        }
         if (this.getUserControlChef()) {
                 float xVelocity = 0;
                 float yVelocity = 0;
@@ -428,13 +425,23 @@ public class Chef extends Sprite {
     }
 
 
+    /**
+     * Method to draw the stack of items that the chef is carrying. The top of the stack will be displayed at the top and
+     * every subsequent item will be displayed below
+     * 
+     * @param batch The batch used for drawing sprites to the screen
+     */
     public void draw_item(Batch batch){
-        Ingredient chefs_ingredient = this.getInHandsIng();
-        if (chefs_ingredient != null){
-            ArrayList<Texture> texture = AllTextures.getTextures(chefs_ingredient.name);
-            batch.draw(texture.get(chefs_ingredient.status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
-            //batch.draw(chefs_ingredient.tex.get(this.getInHandsIng().status), this.getX(), this.getY(), this.getWidth(),this.getHeight());
+        float offset = 0;
+        for (Ingredient chef_ing : stack.arr) {
+            if (chef_ing !=null){
+                ArrayList<Texture> texture = AllTextures.getTextures(chef_ing.name);
+                batch.draw(texture.get(chef_ing.status), this.getX(),(float) this.getY() + offset, this.getWidth(),this.getHeight());
+                offset +=0.1f;
+
+            }
         }
+
     }
 
 
@@ -464,21 +471,7 @@ public class Chef extends Sprite {
     }
 
 
-    /**
-     * The method creates an instance of the recipe and sets its position on the completed station coordinates.
-     * The method also implements a timer for each ingredient which gets removed from the screen after a certain amount of time.
-     *
-     * @param batch The batch used for drawing the sprite on the screen
-     */
 
-    public void displayIngDynamic(SpriteBatch batch){
-        putDownWaitTimer += 1/60f;
-        previousInHandRecipe.create(completedStation.getX(), completedStation.getY() - (0.01f / MainGame.PPM), batch);
-        if (putDownWaitTimer > nextOrderAppearTime) {
-            previousInHandRecipe = null;
-            putDownWaitTimer = 0;
-        }
-    }
 
 
     /**
@@ -595,60 +588,8 @@ public class Chef extends Sprite {
 
 
 
-    /**
-      * Drops the given ingredient on a plate station.
-      * @param station The plate station to drop the ingredient on.
-      * @param ing The ingredient to be dropped.
-     */
 
 
-    public void dropItemOn (InteractiveTileObject station, Ingredient ing){
-        if (station instanceof PlateStation) {
-                ((PlateStation) station).dropItem(ing);
-        }
-        setInHandsRecipe(null);
-    }
-
-
-    /**
-     * Drops the in-hand recipe on a completed dish station and saves the previous in-hand recipe.
-     *
-     * @param station The completed dish station to drop the recipe on.
-     */
-        public void dropItemOn (InteractiveTileObject station){
-            if (station instanceof CompletedDishStation) {
-                previousInHandRecipe = getInHandsRecipe();
-                completedStation = (CompletedDishStation) station;
-            }
-            setInHandsRecipe(null);
-        }
-
-
-    /**
-     * Picks up an item from a plate station and sets it as in-hand ingredient or recipe.
-     *
-     * @param station The plate station to pick up the item from.
-     */
-    public void pickUpItemFrom(InteractiveTileObject station){
-        if (station instanceof PlateStation){
-            PlateStation pStation = (PlateStation) station;
-            Object item = pStation.pickUpItem();
-            if (item instanceof Ingredient){
-                setInHandsIng((Ingredient) item);
-                setChefSkin(item);
-            } else if (item instanceof Recipe){
-                setInHandsRecipe(((Recipe) item));
-                setChefSkin(item);
-            }
-        }
-    }
 }
-
-
-
-
-
-
-
 
 

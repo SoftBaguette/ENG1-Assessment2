@@ -120,9 +120,9 @@ public class PlateStation extends InteractiveTileObject {
      *
      * @return An ArrayList of ingredients on the plate.
      */
-    public ArrayList getPlate(){
-        return (ArrayList) this.plate;
-    }
+    // public ArrayList getPlate(){
+    //     return (ArrayList) this.plate;
+    // }
 
     /**
      * Gets the completed recipe, if any, on the plate.
