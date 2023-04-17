@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="BurgerUnitTest" tests="1" skipped="0" failures="1" errors="0" timestamp="2023-04-17T14:57:18" hostname="DESKTOP-8L6K710" time="6.038">
+<testsuite name="BurgerUnitTest" tests="7" skipped="0" failures="1" errors="0" timestamp="2023-04-17T15:04:01" hostname="DESKTOP-8L6K710" time="24.078">
   <properties/>
-  <testcase name="testMakingSalad" classname="BurgerUnitTest" time="6.038">
-    <failure message="java.lang.AssertionError: Made Salad" type="java.lang.AssertionError">java.lang.AssertionError: Made Salad
-	at org.junit.Assert.fail(Assert.java:89)
-	at org.junit.Assert.assertTrue(Assert.java:42)
-	at BurgerUnitTest.testMakingSalad(BurgerUnitTest.java:78)
+  <testcase name="testMakingSalad" classname="BurgerUnitTest" time="2.023">
+    <failure message="java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 3" type="java.lang.ArrayIndexOutOfBoundsException">java.lang.ArrayIndexOutOfBoundsException: Index -1 out of bounds for length 3
+	at Sprites.Stack.peak(Stack.java:97)
+	at BurgerUnitTest.testMakingSalad(BurgerUnitTest.java:60)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
 	at java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:77)
 	at java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
@@ -51,15 +50,69 @@
 	at worker.org.gradle.process.internal.worker.GradleWorkerMain.main(GradleWorkerMain.java:74)
 </failure>
   </testcase>
+  <testcase name="testMakePotato" classname="BurgerUnitTest" time="2.011"/>
+  <testcase name="testBinning" classname="BurgerUnitTest" time="0.0"/>
+  <testcase name="testBurning" classname="BurgerUnitTest" time="5.01"/>
+  <testcase name="testMakingBurger" classname="BurgerUnitTest" time="6.026"/>
+  <testcase name="testCustomerLeavesAfterTimeLimit" classname="BurgerUnitTest" time="9.008"/>
+  <testcase name="testMakePizza" classname="BurgerUnitTest" time="0.0"/>
   <system-out><![CDATA[Interacted with ingredient source
 Added to stack
-Lettuce
+Interacted with ChoppingBoard station
 Interacted with ingredient source
 Added to stack
-Onion
+Interacted with ChoppingBoard station
+Finished
+Interacted with ChoppingBoard station
+Picked up
+Interacted with Plate station
+CheckingRecipe
 Interacted with ingredient source
 Added to stack
-Tomato
+Interacted with Plate station
+CheckingRecipe
+Potato made
+Cheese
+Interacted with Oven station
+Interacted with Bin station
+Stack Already Empty
+Binned
+Interacted with Pan station
+0
+0
+100
+5009
+Interacted with Pan station
+Picked up
+Interacted with ingredient source
+Added to stack
+Interacted with Pan station
+Finished
+Interacted with Pan station
+Picked up
+Interacted with Plate station
+CheckingRecipe
+Interacted with ingredient source
+Added to stack
+Interacted with ChoppingBoard station
+Finished
+Interacted with ChoppingBoard station
+Picked up
+Interacted with Pan station
+Finished
+0
+0
+Interacted with Pan station
+Picked up
+Interacted with Plate station
+CheckingRecipe
+Made Burger
+Burger_buns
+Changed leave time to: 2.0
+Changed leave time to: 2.0
+reset timer
+Current customer: 1
+Leaving0
 ]]></system-out>
   <system-err><![CDATA[]]></system-err>
 </testsuite>

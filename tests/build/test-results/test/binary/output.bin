@@ -1,9 +1,62 @@
 #Interacted with ingredient source
 Added to stack
-	Lettuce
-#Interacted with ingredient source
-Added to stack
-Onion
-#Interacted with ingredient source
-Added to stack
-Tomato
+'Interacted with ChoppingBoard station
+#Interacted with ingredient source
+Added to stack
+'Interacted with ChoppingBoard station
+
+Finished
+'Interacted with ChoppingBoard station
+Picked up
+Interacted with Plate station
+CheckingRecipe
+#Interacted with ingredient source
+Added to stack
+Interacted with Plate station
+CheckingRecipe
+Potato made
+Cheese
+Interacted with Oven station
+Interacted with Bin station
+Stack Already Empty
+Binned
+Interacted with Pan station
+0
+0
+100
+5009
+Interacted with Pan station
+Picked up
+#Interacted with ingredient source
+Added to stack
+Interacted with Pan station
+
+Finished
+Interacted with Pan station
+Picked up
+Interacted with Plate station
+CheckingRecipe
+#Interacted with ingredient source
+Added to stack
+'Interacted with ChoppingBoard station
+
+Finished
+'Interacted with ChoppingBoard station
+Picked up
+Interacted with Pan station
+
+Finished
+0
+0
+Interacted with Pan station
+Picked up
+Interacted with Plate station
+CheckingRecipe
+Made Burger
+Burger_buns
+Changed leave time to: 2.0
+Changed leave time to: 2.0
+reset timer
+Current customer: 1
+
+Leaving0
