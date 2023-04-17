@@ -75,7 +75,6 @@ public class InteractiveTileObject {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((rectangle.getWidth() / 2f) / MainGame.PPM, (rectangle.getHeight() / 2f) / MainGame.PPM);
 
-        // TODO: All InteractiveTileObject should have collisions off, be unable to be interacted with, and have no sprite drawn IF isPurchased == false.
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fixture = b2body.createFixture(fdef);
@@ -107,6 +106,7 @@ public class InteractiveTileObject {
         shape.setAsBox((rectangle.getWidth() / 2f) / MainGame.PPM, (rectangle.getHeight() / 2f) / MainGame.PPM);
 
 
+        // TODO: All InteractiveTileObject should have collisions off, be unable to be interacted with, and have no sprite drawn if isPurchased == false.
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fixture = b2body.createFixture(fdef);
