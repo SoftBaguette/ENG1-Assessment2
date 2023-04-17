@@ -93,8 +93,13 @@ public class PlayScreen implements Screen {
     /** Because we are saving using CSV files, we will be reading in Strings.
      * Therefore we need a way of mapping each purchasable station with a string, so that we can write
      * e.g. "oven1" in the CSV file and the code knows which InteractiveTileObject it's referring to.
+     * Each purchasable station has attribute String name. The name should be unique.
+     * String name is used for the key in this mapping. This means that stations can be uniquely identified by their
+     * strings in stringsToStations, and strings/names that will correspond to the station are written to the file by getName().
      */
-    Map<String, InteractiveTileObject> stringsToStations = new HashMap<String, InteractiveTileObject>();
+    // TODO: Define this Map in some sort of data file. Wherever a purchasable station is instantiated, you should also have stringsToStations.put(station.name, station)
+
+    static Map<String, InteractiveTileObject> stringsToStations = new HashMap<String, InteractiveTileObject>();
 
 
     /**
