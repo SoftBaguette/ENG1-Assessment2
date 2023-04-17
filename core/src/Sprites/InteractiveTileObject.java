@@ -141,6 +141,7 @@ public class InteractiveTileObject {
         interacting = false;
         item_on_station = null;
         progress = 0;
+        isPurchased = true;
 
 
         plate_items = new ArrayList<>();
