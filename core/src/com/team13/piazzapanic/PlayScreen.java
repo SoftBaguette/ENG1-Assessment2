@@ -102,13 +102,7 @@ public class PlayScreen implements Screen {
     static Map<String, InteractiveTileObject> stringsToStations = new HashMap<String, InteractiveTileObject>();
 
 
-    /**
-     * PlayScreen constructor initializes the game instance, sets initial conditions for scenarioComplete and createdOrder,
-     * creates and initializes game camera and viewport,
-     * creates and initializes HUD and orders hud, loads and initializes the map,
-     * creates and initializes world, creates and initializes chefs and sets them, sets contact listener for world, and initializes ordersArray.
-     * @param game The MainGame instance that the PlayScreen will be a part of.
-     */
+
 
 
     /** Reads a CSV of a game state and sets the class variables as appropriate.
@@ -121,26 +115,18 @@ public class PlayScreen implements Screen {
     public void loadGameData(String filename, HashMap<String, InteractiveTileObject> stations) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
-            String line;
 
-            while ((line = reader.readLine()) != null) {
-                String[] data = line.split(",");
+            // Read game data from CSV file
+            String[] elements = reader.readLine().split(",");
+            reputation = Integer.parseInt(elements[0]);
+            money = (Integer.parseInt(elements[1]));
 
-                // Parse game data from CSV file
-                int reputation = Integer.parseInt(data[0]);
-                int money = Integer.parseInt(data[1]);
-
-                // Update game variables
-                this.reputation = reputation;
-                this.money = money;
-
-                // Parse purchased stations and activate them
-                for (int i = 2; i < data.length; i++) {
-                    String stationName = data[i];
-                    InteractiveTileObject station = stations.get(stationName);
-                    if (station != null) {
-                        station.setPurchased(true);
-                    }
+            String purchasedStationsString = elements[2];
+            String[] purchasedStations = purchasedStationsString.split(";");
+            for (String stationName : purchasedStations) {
+                InteractiveTileObject station = stations.get(stationName);
+                if (station != null) {
+                    station.setPurchased(true);
                 }
             }
 
@@ -149,6 +135,8 @@ public class PlayScreen implements Screen {
             System.err.println("Error loading game data: " + e.getMessage());
         }
     }
+
+
     public void saveGameData(String filename, HashMap<String, InteractiveTileObject> stations) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
@@ -157,7 +145,7 @@ public class PlayScreen implements Screen {
             writer.write(getReputation() + "," + getMoney() + ",");
             StringBuilder purchasedStations = new StringBuilder();
             for (InteractiveTileObject station : stations.values()) {
-                if (station.isPurchased()) {
+                if (station.isPurchased() && station.purchasable) {
                     if (purchasedStations.length() > 0) {
                         purchasedStations.append(";");
                     }
@@ -171,12 +159,18 @@ public class PlayScreen implements Screen {
             System.err.println("Error saving game data: " + e.getMessage());
         }
     }
-    int getReputation() {return this.reputation;}
-    int getMoney() {return this.money;}
+    int getReputation() {return reputation;}
+    int getMoney() {return money;}
 
 
 
-    // New game constructor
+    /**
+     * PlayScreen constructor initializes the game instance, sets initial conditions for scenarioComplete and createdOrder,
+     * creates and initializes game camera and viewport,
+     * creates and initializes HUD and orders hud, loads and initializes the map,
+     * creates and initializes world, creates and initializes chefs and sets them, sets contact listener for world, and initializes ordersArray.
+     * @param game The MainGame instance that the PlayScreen will be a part of.
+     */
     public PlayScreen(MainGame game){
         this.game = game;
         money = 0;

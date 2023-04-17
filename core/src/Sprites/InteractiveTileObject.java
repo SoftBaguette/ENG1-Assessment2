@@ -37,6 +37,7 @@ public class InteractiveTileObject {
     Ingredient item_on_station;
     ProgressBar progressBar;
     int progress;
+    public boolean purchasable;
     boolean isPurchased;
     long start_time_burning;
     boolean burning;
@@ -89,6 +90,7 @@ public class InteractiveTileObject {
         progressBar = new ProgressBar(0.5f, 0.5f, 0.25f,0.075f);
        
         plate_items = new ArrayList<>();
+        purchasable = false;
 
 
        
@@ -96,6 +98,7 @@ public class InteractiveTileObject {
     // Use this constructor for purchasable stations
     public InteractiveTileObject(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type, boolean isPurchased, int price) {
 
+        purchasable = true;
         this.isPurchased = isPurchased;
         bdefNew = bdef;
         this.price = price;
