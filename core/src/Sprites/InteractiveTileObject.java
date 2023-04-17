@@ -84,6 +84,7 @@ public class InteractiveTileObject {
         interacting = false;
         burning = false;
         item_on_station = null;
+        isPurchased = true;
        
         progressBar = new ProgressBar(0.5f, 0.5f, 0.25f,0.075f);
        
