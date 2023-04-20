@@ -89,6 +89,7 @@ public class PlayScreen implements Screen {
     public static int money;
 
     public Boolean one_customer = true;
+    public Texture instructionImage = new Texture("startImage.png");
 
 
     /** Because we are saving using CSV files, we will be reading in Strings.
