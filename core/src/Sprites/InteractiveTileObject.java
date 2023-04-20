@@ -288,7 +288,7 @@ public class InteractiveTileObject {
         if (chef.stack.isEmpty()){
             System.out.println("Stack empty");
         }else{
-            if (chef.stack.peak().isPrepared() == false && chopping_items.contains(chef.stack.peak().name)){
+            if (chef.stack.peak().isPrepared() == false && chopping_items.contains(chef.stack.peak().name) && item_on_station == null){
                 item_on_station = chef.stack.pop();
                 //chef.chefMove = false;
                 start_time_interaction = System.currentTimeMillis();
@@ -318,7 +318,7 @@ public class InteractiveTileObject {
             if (chef.stack.peak().name == "Burger_buns"){
                 chef.stack.arr[chef.stack.top].setPrepared();
             }
-            if (chef.stack.peak().isPrepared() && chef.stack.peak().burnt == false && pan_items.contains(chef.stack.peak().name)){
+            if (chef.stack.peak().isPrepared() && chef.stack.peak().burnt == false && pan_items.contains(chef.stack.peak().name) && item_on_station == null){
                 item_on_station = chef.stack.pop();
                 start_time_interaction = System.currentTimeMillis();
                 interacting = true;
@@ -342,7 +342,7 @@ public class InteractiveTileObject {
         if (chef.stack.isEmpty()){
             System.out.println("Stack empty");
         }else{
-            if (chef.stack.peak().isPrepared() == false && oven_items.contains(chef.stack.peak().name)){
+            if (chef.stack.peak().isPrepared() == false && oven_items.contains(chef.stack.peak().name) && item_on_station == null){
                 item_on_station = chef.stack.pop();
                 item_on_station.setPrepared();
                 start_time_interaction = System.currentTimeMillis();
@@ -363,13 +363,19 @@ public class InteractiveTileObject {
         if (chef.stack.isEmpty()){
             System.out.println("Stack empty");
         }else{
-            plate_items.add(chef.stack.pop());
-            if (checkRecipeCreated()){
-                chef.stack.push(plate_items.get(0));
-                System.out.println(chef.getInHandsIng().name);
-                //item_on_station = plate_items.get(0);
-                plate_items = new ArrayList<>();
+            if (chef.stack.peak().name == "Burger" ||chef.stack.peak().name == "Salad" ||chef.stack.peak().name == "Pizza" ||chef.stack.peak().name == "PotatoCheese"){
+                System.out.println("Can't put premade items onto plate");
+            }else{
+                plate_items.add(chef.stack.pop());
+                if (checkRecipeCreated()){
+                    chef.stack.push(plate_items.get(0));
+                    System.out.println(chef.getInHandsIng().name);
+                    //item_on_station = plate_items.get(0);
+                    plate_items = new ArrayList<>();
+                }
             }
+            
+            
         }
 
         
