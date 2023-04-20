@@ -105,7 +105,6 @@ public class InteractiveTileObject {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((rectangle.getWidth() / 2f) / MainGame.PPM, (rectangle.getHeight() / 2f) / MainGame.PPM);
 
-<<<<<<< HEAD
 
         // TODO: All InteractiveTileObject should have collisions off, be unable to be interacted with, and have no sprite drawn if isPurchased == false.
         FixtureDef fdef = new FixtureDef();
@@ -126,8 +125,7 @@ public class InteractiveTileObject {
 
     }
 
-=======
->>>>>>> main
+
     /**
      * Constructor for the class without b2bodies and textures which causes issues when testing.
      *
@@ -184,11 +182,10 @@ public class InteractiveTileObject {
     * @param chef TODO is this param needed
     */
     public void update(Chef chef){
-<<<<<<< HEAD
+
         if(!isPurchased){return;}
-=======
+
         
->>>>>>> main
         if (interacting == true && burning == false){
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
@@ -235,10 +232,9 @@ public class InteractiveTileObject {
      * @param batch The batch used for drawing sprites to the screen
      */
     public void draw_progress_bar(Batch batch){
-<<<<<<< HEAD
         if(!isPurchased){return;}
-=======
->>>>>>> main
+
+
         if (interacting == true){
             progressBar.change_pos(getX(), getY());
             progressBar.setProgress(progress);
@@ -467,10 +463,9 @@ public class InteractiveTileObject {
      * @param chef the chef that interacted with the station
      */
     public void pickUpItem(Chef chef){
-<<<<<<< HEAD
         if(!isPurchased){return;}
-=======
->>>>>>> main
+
+
 
         //chef.setInHandsIng(item_on_station);
         if (chef.stack.isFull()){
@@ -512,10 +507,8 @@ public class InteractiveTileObject {
 
 
     public void serving_interact(Chef chef, Customer customer, int reputation, int current_customer){
-<<<<<<< HEAD
         if(!isPurchased){return;}
-=======
->>>>>>> main
+
         reputation += customer.served(chef.stack.pop(), current_customer);
         //chef.setInHandsIng(null);
 
@@ -554,7 +547,6 @@ public class InteractiveTileObject {
 
 //    Added for testing purposes
     public Boolean getInteractingStatus() {return interacting;}
-<<<<<<< HEAD
 
     public boolean isPurchased() {return this.isPurchased;}
 
@@ -573,9 +565,4 @@ public class InteractiveTileObject {
     public void setPurchased(boolean b) {this.isPurchased = b;
     }
     }
-
-
-=======
-}
->>>>>>> main
 
