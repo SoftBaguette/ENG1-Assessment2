@@ -497,8 +497,8 @@ public class PlayScreen implements Screen {
         //System.out.println(Gdx.input.getY());
         chef1.draw(game.batch);
         chef1.draw_item(game.batch);
-        game.batch.draw(new Texture("Food/Lettuce.png"), (chef1.getX()*1.01f), chef1.getY(), chef1.getWidth()/2,chef1.getHeight()/2);
         chef2.draw(game.batch);
+        chef2.draw_item(game.batch);
 
         controlledChef.drawNotification(game.batch);
         
