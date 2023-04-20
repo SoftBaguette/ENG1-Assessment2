@@ -57,22 +57,38 @@ public class BurgerUnitTest {
         lettuce_box.interact(chef1);
         chopping_station.interact(chef1);
         wait(2000);
+<<<<<<< HEAD
+        System.out.println(chef1.stack.peak().name);
+=======
+>>>>>>> main
         chopping_station.update(chef1);
         chopping_station.interact(chef1);
         plate.interact(chef1);
         onion_box.interact(chef1);
         chopping_station.interact(chef1);
+<<<<<<< HEAD
+        System.out.println(chef1.stack.peak().name);
+=======
+>>>>>>> main
         wait(2000);
         chopping_station.update(chef1);
         chopping_station.interact(chef1);
         plate.interact(chef1);
         tomato_box.interact(chef1);
         chopping_station.interact(chef1);
+<<<<<<< HEAD
+        System.out.println(chef1.stack.peak().name);
+=======
+>>>>>>> main
         wait(2000);
         chopping_station.update(chef1);
         chopping_station.interact(chef1);
         plate.interact(chef1);
+<<<<<<< HEAD
+        assertTrue("Made Salad", chef1.stack.peak().name == "Salad");
+=======
         assertTrue("Making a salad", chef1.stack.peak().name == "Salad");
+>>>>>>> main
     }
 
     @Test

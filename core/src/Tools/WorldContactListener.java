@@ -39,6 +39,9 @@ public class WorldContactListener implements ContactListener {
             }
             // if the object fixture is an InteractiveTileObject
             else if(objectFixt.getUserData() != null && objectFixt.getUserData() instanceof InteractiveTileObject){
+            if(!((InteractiveTileObject) objectFixt.getUserData()).isPurchased()) {
+                return;
+            }
                 // set the InteractiveTileObject for the Chef
                 ((Chef) chefFixt.getUserData()).setTouchingTile(objectFixt);
             }

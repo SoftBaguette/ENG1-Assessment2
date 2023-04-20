@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testsuite name="BurgerUnitTest" tests="1" skipped="0" failures="0" errors="0" timestamp="2023-04-20T14:39:41" hostname="CSE270PC33" time="6.079">
+  <properties/>
+  <testcase name="testMakingBurger" classname="BurgerUnitTest" time="6.079"/>
+  <system-out><![CDATA[Interacted with ingredient source
+Added to stack
+Interacted with Pan station
+Finished
+Interacted with Pan station
+Picked up
+Interacted with Plate station
+CheckingRecipe
+Interacted with ingredient source
+Added to stack
+Interacted with ChoppingBoard station
+Finished
+Interacted with ChoppingBoard station
+Picked up
+Interacted with Pan station
+Finished
+0
+0
+Interacted with Pan station
+Picked up
+Interacted with Plate station
+CheckingRecipe
+Making a burger
+Burger_buns
+]]></system-out>
+  <system-err><![CDATA[]]></system-err>
+</testsuite>

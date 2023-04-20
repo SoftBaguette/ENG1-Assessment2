@@ -21,7 +21,10 @@ import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -83,8 +86,88 @@ public class PlayScreen implements Screen {
     public static Boolean endless = false;
     public String difficulty = "";
     public static Integer reputation = 2;
+<<<<<<< HEAD
+    public static int money;
+=======
 
+>>>>>>> main
     public Boolean one_customer = true;
+
+
+    /** Because we are saving using CSV files, we will be reading in Strings.
+     * Therefore we need a way of mapping each purchasable station with a string, so that we can write
+     * e.g. "oven1" in the CSV file and the code knows which InteractiveTileObject it's referring to.
+     * Each purchasable station has attribute String name. The name should be unique.
+     * String name is used for the key in this mapping. This means that stations can be uniquely identified by their
+     * strings in stringsToStations, and strings/names that will correspond to the station are written to the file by getName().
+     */
+    // TODO: Define this Map in some sort of data file. Wherever a purchasable station is instantiated, you should also have stringsToStations.put(station.name, station)
+
+    static Map<String, InteractiveTileObject> stringsToStations = new HashMap<String, InteractiveTileObject>();
+
+
+
+
+
+    /** Reads a CSV of a game state and sets the class variables as appropriate.
+     *  CSV format: money, reputation, purchased stations
+     *  The HashMap stations is the same as stringsToStations. Once finalised, feel free to remove the parameter,
+     *  but stringsToStations might be moved to a separate data file at a later stage.
+     *
+     */
+
+    public void loadGameData(String filename, HashMap<String, InteractiveTileObject> stations) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+            // Read game data from CSV file
+            String[] elements = reader.readLine().split(",");
+            reputation = Integer.parseInt(elements[0]);
+            money = (Integer.parseInt(elements[1]));
+
+            String purchasedStationsString = elements[2];
+            String[] purchasedStations = purchasedStationsString.split(";");
+            for (String stationName : purchasedStations) {
+                InteractiveTileObject station = stations.get(stationName);
+                if (station != null) {
+                    station.setPurchased(true);
+                }
+            }
+
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error loading game data: " + e.getMessage());
+        }
+    }
+
+
+    public void saveGameData(String filename, HashMap<String, InteractiveTileObject> stations) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+
+            // Write game data to CSV file
+            writer.write(getReputation() + "," + getMoney() + ",");
+            StringBuilder purchasedStations = new StringBuilder();
+            for (InteractiveTileObject station : stations.values()) {
+                if (station.isPurchased() && station.purchasable) {
+                    if (purchasedStations.length() > 0) {
+                        purchasedStations.append(";");
+                    }
+                    purchasedStations.append(station.getName());
+                }
+            }
+            writer.write(purchasedStations.toString());
+
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Error saving game data: " + e.getMessage());
+        }
+    }
+    int getReputation() {return reputation;}
+    int getMoney() {return money;}
+
+
+
     /**
      * PlayScreen constructor initializes the game instance, sets initial conditions for scenarioComplete and createdOrder,
      * creates and initializes game camera and viewport,
@@ -92,9 +175,9 @@ public class PlayScreen implements Screen {
      * creates and initializes world, creates and initializes chefs and sets them, sets contact listener for world, and initializes ordersArray.
      * @param game The MainGame instance that the PlayScreen will be a part of.
      */
-
     public PlayScreen(MainGame game){
         this.game = game;
+        money = 0;
         scenarioComplete = Boolean.FALSE;
         createdOrder = Boolean.FALSE;
         gamecam = new OrthographicCamera();
@@ -143,6 +226,63 @@ public class PlayScreen implements Screen {
 
         reputation = 2;
 
+<<<<<<< HEAD
+    }
+
+
+    // Saved game constructor; use generateSaveState to create this.SavedGame
+    public PlayScreen(MainGame game, String SavedGame) {
+        this.game = game;
+        money = 0;
+        scenarioComplete = Boolean.FALSE;
+        createdOrder = Boolean.FALSE;
+        gamecam = new OrthographicCamera();
+        // FitViewport to maintain aspect ratio whilst scaling to screen size
+        gameport = new FitViewport(MainGame.V_WIDTH / MainGame.PPM, MainGame.V_HEIGHT / MainGame.PPM, gamecam);
+        // create HUD for score & time
+        hud = new HUD(game.batch);
+        // create orders hud
+        Orders orders = new Orders(game.batch);
+        // create map
+        TmxMapLoader mapLoader = new TmxMapLoader(new InternalFileHandleResolver());
+        map = mapLoader.load("NewKitchen.tmx");
+        renderer = new OrthogonalTiledMapRenderer(map, 1 / MainGame.PPM);
+        gamecam.position.set(gameport.getWorldWidth() / 2, gameport.getWorldHeight() / 2, 0);
+
+        world = new World(new Vector2(0,0), true);
+
+        b2world =  new B2WorldCreator(world, map, this);
+        tile_objects = b2world.getTiles();
+        for (InteractiveTileObject tile : tile_objects){
+            System.out.println(tile.type);
+        }
+
+        timeSeconds = 0f;
+
+        timeSecondsCount = 0f;
+        customers = new Customer[5];
+        current_customer = 0;
+        reputation = 2;
+
+        one_customer = true;
+
+
+
+        chef1 = new Chef(this.world, 31.5F,65);
+        chef2 = new Chef(this.world, 128,65);
+        customers[0] = new Customer(167,15, difficulty, 60);
+        customers[1] = new Customer(167,10, difficulty, 60);
+        last_customer = 2;
+        customer1 = new Customer(145,15, null, 100);
+        controlledChef = chef1;
+        world.setContactListener(new WorldContactListener());
+        controlledChef.notificationSetBounds("Down");
+
+        ordersArray = new ArrayList<>();
+
+        reputation = 2;
+=======
+>>>>>>> main
     }
 
     @Override

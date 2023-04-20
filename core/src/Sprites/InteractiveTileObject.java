@@ -18,12 +18,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import Ingredients.Ingredient;
-
-
-
-
-
-
+import com.team13.piazzapanic.PlayScreen;
 
 
 public class InteractiveTileObject {
@@ -34,14 +29,16 @@ public class InteractiveTileObject {
     public BodyDef bdefNew;
     public Ingredient ingredient;
     public String type;
-
+    public String name;
+    public int price;
 
     long start_time_interaction;
     boolean interacting;
     Ingredient item_on_station;
     ProgressBar progressBar;
     int progress;
-
+    public boolean purchasable;
+    boolean isPurchased;
     long start_time_burning;
     boolean burning;
     float burn_time = 5000f;
@@ -66,15 +63,17 @@ public class InteractiveTileObject {
      *             - Oven - Oven
      *             - Plate - Place to assemble the food
      */
+
+    // This constructor is only used for stations that exist initially in the game
     public InteractiveTileObject(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type) {
 
 
         bdefNew = bdef;
-       
+        // No need to set a price.
+        price = 0;
         Body b2body = world.createBody(bdef);
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((rectangle.getWidth() / 2f) / MainGame.PPM, (rectangle.getHeight() / 2f) / MainGame.PPM);
-
 
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
@@ -85,15 +84,50 @@ public class InteractiveTileObject {
         interacting = false;
         burning = false;
         item_on_station = null;
+        isPurchased = true;
        
         progressBar = new ProgressBar(0.5f, 0.5f, 0.25f,0.075f);
        
         plate_items = new ArrayList<>();
+        purchasable = false;
 
 
        
     }
+    // Use this constructor for purchasable stations
+    public InteractiveTileObject(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type, boolean isPurchased, int price) {
 
+        purchasable = true;
+        this.isPurchased = isPurchased;
+        bdefNew = bdef;
+        this.price = price;
+        Body b2body = world.createBody(bdef);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox((rectangle.getWidth() / 2f) / MainGame.PPM, (rectangle.getHeight() / 2f) / MainGame.PPM);
+
+<<<<<<< HEAD
+
+        // TODO: All InteractiveTileObject should have collisions off, be unable to be interacted with, and have no sprite drawn if isPurchased == false.
+        FixtureDef fdef = new FixtureDef();
+        fdef.shape = shape;
+        fixture = b2body.createFixture(fdef);
+        fixture.setUserData(this);
+        ingredient = null;
+        this.type = type;
+        interacting = false;
+        burning = false;
+        item_on_station = null;
+
+        progressBar = new ProgressBar(0.5f, 0.5f, 0.25f,0.075f);
+
+        plate_items = new ArrayList<>();
+
+
+
+    }
+
+=======
+>>>>>>> main
     /**
      * Constructor for the class without b2bodies and textures which causes issues when testing.
      *
@@ -110,6 +144,7 @@ public class InteractiveTileObject {
         interacting = false;
         item_on_station = null;
         progress = 0;
+        isPurchased = true;
 
 
         plate_items = new ArrayList<>();
@@ -122,6 +157,7 @@ public class InteractiveTileObject {
      * @param chef the chef that interacted with the station
      */
     public void interact(Chef chef){
+        if(!isPurchased) {return;}
         System.out.println("Interacted with " + type + " station");
 
         if (item_on_station  != null && interacting == false){
@@ -148,7 +184,11 @@ public class InteractiveTileObject {
     * @param chef TODO is this param needed
     */
     public void update(Chef chef){
+<<<<<<< HEAD
+        if(!isPurchased){return;}
+=======
         
+>>>>>>> main
         if (interacting == true && burning == false){
             float percent = (float) (System.currentTimeMillis() - start_time_interaction+1)/(item_on_station.prepareTime *1000);
             progress = (int) (percent*100);
@@ -195,6 +235,10 @@ public class InteractiveTileObject {
      * @param batch The batch used for drawing sprites to the screen
      */
     public void draw_progress_bar(Batch batch){
+<<<<<<< HEAD
+        if(!isPurchased){return;}
+=======
+>>>>>>> main
         if (interacting == true){
             progressBar.change_pos(getX(), getY());
             progressBar.setProgress(progress);
@@ -341,6 +385,7 @@ public class InteractiveTileObject {
      * @return true if a recipe has been made, false otherwise
      */
     public Boolean checkRecipeCreated(){
+        if(!isPurchased){return false;}
         Boolean item_made = false;
         System.out.println("CheckingRecipe");
         Set<String> salad_ingdredients = new HashSet<String>();
@@ -380,7 +425,7 @@ public class InteractiveTileObject {
                     plate_items = new ArrayList<>();
                     plate_items.add(new Ingredient("Burger", 0,0,0, null));
                     item_made = true;
-                    System.out.println("Made Burger");
+                    System.out.println("Making a burger");
                 }    
                 
                 if (pizza_ingredients.contains(ing.name)){
@@ -422,6 +467,10 @@ public class InteractiveTileObject {
      * @param chef the chef that interacted with the station
      */
     public void pickUpItem(Chef chef){
+<<<<<<< HEAD
+        if(!isPurchased){return;}
+=======
+>>>>>>> main
 
         //chef.setInHandsIng(item_on_station);
         if (chef.stack.isFull()){
@@ -436,6 +485,7 @@ public class InteractiveTileObject {
     }
 
     public void completed_dish(){
+        if(!isPurchased){return;}
         Set<String> available_dishes = new HashSet<>();
         available_dishes.add("Burger");
         available_dishes.add("Salad");
@@ -448,6 +498,7 @@ public class InteractiveTileObject {
      * @param batch The batch used for drawing sprites to the screen
      */
     public void draw_item_on_station(SpriteBatch batch){
+        if(!isPurchased){return;}
         if (plate_items.size() > 0){
             for(Object ing : plate_items){
                 Ingredient ingNew = (Ingredient) ing;
@@ -461,6 +512,10 @@ public class InteractiveTileObject {
 
 
     public void serving_interact(Chef chef, Customer customer, int reputation, int current_customer){
+<<<<<<< HEAD
+        if(!isPurchased){return;}
+=======
+>>>>>>> main
         reputation += customer.served(chef.stack.pop(), current_customer);
         //chef.setInHandsIng(null);
 
@@ -499,5 +554,28 @@ public class InteractiveTileObject {
 
 //    Added for testing purposes
     public Boolean getInteractingStatus() {return interacting;}
+<<<<<<< HEAD
+
+    public boolean isPurchased() {return this.isPurchased;}
+
+    public String getName() {return this.name;}
+
+    public boolean purchase(){
+        if(PlayScreen.money >= price) {
+            setPurchased(true);
+            PlayScreen.money -= price;
+            System.out.println("Purchased!");
+            return true;
+        }
+        System.out.println("Insufficient funds!");
+        return false;
+    }
+    public void setPurchased(boolean b) {this.isPurchased = b;
+    }
+    }
+
+
+=======
 }
+>>>>>>> main
 
