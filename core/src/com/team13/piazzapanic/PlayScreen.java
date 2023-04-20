@@ -90,6 +90,7 @@ public class PlayScreen implements Screen {
 
     public Boolean one_customer = true;
     public Texture instructionImage = new Texture("startImage.png");
+    public Boolean isEscPressed = false;
 
 
     /** Because we are saving using CSV files, we will be reading in Strings.
@@ -263,6 +264,7 @@ public class PlayScreen implements Screen {
 
         one_customer = true;
 
+        isEscPressed = false;
 
 
         chef1 = new Chef(this.world, 31.5F,65);
@@ -357,7 +359,12 @@ public class PlayScreen implements Screen {
                     controlledChef.setChefSkin(null);
                 }
 
+            
             }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+                isEscPressed = !isEscPressed;
+            }
+
         }
 
     /**
@@ -563,6 +570,11 @@ public class PlayScreen implements Screen {
         for (InteractiveTileObject tile : tile_objects){
             tile.draw_progress_bar(game.batch);
         }
+
+        if (isEscPressed){
+            game.batch.draw(instructionImage, 0, 0, 1.88f, 1.88f);
+        }
+
         game.batch.end();
     }
 
