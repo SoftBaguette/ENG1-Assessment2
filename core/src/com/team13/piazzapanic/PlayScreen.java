@@ -86,7 +86,11 @@ public class PlayScreen implements Screen {
     public static Boolean endless = false;
     public String difficulty = "";
     public static Integer reputation = 2;
+<<<<<<< HEAD
     public static int money;
+=======
+
+>>>>>>> main
     public Boolean one_customer = true;
 
 
@@ -222,6 +226,7 @@ public class PlayScreen implements Screen {
 
         reputation = 2;
 
+<<<<<<< HEAD
     }
 
 
@@ -276,6 +281,8 @@ public class PlayScreen implements Screen {
         ordersArray = new ArrayList<>();
 
         reputation = 2;
+=======
+>>>>>>> main
     }
 
     @Override
