@@ -49,7 +49,7 @@ public class TestInteractiveTileObject {
     @Test
     public void testPlateInteract(){
         Chef chef1 = new Chef();
-        Ingredient test_salad = new Ingredient("Salad", null, 0, 0, null);
+        Ingredient test_salad = new Ingredient("Lettuce", 0, 0, 0, null);
         chef1.stack.push(test_salad);
         plate.interact(chef1);
         plate.update(chef1);
