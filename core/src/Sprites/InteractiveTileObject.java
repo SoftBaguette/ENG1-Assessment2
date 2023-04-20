@@ -415,7 +415,7 @@ public class InteractiveTileObject {
                     plate_items = new ArrayList<>();
                     plate_items.add(new Ingredient("Burger", 0,0,0, null));
                     item_made = true;
-                    System.out.println("Made Burger");
+                    System.out.println("Making a burger");
                 }    
                 
                 if (pizza_ingredients.contains(ing.name)){
