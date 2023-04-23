@@ -297,8 +297,6 @@ public class PlayScreen implements Screen {
      * If the controlled chef does not have the user control,
      * the method checks if chef1 or chef2 have the user control and sets the control to that chef.
      *
-     * If the controlled chef has the user control,
-     * it checks if the 'W', 'A', 'S', or 'D' keys are pressed and sets the velocity of the chef accordingly.
      *
      * If the 'E' key is just pressed and the chef is touching a tile,
      * it checks the type of tile and sets the chef's in-hands ingredient accordingly.
@@ -306,6 +304,10 @@ public class PlayScreen implements Screen {
      * The method also sets the direction of the chef based on its linear velocity.
      *
      * @param dt is the time delta between the current and previous frame.
+     * 
+     * Updates:
+     *  - Significantly reduced the size of this function by using the improved interactive tile object
+     *  - Moved chef movement to the chef class
      */
 
     public void handleInput(float dt){
@@ -371,6 +373,9 @@ public class PlayScreen implements Screen {
      * The update method updates the game elements, such as camera and characters,
      * based on a specified time interval "dt".
      * @param dt time interval for the update
+     * 
+     * Updates:
+     *  - Each interactive tile object is updated when they are interacting
     */
     public void update(float dt){
         handleInput(dt);
@@ -444,6 +449,11 @@ public class PlayScreen implements Screen {
      Additionally, it checks the state of the game and draws the ingredients, completed recipes, and notifications on the screen.
 
      @param delta The time in seconds since the last frame.
+
+     Updates: 
+        - Render the chef's stack
+        - Render the tile's progress bar
+        - Create new customers
      */
     @Override
     public void render(float delta){
@@ -482,7 +492,6 @@ public class PlayScreen implements Screen {
 
         if(Math.round(timeSecondsCount) == 5 && createdOrder == Boolean.FALSE){
             createdOrder = Boolean.TRUE;
-            //createOrder();
         }
         float period = 1f;
         if(timeSeconds > period) {
@@ -499,10 +508,6 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         updateOrder();
-        //game.batch.draw(new Texture("Chef/Chef_normal.png"), chef1.getX(), chef1.getY(), chef1.getWidth(), chef1.getHeight());
-        //chef1.draw_chef(game.batch);
-        //System.out.println(Gdx.input.getX());
-        //System.out.println(Gdx.input.getY());
         chef1.draw(game.batch);
         chef1.draw_item(game.batch);
         chef2.draw(game.batch);
@@ -518,7 +523,6 @@ public class PlayScreen implements Screen {
                 if (customers[i].status == "destroy"){
                     customers[i] = null;
                 }
-                //System.out.println(current_customer);
             }
         }
         if (customers[current_customer] != null){
@@ -526,26 +530,12 @@ public class PlayScreen implements Screen {
         }
         
         
-        //customer1.draw(game.batch);
-        //customer1.move(1, current_customer);
-        //TODO check this section about drawing on plate station
+
         for (InteractiveTileObject tile : tile_objects){
-            // if (tile.type != "Oven"){
-            //     tile.draw_item_on_station(game.batch);
-            // }
             tile.draw_item_on_station(game.batch);
             
         }
-        /*
-        if (plateStation.getPlate().size() > 0){
-            for(Object ing : plateStation.getPlate()){
-                Ingredient ingNew = (Ingredient) ing;
-                ingNew.create(plateStation.getX(), plateStation.getY(),game.batch);
-            }
-        } else if (plateStation.getCompletedRecipe() != null){
-            Recipe recipeNew = plateStation.getCompletedRecipe();
-            recipeNew.create(plateStation.getX(), plateStation.getY(), game.batch);
-        }*/
+
 
         if (!chef1.getUserControlChef()) {
             if (chef1.getTouchingTile() != null && chef1.getInHandsIng() != null){
@@ -561,12 +551,7 @@ public class PlayScreen implements Screen {
                 }
             }
         }
-        // if (chef1.previousInHandRecipe != null){
-        //     chef1.displayIngDynamic(game.batch);
-        // }
-        // if (chef2.previousInHandRecipe != null){
-        //     chef2.displayIngDynamic(game.batch);
-        // }
+
         for (InteractiveTileObject tile : tile_objects){
             tile.draw_progress_bar(game.batch);
         }
@@ -579,9 +564,13 @@ public class PlayScreen implements Screen {
     }
 
 
+    /**
+     * Responsible for creating customers and adds them to the customers array
+     */
+    //TODO Add endless to this
     public void create_customer(){
         if (current_customer >= customers.length){
-            System.out.println("AHAHHAHH");
+            System.out.println("Broken");
 
         }else{
             Random r = new Random();
