@@ -2,6 +2,7 @@ package Sprites;
 
 import Ingredients.*;
 import Recipe.*;
+import Recipe.Ingredients.Ingredient;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;

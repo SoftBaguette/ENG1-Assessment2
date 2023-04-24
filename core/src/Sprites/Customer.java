@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.team13.piazzapanic.MainGame;
 import com.team13.piazzapanic.PlayScreen;
 
-import Ingredients.Ingredient;
+import Recipe.Ingredients.Ingredient;
 
 public class Customer {
 

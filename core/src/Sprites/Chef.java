@@ -2,6 +2,7 @@ package Sprites;
 
 
 import Ingredients.*;
+import Recipe.Ingredients.Ingredient;
 import Recipe.Recipe;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;

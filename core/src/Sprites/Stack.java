@@ -1,6 +1,6 @@
 package Sprites;
 
-import Ingredients.Ingredient;
+import Recipe.Ingredients.Ingredient;
 
 public class Stack {
     Ingredient arr[];

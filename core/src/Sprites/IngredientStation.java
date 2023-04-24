@@ -5,7 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
-import Ingredients.Ingredient;
+import Recipe.Ingredients.Ingredient;
 
 
 public class IngredientStation extends InteractiveTileObject{
