@@ -1,6 +1,6 @@
 package Recipe;
 
-import Recipe.Ingredients.Ingredient;
+import Ingredients.Ingredient;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  * The Recipe class is a subclass of Sprite that represents a completed dish in the kitchen game.
- * It holds an ArrayList of {@link Ingredient}s and a Texture of the completed dish image.
+ * It holds an ArrayList of {@link Ingredients.Ingredient}s and a Texture of the completed dish image.
  *
  */
 public class Recipe extends Sprite {

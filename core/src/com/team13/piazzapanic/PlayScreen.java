@@ -333,7 +333,7 @@ public class PlayScreen implements Screen {
 
                     if (tileName == "Sprites.InteractiveTileObject"){
                         if (tile.type == "Serving"){
-                            if (customers[current_customer] != null){
+                            if (customers[current_customer] != null && controlledChef.stack.isEmpty() == false){
                                 tile.serving_interact(controlledChef, customers[current_customer], 0, current_customer);
                                 System.out.println(current_customer);
                             }

@@ -12,7 +12,6 @@ import com.badlogic.gdx.utils.viewport.*;
 
 /**
  * This class implements the `Screen` interface and represents the start screen of the game.
- * Update: Added button to choose game mode and difficulty
  */
 public class StartScreen implements Screen {
     private final MainGame game;
@@ -123,9 +122,7 @@ public class StartScreen implements Screen {
         update();
     }
 
-    /*
-    * Updates what button the user has selected
-    */
+    
     public void update(){
         if (show_instruction){
             if (System.currentTimeMillis() - startTime > 3000){

@@ -38,7 +38,7 @@ public class EndScreen implements Screen {
     Texture RedButton = new Texture("RedButton.png");
 
     /**
-     * Constructor for EndScreen.
+     * Constructor for StartScreen.
      *
      * @param game the game object.
      */
@@ -93,9 +93,7 @@ public class EndScreen implements Screen {
         update();
     }
 
-    /*
-    * Updates what button the user has selected
-    */
+    
     public void update(){
         if (Gdx.input.isKeyJustPressed(Input.Keys.W) ){
             current_button --;

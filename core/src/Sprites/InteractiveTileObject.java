@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -18,7 +17,7 @@ import com.team13.piazzapanic.MainGame;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
-import Recipe.Ingredients.Ingredient;
+import Ingredients.Ingredient;
 import com.team13.piazzapanic.PlayScreen;
 
 
@@ -26,7 +25,7 @@ public class InteractiveTileObject {
    
     protected Fixture fixture;
 
-    public Texture purchaseBox;
+
     public BodyDef bdefNew;
     public Ingredient ingredient;
     public String type;
@@ -117,9 +116,7 @@ public class InteractiveTileObject {
         interacting = false;
         burning = false;
         item_on_station = null;
-        purchaseBox = new Texture("purchasebox.png");
-        SpriteBatch batch = new SpriteBatch();
-        batch.draw(purchaseBox, getX(), getY());
+
         progressBar = new ProgressBar(0.5f, 0.5f, 0.25f,0.075f);
 
         plate_items = new ArrayList<>();

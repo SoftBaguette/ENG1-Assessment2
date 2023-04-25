@@ -1,6 +1,6 @@
 package Recipe;
 
-import Recipe.Ingredients.Ingredient;
+import Ingredients.Ingredient;
 import Sprites.AllTextures;
 import com.badlogic.gdx.graphics.Texture;
 import java.util.ArrayList;

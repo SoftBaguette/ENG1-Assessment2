@@ -19,7 +19,7 @@ import com.team13.piazzapanic.MainGame;
 import com.team13.piazzapanic.PlayScreen;
 
 
-import Recipe.Ingredients.Ingredient;
+import Ingredients.Ingredient;
 
 
 

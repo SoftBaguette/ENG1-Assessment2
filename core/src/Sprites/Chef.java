@@ -2,7 +2,6 @@ package Sprites;
 
 
 import Ingredients.*;
-import Recipe.Ingredients.Ingredient;
 import Recipe.Recipe;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -93,7 +92,10 @@ public class Chef extends Sprite {
         holdingChef = null;
         circleSprite = null;
         
-
+        /*
+        normalChef = new Texture("Chef/Chef_normal.png");
+        holdingChef = new Texture("Chef/Chef_holding.png");
+        skinNeeded = normalChef;*/
         currentState = State.DOWN;
         float chefWidth = 13 / MainGame.PPM;
         float chefHeight = 20 / MainGame.PPM;
@@ -106,6 +108,8 @@ public class Chef extends Sprite {
         inHandsRecipe = null;
         userControlChef = true;
         chefMove = true;
+        //Texture circleTexture = new Texture("Chef/chefIdentifier.png");
+        //circleSprite = new Sprite(circleTexture);
         nextOrderAppearTime = 3;
     }
 
