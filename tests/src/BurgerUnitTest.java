@@ -131,44 +131,6 @@ public class BurgerUnitTest {
         assertTrue("Binning lettuce", chef1.stack.isEmpty());
     }
 
-    // @Test
-    // public void testServingWrongOrder(){
-    //     Chef chef1 = new Chef();
-    //     chef1.setInHandsIng(testSalad);
-    //     cust1 = new Customer(0,0,"Easy", 60);
-    //     cust1.desired_ingredient = new Ingredient("Burger", null, 0, 0, null);
-    //     cust1.served(chef1.getInHandsIng(),0);
-    //     assertTrue("Serving salad instead of burger", (cust1.status != "served"));
-
-    // }
-
-    // @Test
-    // public void testServingSingleIngredient(){
-    //     Chef chef1 = new Chef();
-    //     chef1.setInHandsIng(new Ingredient("Burger_bun", null, 0, 0, null));
-    //     cust1 = new Customer(0,0,"Easy", 60);
-    //     cust1.desired_ingredient = new Ingredient("Burger", null, 0, 0, null);
-
-    //     cust1.served(chef1.getInHandsIng(),0);
-
-
-    //     assertTrue("Serving burger bun instead of burger", (cust1.status != "served"));
-    // }
-
-//    @Test
-//    public void TestServeNothing(){
-//        Chef chef1 = new Chef();
-//        Customer cust1 = new Customer("Easy",60);
-//        InteractiveTileObject plate = new InteractiveTileObject("Plate");
-//
-//        cust1.desired_ingredient = new Ingredient("Burger", null, 0, 0, null);
-//        chef1.setInHandsIng(null);
-//        cust1.served(chef1.getInHandsIng(), 0);
-//
-//        assertTrue("Serve Nothing", (cust1.status != "served"));
-//    }
-
-    
 
 
 
