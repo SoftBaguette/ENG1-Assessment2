@@ -339,7 +339,7 @@ public class PlayScreen implements Screen {
                             }
                             
                         }else{
-                            tile.interact(chef1);
+                            tile.interact(controlledChef);
                         }
                     }
 
