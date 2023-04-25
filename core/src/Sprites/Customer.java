@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.g2d.Batch;
 import com.team13.piazzapanic.MainGame;
 import com.team13.piazzapanic.PlayScreen;
 
-import Recipe.Ingredients.Ingredient;
+import Ingredients.Ingredient;
 
 public class Customer {
 
@@ -163,26 +163,31 @@ public class Customer {
      * @return
      */
     public int served(Ingredient recipe_ingredient, int current_customer){
+        Integer value = 0;
         if (recipe_ingredient != null){
             if (recipe_ingredient.name == desired_ingredient.name){
                 if (PlayScreen.reputation < 3){
                     PlayScreen.reputation ++;
+                    value = 1;
                 }
                 
             }else{
                 PlayScreen.reputation --;
+                value = -1;
             }
+            //TODO change this to be different
+            status = "served";
+            PlayScreen.current_customer +=1;
+            if (PlayScreen.endless == true && PlayScreen.current_customer == 4){
+                PlayScreen.current_customer = 0;
+            }
+            current_customer += 1;
+            System.out.println("Current customer: " + current_customer);
+            
         }
+        return value;
         
-        //TODO change this to be different
-        status = "served";
-        PlayScreen.current_customer +=1;
-        if (PlayScreen.endless == true && PlayScreen.current_customer == 4){
-            PlayScreen.current_customer = 0;
-        }
-        current_customer += 1;
-        System.out.println("Current customer: " + current_customer);
-        return 0;
+        
     }
 
     /**
