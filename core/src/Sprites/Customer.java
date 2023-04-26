@@ -29,6 +29,7 @@ public class Customer {
     public Texture salad_recipe_texture;
     public Texture burger_recipe_texture;
     public Texture pizza_recipe_texture;
+    public Texture potato_recipe_texture;
     public Boolean leaving = false;
     public Boolean now_serving = false;
 
@@ -90,6 +91,7 @@ public class Customer {
         salad_recipe_texture = new Texture("Food/salad_recipe.png");
         burger_recipe_texture = new Texture("Food/burger_recipe.png");
         pizza_recipe_texture = new Texture("Food/pizza_recipe.png");
+        potato_recipe_texture = new Texture("Food/potato_recipe.png");
 
 
     }
@@ -215,6 +217,9 @@ public class Customer {
             }
             else if (desired_ingredient.name == "Pizza"){
                 batch.draw(pizza_recipe_texture, 1.1f,1.5f, 0.4f, 0.3f);
+            }
+            else if (desired_ingredient.name == "PotatoCheese"){
+                batch.draw(potato_recipe_texture, 1.1f,1.5f, 0.4f, 0.3f);
             }
         }
     }

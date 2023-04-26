@@ -75,11 +75,10 @@ public class Chef extends Sprite {
     private float notificationWidth;
     private float notificationHeight;
 
-
-
     public int nextOrderAppearTime;
     public Recipe previousInHandRecipe;
 
+    public float speed_multiplier;
 
     // Used for Testing
     public Chef(){
@@ -111,6 +110,7 @@ public class Chef extends Sprite {
         //Texture circleTexture = new Texture("Chef/chefIdentifier.png");
         //circleSprite = new Sprite(circleTexture);
         nextOrderAppearTime = 3;
+        speed_multiplier = 1;
     }
 
 
@@ -152,6 +152,7 @@ public class Chef extends Sprite {
         Texture circleTexture = new Texture("Chef/chefIdentifier.png");
         circleSprite = new Sprite(circleTexture);
         nextOrderAppearTime = 3;
+        speed_multiplier = 1;
     }
 
 
@@ -257,7 +258,6 @@ public class Chef extends Sprite {
                 float xVelocity = 0;
                 float yVelocity = 0;
 
-                float speed_multiplier = 1;
 
                 if (Gdx.input.isKeyPressed(Input.Keys.W)) {
                     yVelocity += 0.5f * speed_multiplier;
