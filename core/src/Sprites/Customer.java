@@ -149,6 +149,7 @@ public class Customer {
             status = "served";
             leaving = true;
             PlayScreen.reputation --;
+            PlayScreen.current_customer ++;
 
             //TODO fix this thing!!!!
             served(null, current_customer);

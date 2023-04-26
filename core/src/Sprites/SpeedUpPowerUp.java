@@ -18,7 +18,7 @@ public class SpeedUpPowerUp {
     }
 
     public void increase_speed_mult(Chef chef){
-        chef.speed_multiplier += 0.5f;
+        chef.speed_multiplier += 0.25f;
     }
 
     public Boolean isColliding(Chef chef){
