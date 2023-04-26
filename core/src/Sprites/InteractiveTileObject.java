@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -38,7 +38,7 @@ public class InteractiveTileObject {
     ProgressBar progressBar;
     int progress;
     public boolean purchasable;
-    boolean isPurchased;
+    public boolean isPurchased;
     long start_time_burning;
     boolean burning;
     float burn_time = 5000f;
@@ -46,7 +46,7 @@ public class InteractiveTileObject {
 
     ArrayList<Ingredient> plate_items;
 
-
+    public Texture padlock_texture;
    
 
 
@@ -91,7 +91,7 @@ public class InteractiveTileObject {
         plate_items = new ArrayList<>();
         purchasable = false;
 
-
+        padlock_texture = new Texture("PadLock.png");
        
     }
     // Use this constructor for purchasable stations
@@ -105,8 +105,6 @@ public class InteractiveTileObject {
         PolygonShape shape = new PolygonShape();
         shape.setAsBox((rectangle.getWidth() / 2f) / MainGame.PPM, (rectangle.getHeight() / 2f) / MainGame.PPM);
 
-
-        // TODO: All InteractiveTileObject should have collisions off, be unable to be interacted with, and have no sprite drawn if isPurchased == false.
         FixtureDef fdef = new FixtureDef();
         fdef.shape = shape;
         fixture = b2body.createFixture(fdef);
@@ -387,7 +385,6 @@ public class InteractiveTileObject {
      * @return true if a recipe has been made, false otherwise
      */
     public Boolean checkRecipeCreated(){
-        if(!isPurchased){return false;}
         Boolean item_made = false;
         System.out.println("CheckingRecipe");
         Set<String> salad_ingdredients = new HashSet<String>();
@@ -469,7 +466,6 @@ public class InteractiveTileObject {
      * @param chef the chef that interacted with the station
      */
     public void pickUpItem(Chef chef){
-        if(!isPurchased){return;}
 
 
 
@@ -486,7 +482,6 @@ public class InteractiveTileObject {
     }
 
     public void completed_dish(){
-        if(!isPurchased){return;}
         Set<String> available_dishes = new HashSet<>();
         available_dishes.add("Burger");
         available_dishes.add("Salad");
@@ -499,7 +494,6 @@ public class InteractiveTileObject {
      * @param batch The batch used for drawing sprites to the screen
      */
     public void draw_item_on_station(SpriteBatch batch){
-        if(!isPurchased){return;}
         if (plate_items.size() > 0){
             for(Object ing : plate_items){
                 Ingredient ingNew = (Ingredient) ing;
@@ -511,9 +505,14 @@ public class InteractiveTileObject {
         }
     }
 
+    public void draw_padlock(Batch batch){
+        if (isPurchased == false){
+            batch.draw(padlock_texture, getX()-0.05f, getY()-0.05f, 0.1f, 0.1f);
+        }
+    }
+
 
     public void serving_interact(Chef chef, Customer customer, int reputation, int current_customer){
-        if(!isPurchased){return;}
 
         reputation += customer.served(chef.stack.pop(), current_customer);
         //chef.setInHandsIng(null);
