@@ -85,11 +85,32 @@ public class BurgerUnitTest {
 
     @Test
     public void testMakePizza(){
-        //Chop tomatoe
-        //Chop cheese
-        //get pizza dough
-        //add to assembly station
-        //put in oven
+        Chef chef1 = new Chef();
+        tomato_box.interact(chef1);
+        chopping_station.interact(chef1);
+        wait(2000);
+        chopping_station.update(chef1);
+        chopping_station.interact(chef1);
+
+        plate.interact(chef1);
+
+        cheese_box.interact(chef1);
+        chopping_station.interact(chef1);
+        wait(2000);
+        chopping_station.update(chef1);
+        chopping_station.interact(chef1);
+        plate.interact(chef1);
+
+        dough_box.interact(chef1);
+        plate.interact(chef1);
+
+        oven.interact(chef1);
+        wait(5000);
+
+        oven.update(chef1);
+        oven.interact(chef1);
+
+        assertTrue("Making a salad", chef1.stack.peak().name == "Pizza");
     }
 
     @Test
@@ -104,7 +125,7 @@ public class BurgerUnitTest {
         potato_box.interact(chef1);
         plate.interact(chef1);
         oven.interact(chef1);
-        wait(2000);
+        wait(5000);
         oven.update(chef1);
         oven.interact(chef1);
 
