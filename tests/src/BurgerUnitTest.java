@@ -104,6 +104,11 @@ public class BurgerUnitTest {
         potato_box.interact(chef1);
         plate.interact(chef1);
         oven.interact(chef1);
+        wait(2000);
+        oven.update(chef1);
+        oven.interact(chef1);
+
+        assertTrue("Making a salad", chef1.stack.peak().name == "PotatoCheese");
 
     }
 
