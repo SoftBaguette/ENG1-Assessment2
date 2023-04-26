@@ -549,6 +549,8 @@ public class PlayScreen implements Screen {
         for (InteractiveTileObject tile : tile_objects){
             tile.draw_progress_bar(game.batch);
             tile.draw_item_on_station(game.batch);
+            tile.draw_padlock(game.batch);
+            //tile.isPurchased = false;
         }
 
         if (isEscPressed){
