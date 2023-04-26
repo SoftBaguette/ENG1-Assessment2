@@ -406,47 +406,7 @@ public class PlayScreen implements Screen {
         hud.updateOrder(Boolean.FALSE, reputation);
     }
 
-    /**
-     * Creates the orders randomly and adds to an array, updates the HUD.
-     */
-    public void createOrder() {
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 2 + 1);
-        Texture burger_recipe = new Texture("Food/burger_recipe.png");
-        Texture salad_recipe = new Texture("Food/salad_recipe.png");
-        Order order;
-
-        for(int i = 0; i<5; i++){
-            if(randomNum==1) {
-                order = new Order(PlateStation.burgerRecipe, burger_recipe);
-            }
-            else {
-                order = new Order(PlateStation.saladRecipe, salad_recipe);
-            }
-            ordersArray.add(order);
-            randomNum = ThreadLocalRandom.current().nextInt(1, 2 + 1);
-        }
-        hud.updateOrder(Boolean.FALSE, 1);
-    }
-
-    /**
-     * Updates the orders as they are completed, or if the game scenario has been completed.
-     */
-    public void updateOrder(){
-        if(scenarioComplete==Boolean.TRUE) {
-            hud.updateScore(Boolean.TRUE, (6 - ordersArray.size()) * 35);
-            hud.updateOrder(Boolean.TRUE, 0);
-            return;
-        }
-        if(ordersArray.size() != 0) {
-            if (ordersArray.get(0).orderComplete) {
-                hud.updateScore(Boolean.FALSE, (6 - ordersArray.size()) * 35);
-                ordersArray.remove(0);
-                hud.updateOrder(Boolean.FALSE, 6 - ordersArray.size());
-                return;
-            }
-            ordersArray.get(0).create(trayX, trayY, game.batch);
-        }
-    }
+    
 
     /**
 
@@ -462,6 +422,7 @@ public class PlayScreen implements Screen {
         - Render the chef's stack
         - Render the tile's progress bar
         - Create new customers
+        - Render and interact with powerups
      */
     @Override
     public void render(float delta){
@@ -477,23 +438,29 @@ public class PlayScreen implements Screen {
             one_powerup = false;
 
         }
-        else if (HUD.worldTimerS != 59 ||HUD.worldTimerS != 30){
+        else if (HUD.worldTimerS != 59 &&HUD.worldTimerS != 30){
             one_powerup = true;
         }
 
         if (endless == false){
-            if (HUD.worldTimerS == 59 && one_customer == true  && last_customer < 4){
-                //TODO determine if scenario mode is over
+            if ((HUD.worldTimerS == 59 ||HUD.worldTimerS == 30) && one_customer == true  && last_customer < 4){
+                
                 System.out.println("Created customer");
                 System.out.println(last_customer);
                 create_customer();
                 
                 one_customer = false;
-            }else if (HUD.worldTimerS != 59){
+
+                // Scenario mode over
+                if (last_customer == 4){
+                    reputation = 0;
+                }
+
+            }else if (HUD.worldTimerS != 59 && HUD.worldTimerS != 30){
                 one_customer = true;
             }
         }else{
-            if (HUD.worldTimerS == 59 && one_customer == true){
+            if ((HUD.worldTimerS == 59 ||HUD.worldTimerS == 30) && one_customer == true){
                 System.out.println("Created customer");
                 System.out.println(last_customer);
                 if (last_customer == 4){
@@ -502,7 +469,7 @@ public class PlayScreen implements Screen {
                 create_customer();
                 
                 one_customer = false;
-            }else if (HUD.worldTimerS != 59){
+            }else if (HUD.worldTimerS != 59 && HUD.worldTimerS != 30){
                 one_customer = true;
             }
         }
@@ -553,19 +520,15 @@ public class PlayScreen implements Screen {
 
                 if (customers[i].status == "destroy"){
                     customers[i] = null;
+                    //current_customer ++;
                 }
+
             }
         }
         if (customers[current_customer] != null){
             customers[current_customer].draw_order(game.batch);
         }
         
-        
-
-        for (InteractiveTileObject tile : tile_objects){
-            tile.draw_item_on_station(game.batch);
-            
-        }
 
 
         if (!chef1.getUserControlChef()) {
@@ -585,6 +548,7 @@ public class PlayScreen implements Screen {
 
         for (InteractiveTileObject tile : tile_objects){
             tile.draw_progress_bar(game.batch);
+            tile.draw_item_on_station(game.batch);
         }
 
         if (isEscPressed){
@@ -598,7 +562,6 @@ public class PlayScreen implements Screen {
     /**
      * Responsible for creating customers and adds them to the customers array
      */
-    //TODO Add endless to this
     public void create_customer(){
         if (current_customer >= customers.length){
             System.out.println("Broken");
@@ -646,6 +609,47 @@ public class PlayScreen implements Screen {
     @Override
     public void hide(){
 
+    }
+    /**
+     * Creates the orders randomly and adds to an array, updates the HUD.
+     */
+    public void createOrder() {
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 2 + 1);
+        Texture burger_recipe = new Texture("Food/burger_recipe.png");
+        Texture salad_recipe = new Texture("Food/salad_recipe.png");
+        Order order;
+
+        for(int i = 0; i<5; i++){
+            if(randomNum==1) {
+                order = new Order(PlateStation.burgerRecipe, burger_recipe);
+            }
+            else {
+                order = new Order(PlateStation.saladRecipe, salad_recipe);
+            }
+            ordersArray.add(order);
+            randomNum = ThreadLocalRandom.current().nextInt(1, 2 + 1);
+        }
+        hud.updateOrder(Boolean.FALSE, 1);
+    }
+
+    /**
+     * Updates the orders as they are completed, or if the game scenario has been completed.
+     */
+    public void updateOrder(){
+        if(scenarioComplete==Boolean.TRUE) {
+            hud.updateScore(Boolean.TRUE, (6 - ordersArray.size()) * 35);
+            hud.updateOrder(Boolean.TRUE, 0);
+            return;
+        }
+        if(ordersArray.size() != 0) {
+            if (ordersArray.get(0).orderComplete) {
+                hud.updateScore(Boolean.FALSE, (6 - ordersArray.size()) * 35);
+                ordersArray.remove(0);
+                hud.updateOrder(Boolean.FALSE, 6 - ordersArray.size());
+                return;
+            }
+            ordersArray.get(0).create(trayX, trayY, game.batch);
+        }
     }
 
     @Override
