@@ -92,6 +92,10 @@ public class PlayScreen implements Screen {
     public Texture instructionImage = new Texture("startImage.png");
     public Boolean isEscPressed = false;
 
+    public SpeedUpPowerUp[] powerUps = new SpeedUpPowerUp[20];
+    public int powerup_counter = 1;
+    public boolean one_powerup = true;
+
 
     /** Because we are saving using CSV files, we will be reading in Strings.
      * Therefore we need a way of mapping each purchasable station with a string, so that we can write
@@ -224,6 +228,10 @@ public class PlayScreen implements Screen {
         ordersArray = new ArrayList<>();
 
         reputation = 2;
+        
+        powerUps[0] = new SpeedUpPowerUp(0.55f,0.55f, 0.05f,0.05f);
+
+       
 
     }
 
@@ -463,6 +471,16 @@ public class PlayScreen implements Screen {
         timeSeconds +=Gdx.graphics.getRawDeltaTime();
         timeSecondsCount += Gdx.graphics.getDeltaTime();
 
+        if((HUD.worldTimerS == 59 ||HUD.worldTimerS == 30) && one_powerup == true && powerup_counter < powerUps.length){
+            Random r = new Random();
+            powerUps[powerup_counter] = new SpeedUpPowerUp((0.15f) + r.nextFloat() * (1.2f - 0.15f), (0.15f) + r.nextFloat() * (1.1f - 0.15f), 0.05f, 0.05f);
+            one_powerup = false;
+
+        }
+        else if (HUD.worldTimerS != 59 ||HUD.worldTimerS != 30){
+            one_powerup = true;
+        }
+
         if (endless == false){
             if (HUD.worldTimerS == 59 && one_customer == true  && last_customer < 4){
                 //TODO determine if scenario mode is over
@@ -508,6 +526,19 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         updateOrder();
+
+        for (int i = 0; i < powerUps.length; i++) {
+            if (powerUps[i] != null){
+                powerUps[i].draw(game.batch);
+                if(powerUps[i].isColliding(controlledChef)){
+                    powerUps[i].increase_speed_mult(controlledChef);
+                    powerUps[i] = null;
+                }
+                
+            }
+        }
+
+
         chef1.draw(game.batch);
         chef1.draw_item(game.batch);
         chef2.draw(game.batch);
