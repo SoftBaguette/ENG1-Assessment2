@@ -467,7 +467,7 @@ public class PlayScreen implements Screen {
                 one_customer = false;
 
                 // Scenario mode over
-                if (last_customer == 4){
+                if (current_customer == 4){
                     reputation = 0;
                 }
 
