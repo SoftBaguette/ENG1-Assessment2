@@ -172,8 +172,9 @@ public class Customer {
                 if (PlayScreen.reputation < 3){
                     PlayScreen.reputation ++;
                     value = 1;
-                    PlayScreen.money += 20;
+                    
                 }
+                PlayScreen.money += 20;
                 
             }else{
                 PlayScreen.reputation --;
