@@ -42,6 +42,7 @@ public class InteractiveTileObject {
     long start_time_burning;
     boolean burning;
     float burn_time = 5000f;
+    
 
 
     ArrayList<Ingredient> plate_items;
@@ -119,6 +120,7 @@ public class InteractiveTileObject {
 
         plate_items = new ArrayList<>();
 
+        padlock_texture = new Texture("PadLock.png");
 
 
     }
@@ -153,7 +155,7 @@ public class InteractiveTileObject {
      * @param chef the chef that interacted with the station
      */
     public void interact(Chef chef){
-        if(!isPurchased) {return;}
+        if (!isPurchased){return;}
         System.out.println("Interacted with " + type + " station");
 
         if (item_on_station  != null && interacting == false){
@@ -507,7 +509,10 @@ public class InteractiveTileObject {
 
     public void draw_padlock(Batch batch){
         if (isPurchased == false){
+            //drawing_font = new BitmapFont();
             batch.draw(padlock_texture, getX()-0.05f, getY()-0.05f, 0.1f, 0.1f);
+            // drawing_font.draw(batch, "Something", getX()-0.05f, getY()-0.2f);
+            // drawing_font.draw(batch, "Something", 130, 90);
         }
     }
 
