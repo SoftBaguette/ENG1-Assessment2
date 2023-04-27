@@ -94,6 +94,9 @@ public class Stack {
      * @return the ingredient at the top of the stack
      */
     public Ingredient peak(){
+        if (isEmpty()){
+            return null;
+        }
         return arr[top];
     }
 

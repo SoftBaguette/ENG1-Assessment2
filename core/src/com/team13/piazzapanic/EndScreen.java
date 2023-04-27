@@ -114,7 +114,7 @@ public class EndScreen implements Screen {
                 restart = true;
             }
             else{
-
+                System.exit(-1);
             }
         }
 

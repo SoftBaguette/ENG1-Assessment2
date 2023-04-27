@@ -33,6 +33,9 @@ public class HUD implements Disposable {
     Label orderNumL;
     Label orderNumLT;
 
+    Label moneyNumL;
+    Label moneyNumLT;
+
     public HUD(SpriteBatch sb){
         this.scenarioComplete = Boolean.FALSE;
         worldTimerM = 0;
@@ -56,7 +59,7 @@ public class HUD implements Disposable {
         orderNumLT = new Label("REPUTATION", new Label.LabelStyle(font, Color.BLACK));
         orderNumL = new Label(String.format("%d", PlayScreen.reputation), new Label.LabelStyle(font, Color.WHITE));
 
-        scoreLabel = new Label(String.format("%d", score), new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel = new Label(String.format("%d", PlayScreen.money), new Label.LabelStyle(font, Color.WHITE));
         scoreLabelT = new Label("MONEY", new Label.LabelStyle(font, Color.BLACK));
 
 
@@ -105,6 +108,16 @@ public class HUD implements Disposable {
         timeLabel.setText(timeStr);
         stage.addActor(table);
 
+    }
+
+    public void updateMoney(){
+        table.left().top();
+        
+        scoreLabel.setText(String.format("%d", PlayScreen.money));
+        scoreLabelT.setText("Money");
+
+
+        stage.addActor(table);
     }
 
     /**
@@ -168,6 +181,8 @@ public class HUD implements Disposable {
         table.left().top();
         orderNumL.setText(String.format("%d", PlayScreen.reputation));
         orderNumLT.setText("Reputation");
+
+
         stage.addActor(table);
 
     }

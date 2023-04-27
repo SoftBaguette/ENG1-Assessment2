@@ -86,12 +86,16 @@ public class PlayScreen implements Screen {
     public static Boolean endless = false;
     public String difficulty = "";
     public static Integer reputation = 2;
-<<<<<<< HEAD
     public static int money;
-=======
 
->>>>>>> main
     public Boolean one_customer = true;
+    public Texture instructionImage = new Texture("startImage.png");
+    public Boolean isEscPressed = false;
+
+    public SpeedUpPowerUp[] powerUps = new SpeedUpPowerUp[20];
+    public int powerup_counter = 1;
+    public boolean one_powerup = true;
+
 
 
     /** Because we are saving using CSV files, we will be reading in Strings.
@@ -103,7 +107,7 @@ public class PlayScreen implements Screen {
      */
     // TODO: Define this Map in some sort of data file. Wherever a purchasable station is instantiated, you should also have stringsToStations.put(station.name, station)
 
-    static Map<String, InteractiveTileObject> stringsToStations = new HashMap<String, InteractiveTileObject>();
+    public static Map<String, InteractiveTileObject> stringsToStations = new HashMap<String, InteractiveTileObject>();
 
 
 
@@ -116,7 +120,7 @@ public class PlayScreen implements Screen {
      *
      */
 
-    public void loadGameData(String filename, HashMap<String, InteractiveTileObject> stations) {
+    public static void loadGameData(String filename) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
 
@@ -128,7 +132,7 @@ public class PlayScreen implements Screen {
             String purchasedStationsString = elements[2];
             String[] purchasedStations = purchasedStationsString.split(";");
             for (String stationName : purchasedStations) {
-                InteractiveTileObject station = stations.get(stationName);
+                InteractiveTileObject station = stringsToStations.get(stationName);
                 if (station != null) {
                     station.setPurchased(true);
                 }
@@ -141,14 +145,14 @@ public class PlayScreen implements Screen {
     }
 
 
-    public void saveGameData(String filename, HashMap<String, InteractiveTileObject> stations) {
+    public static void saveGameData(String filename) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 
             // Write game data to CSV file
             writer.write(getReputation() + "," + getMoney() + ",");
             StringBuilder purchasedStations = new StringBuilder();
-            for (InteractiveTileObject station : stations.values()) {
+            for (InteractiveTileObject station : stringsToStations.values()) {
                 if (station.isPurchased() && station.purchasable) {
                     if (purchasedStations.length() > 0) {
                         purchasedStations.append(";");
@@ -163,8 +167,8 @@ public class PlayScreen implements Screen {
             System.err.println("Error saving game data: " + e.getMessage());
         }
     }
-    int getReputation() {return reputation;}
-    int getMoney() {return money;}
+    static int getReputation() {return reputation;}
+    static int getMoney() {return money;}
 
 
 
@@ -225,8 +229,11 @@ public class PlayScreen implements Screen {
         ordersArray = new ArrayList<>();
 
         reputation = 2;
+        
+        powerUps[0] = new SpeedUpPowerUp(0.55f,0.55f, 0.05f,0.05f);
 
-<<<<<<< HEAD
+       
+
     }
 
 
@@ -266,6 +273,7 @@ public class PlayScreen implements Screen {
 
         one_customer = true;
 
+        isEscPressed = false;
 
 
         chef1 = new Chef(this.world, 31.5F,65);
@@ -281,8 +289,6 @@ public class PlayScreen implements Screen {
         ordersArray = new ArrayList<>();
 
         reputation = 2;
-=======
->>>>>>> main
     }
 
     @Override
@@ -300,8 +306,6 @@ public class PlayScreen implements Screen {
      * If the controlled chef does not have the user control,
      * the method checks if chef1 or chef2 have the user control and sets the control to that chef.
      *
-     * If the controlled chef has the user control,
-     * it checks if the 'W', 'A', 'S', or 'D' keys are pressed and sets the velocity of the chef accordingly.
      *
      * If the 'E' key is just pressed and the chef is touching a tile,
      * it checks the type of tile and sets the chef's in-hands ingredient accordingly.
@@ -309,6 +313,10 @@ public class PlayScreen implements Screen {
      * The method also sets the direction of the chef based on its linear velocity.
      *
      * @param dt is the time delta between the current and previous frame.
+     * 
+     * Updates:
+     *  - Significantly reduced the size of this function by using the improved interactive tile object
+     *  - Moved chef movement to the chef class
      */
 
     public void handleInput(float dt){
@@ -334,13 +342,20 @@ public class PlayScreen implements Screen {
 
                     if (tileName == "Sprites.InteractiveTileObject"){
                         if (tile.type == "Serving"){
-                            if (customers[current_customer] != null){
+                            if (customers[current_customer] != null && controlledChef.stack.isEmpty() == false){
                                 tile.serving_interact(controlledChef, customers[current_customer], 0, current_customer);
                                 System.out.println(current_customer);
                             }
                             
                         }else{
-                            tile.interact(chef1);
+                            if(!tile.isPurchased && money < tile.price) {
+                                
+                            }else if (!tile.isPurchased && money >= tile.price){
+                                tile.isPurchased = true;
+                                money -= tile.price;
+                                
+                            }
+                            tile.interact(controlledChef);
                         }
                     }
 
@@ -349,6 +364,13 @@ public class PlayScreen implements Screen {
                     if (tile.ingredient != null){
                         System.out.println(tile.ingredient.name);
                         if (tileName == "Sprites.IngredientStation"){
+                            if(!tile.isPurchased && money < tile.price) {
+                                
+                            }else if (!tile.isPurchased && money >= tile.price){
+                                tile.isPurchased = true;
+                                money -= tile.price;
+                                
+                            }
                             tile.interact(controlledChef);
                         }
                     }
@@ -362,13 +384,27 @@ public class PlayScreen implements Screen {
                     controlledChef.setChefSkin(null);
                 }
 
+            
             }
+            if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)){
+                isEscPressed = !isEscPressed;
+            }
+
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.C)){saveGameData("savedata.txt");
+        System.out.println("Game data saved!");}
         }
+
+
+
 
     /**
      * The update method updates the game elements, such as camera and characters,
      * based on a specified time interval "dt".
      * @param dt time interval for the update
+     * 
+     * Updates:
+     *  - Each interactive tile object is updated when they are interacting
     */
     public void update(float dt){
         handleInput(dt);
@@ -391,47 +427,7 @@ public class PlayScreen implements Screen {
         hud.updateOrder(Boolean.FALSE, reputation);
     }
 
-    /**
-     * Creates the orders randomly and adds to an array, updates the HUD.
-     */
-    public void createOrder() {
-        int randomNum = ThreadLocalRandom.current().nextInt(1, 2 + 1);
-        Texture burger_recipe = new Texture("Food/burger_recipe.png");
-        Texture salad_recipe = new Texture("Food/salad_recipe.png");
-        Order order;
-
-        for(int i = 0; i<5; i++){
-            if(randomNum==1) {
-                order = new Order(PlateStation.burgerRecipe, burger_recipe);
-            }
-            else {
-                order = new Order(PlateStation.saladRecipe, salad_recipe);
-            }
-            ordersArray.add(order);
-            randomNum = ThreadLocalRandom.current().nextInt(1, 2 + 1);
-        }
-        hud.updateOrder(Boolean.FALSE, 1);
-    }
-
-    /**
-     * Updates the orders as they are completed, or if the game scenario has been completed.
-     */
-    public void updateOrder(){
-        if(scenarioComplete==Boolean.TRUE) {
-            hud.updateScore(Boolean.TRUE, (6 - ordersArray.size()) * 35);
-            hud.updateOrder(Boolean.TRUE, 0);
-            return;
-        }
-        if(ordersArray.size() != 0) {
-            if (ordersArray.get(0).orderComplete) {
-                hud.updateScore(Boolean.FALSE, (6 - ordersArray.size()) * 35);
-                ordersArray.remove(0);
-                hud.updateOrder(Boolean.FALSE, 6 - ordersArray.size());
-                return;
-            }
-            ordersArray.get(0).create(trayX, trayY, game.batch);
-        }
-    }
+    
 
     /**
 
@@ -442,6 +438,12 @@ public class PlayScreen implements Screen {
      Additionally, it checks the state of the game and draws the ingredients, completed recipes, and notifications on the screen.
 
      @param delta The time in seconds since the last frame.
+
+     Updates: 
+        - Render the chef's stack
+        - Render the tile's progress bar
+        - Create new customers
+        - Render and interact with powerups
      */
     @Override
     public void render(float delta){
@@ -451,19 +453,35 @@ public class PlayScreen implements Screen {
         timeSeconds +=Gdx.graphics.getRawDeltaTime();
         timeSecondsCount += Gdx.graphics.getDeltaTime();
 
+        if((HUD.worldTimerS == 59 ||HUD.worldTimerS == 30) && one_powerup == true && powerup_counter < powerUps.length){
+            Random r = new Random();
+            powerUps[powerup_counter] = new SpeedUpPowerUp((0.15f) + r.nextFloat() * (1.2f - 0.15f), (0.15f) + r.nextFloat() * (1.1f - 0.15f), 0.05f, 0.05f);
+            one_powerup = false;
+
+        }
+        else if (HUD.worldTimerS != 59 &&HUD.worldTimerS != 30){
+            one_powerup = true;
+        }
+
         if (endless == false){
-            if (HUD.worldTimerS == 59 && one_customer == true  && last_customer < 4){
-                //TODO determine if scenario mode is over
+            if ((HUD.worldTimerS == 59 ||HUD.worldTimerS == 30) && one_customer == true  && last_customer < 4){
+                
                 System.out.println("Created customer");
                 System.out.println(last_customer);
                 create_customer();
                 
                 one_customer = false;
-            }else if (HUD.worldTimerS != 59){
+
+                // Scenario mode over
+                if (current_customer == 4){
+                    reputation = 0;
+                }
+
+            }else if (HUD.worldTimerS != 59 && HUD.worldTimerS != 30){
                 one_customer = true;
             }
         }else{
-            if (HUD.worldTimerS == 59 && one_customer == true){
+            if ((HUD.worldTimerS == 59 ||HUD.worldTimerS == 30) && one_customer == true){
                 System.out.println("Created customer");
                 System.out.println(last_customer);
                 if (last_customer == 4){
@@ -472,7 +490,7 @@ public class PlayScreen implements Screen {
                 create_customer();
                 
                 one_customer = false;
-            }else if (HUD.worldTimerS != 59){
+            }else if (HUD.worldTimerS != 59 && HUD.worldTimerS != 30){
                 one_customer = true;
             }
         }
@@ -480,7 +498,6 @@ public class PlayScreen implements Screen {
 
         if(Math.round(timeSecondsCount) == 5 && createdOrder == Boolean.FALSE){
             createdOrder = Boolean.TRUE;
-            //createOrder();
         }
         float period = 1f;
         if(timeSeconds > period) {
@@ -497,14 +514,24 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         updateOrder();
-        //game.batch.draw(new Texture("Chef/Chef_normal.png"), chef1.getX(), chef1.getY(), chef1.getWidth(), chef1.getHeight());
-        //chef1.draw_chef(game.batch);
-        //System.out.println(Gdx.input.getX());
-        //System.out.println(Gdx.input.getY());
+        hud.updateMoney();
+
+        for (int i = 0; i < powerUps.length; i++) {
+            if (powerUps[i] != null){
+                powerUps[i].draw(game.batch);
+                if(powerUps[i].isColliding(controlledChef)){
+                    powerUps[i].increase_speed_mult(controlledChef);
+                    powerUps[i] = null;
+                }
+                
+            }
+        }
+
+
         chef1.draw(game.batch);
         chef1.draw_item(game.batch);
-        game.batch.draw(new Texture("Food/Lettuce.png"), (chef1.getX()*1.01f), chef1.getY(), chef1.getWidth()/2,chef1.getHeight()/2);
         chef2.draw(game.batch);
+        chef2.draw_item(game.batch);
 
         controlledChef.drawNotification(game.batch);
         
@@ -515,35 +542,16 @@ public class PlayScreen implements Screen {
 
                 if (customers[i].status == "destroy"){
                     customers[i] = null;
+                    //current_customer ++;
                 }
-                //System.out.println(current_customer);
+
             }
         }
         if (customers[current_customer] != null){
             customers[current_customer].draw_order(game.batch);
         }
         
-        
-        //customer1.draw(game.batch);
-        //customer1.move(1, current_customer);
-        //TODO check this section about drawing on plate station
-        for (InteractiveTileObject tile : tile_objects){
-            // if (tile.type != "Oven"){
-            //     tile.draw_item_on_station(game.batch);
-            // }
-            tile.draw_item_on_station(game.batch);
-            
-        }
-        /*
-        if (plateStation.getPlate().size() > 0){
-            for(Object ing : plateStation.getPlate()){
-                Ingredient ingNew = (Ingredient) ing;
-                ingNew.create(plateStation.getX(), plateStation.getY(),game.batch);
-            }
-        } else if (plateStation.getCompletedRecipe() != null){
-            Recipe recipeNew = plateStation.getCompletedRecipe();
-            recipeNew.create(plateStation.getX(), plateStation.getY(), game.batch);
-        }*/
+
 
         if (!chef1.getUserControlChef()) {
             if (chef1.getTouchingTile() != null && chef1.getInHandsIng() != null){
@@ -559,22 +567,29 @@ public class PlayScreen implements Screen {
                 }
             }
         }
-        // if (chef1.previousInHandRecipe != null){
-        //     chef1.displayIngDynamic(game.batch);
-        // }
-        // if (chef2.previousInHandRecipe != null){
-        //     chef2.displayIngDynamic(game.batch);
-        // }
+
         for (InteractiveTileObject tile : tile_objects){
+            //tile.isPurchased = true;
             tile.draw_progress_bar(game.batch);
+            tile.draw_item_on_station(game.batch);
+            tile.draw_padlock(game.batch);
+            //tile.isPurchased = false;
         }
+
+        if (isEscPressed){
+            game.batch.draw(instructionImage, 0, 0, 1.88f, 1.88f);
+        }
+
         game.batch.end();
     }
 
 
+    /**
+     * Responsible for creating customers and adds them to the customers array
+     */
     public void create_customer(){
         if (current_customer >= customers.length){
-            System.out.println("AHAHHAHH");
+            System.out.println("Broken");
 
         }else{
             Random r = new Random();
@@ -619,6 +634,47 @@ public class PlayScreen implements Screen {
     @Override
     public void hide(){
 
+    }
+    /**
+     * Creates the orders randomly and adds to an array, updates the HUD.
+     */
+    public void createOrder() {
+        int randomNum = ThreadLocalRandom.current().nextInt(1, 2 + 1);
+        Texture burger_recipe = new Texture("Food/burger_recipe.png");
+        Texture salad_recipe = new Texture("Food/salad_recipe.png");
+        Order order;
+
+        for(int i = 0; i<5; i++){
+            if(randomNum==1) {
+                order = new Order(PlateStation.burgerRecipe, burger_recipe);
+            }
+            else {
+                order = new Order(PlateStation.saladRecipe, salad_recipe);
+            }
+            ordersArray.add(order);
+            randomNum = ThreadLocalRandom.current().nextInt(1, 2 + 1);
+        }
+        hud.updateOrder(Boolean.FALSE, 1);
+    }
+
+    /**
+     * Updates the orders as they are completed, or if the game scenario has been completed.
+     */
+    public void updateOrder(){
+        if(scenarioComplete==Boolean.TRUE) {
+            hud.updateScore(Boolean.TRUE, (6 - ordersArray.size()) * 35);
+            hud.updateOrder(Boolean.TRUE, 0);
+            return;
+        }
+        if(ordersArray.size() != 0) {
+            if (ordersArray.get(0).orderComplete) {
+                hud.updateScore(Boolean.FALSE, (6 - ordersArray.size()) * 35);
+                ordersArray.remove(0);
+                hud.updateOrder(Boolean.FALSE, 6 - ordersArray.size());
+                return;
+            }
+            ordersArray.get(0).create(trayX, trayY, game.batch);
+        }
     }
 
     @Override
