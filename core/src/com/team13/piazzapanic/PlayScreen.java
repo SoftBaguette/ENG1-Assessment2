@@ -97,6 +97,7 @@ public class PlayScreen implements Screen {
     public boolean one_powerup = true;
 
 
+
     /** Because we are saving using CSV files, we will be reading in Strings.
      * Therefore we need a way of mapping each purchasable station with a string, so that we can write
      * e.g. "oven1" in the CSV file and the code knows which InteractiveTileObject it's referring to.
@@ -347,6 +348,13 @@ public class PlayScreen implements Screen {
                             }
                             
                         }else{
+                            if(!tile.isPurchased && money < tile.price) {
+                                
+                            }else if (!tile.isPurchased && money >= tile.price){
+                                tile.isPurchased = true;
+                                money -= tile.price;
+                                
+                            }
                             tile.interact(controlledChef);
                         }
                     }
@@ -356,6 +364,13 @@ public class PlayScreen implements Screen {
                     if (tile.ingredient != null){
                         System.out.println(tile.ingredient.name);
                         if (tileName == "Sprites.IngredientStation"){
+                            if(!tile.isPurchased && money < tile.price) {
+                                
+                            }else if (!tile.isPurchased && money >= tile.price){
+                                tile.isPurchased = true;
+                                money -= tile.price;
+                                
+                            }
                             tile.interact(controlledChef);
                         }
                     }
@@ -493,6 +508,7 @@ public class PlayScreen implements Screen {
         game.batch.setProjectionMatrix(gamecam.combined);
         game.batch.begin();
         updateOrder();
+        hud.updateMoney();
 
         for (int i = 0; i < powerUps.length; i++) {
             if (powerUps[i] != null){
@@ -547,6 +563,7 @@ public class PlayScreen implements Screen {
         }
 
         for (InteractiveTileObject tile : tile_objects){
+            //tile.isPurchased = true;
             tile.draw_progress_bar(game.batch);
             tile.draw_item_on_station(game.batch);
             tile.draw_padlock(game.batch);
