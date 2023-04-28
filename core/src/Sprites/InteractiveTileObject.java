@@ -42,6 +42,8 @@ public class InteractiveTileObject {
     long start_time_burning;
     boolean burning;
     float burn_time = 5000f;
+
+    public Integer ID = null;
     
 
 
@@ -124,6 +126,69 @@ public class InteractiveTileObject {
 
 
     }
+ 
+
+        // This constructor is only used for stations that exist initially in the game and to save/load
+        public InteractiveTileObject(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type, Integer ID) {
+
+
+            bdefNew = bdef;
+            // No need to set a price.
+            price = 0;
+            Body b2body = world.createBody(bdef);
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox((rectangle.getWidth() / 2f) / MainGame.PPM, (rectangle.getHeight() / 2f) / MainGame.PPM);
+    
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+            fixture = b2body.createFixture(fdef);
+            fixture.setUserData(this);
+            ingredient = null;
+            this.type = type;
+            interacting = false;
+            burning = false;
+            item_on_station = null;
+            isPurchased = true;
+           
+            progressBar = new ProgressBar(0.5f, 0.5f, 0.25f,0.075f);
+           
+            plate_items = new ArrayList<>();
+            purchasable = false;
+    
+            padlock_texture = new Texture("PadLock.png");
+            this.ID = ID;
+           
+        }
+        // Use this constructor for purchasable stations and to save/load
+        public InteractiveTileObject(World world, TiledMap map, BodyDef bdef, Rectangle rectangle, String type, boolean isPurchased, int price, Integer ID) {
+    
+            purchasable = true;
+            this.isPurchased = isPurchased;
+            bdefNew = bdef;
+            this.price = price;
+            Body b2body = world.createBody(bdef);
+            PolygonShape shape = new PolygonShape();
+            shape.setAsBox((rectangle.getWidth() / 2f) / MainGame.PPM, (rectangle.getHeight() / 2f) / MainGame.PPM);
+    
+            FixtureDef fdef = new FixtureDef();
+            fdef.shape = shape;
+            fixture = b2body.createFixture(fdef);
+            fixture.setUserData(this);
+            ingredient = null;
+            this.type = type;
+            interacting = false;
+            burning = false;
+            item_on_station = null;
+    
+            progressBar = new ProgressBar(0.5f, 0.5f, 0.25f,0.075f);
+    
+            plate_items = new ArrayList<>();
+    
+            padlock_texture = new Texture("PadLock.png");
+            this.ID = ID;
+    
+    
+        }
 
 
     /**
