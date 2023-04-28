@@ -137,12 +137,13 @@ public class B2WorldCreator {
                 } else if (mapObject.getName().equals("chopping_board")) {
                     //new ChoppingBoard(world, map, bdef, rectangle,"ChoppingBoard");
                     if (num_chopping_boards < 2){
-                        new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard");
-                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard"));
+                        new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard", num_chopping_boards);
+                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard", num_chopping_boards));
                         num_chopping_boards ++;
                     }else{
-                        new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard", false, 20);
-                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard",false, 20));
+                        new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard", false, 20,num_chopping_boards);
+                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"ChoppingBoard",false, 20,num_chopping_boards));
+                        num_chopping_boards ++;
                     }
 
                 } else if (mapObject.getName().equals("plate")) {
@@ -165,12 +166,13 @@ public class B2WorldCreator {
                     new IngredientStation(world, map, bdef, rectangle, new Ingredient("Onion", 0, 2,0,onion_textures ), "");
                 } else if (mapObject.getName().equals("pan1")) {
                     if (num_pans < 1){
-                        new InteractiveTileObject(world, map, bdef, rectangle,"Pan");
-                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan"));
+                        new InteractiveTileObject(world, map, bdef, rectangle,"Pan",num_pans);
+                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan",num_pans));
                         num_pans ++;
                     }else{
-                        new InteractiveTileObject(world, map, bdef, rectangle,"Pan", false, 20);
-                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan", false, 20));
+                        new InteractiveTileObject(world, map, bdef, rectangle,"Pan", false, 20,num_pans);
+                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan", false, 20,num_pans));
+                        num_pans ++;
                     }
 
                     
@@ -188,12 +190,13 @@ public class B2WorldCreator {
                 
                 else if (mapObject.getName().equals("pan2")) {
                     if (num_pans <= 0){
-                        new InteractiveTileObject(world, map, bdef, rectangle,"Pan");
-                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan"));
+                        new InteractiveTileObject(world, map, bdef, rectangle,"Pan",num_pans);
+                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan",num_pans));
                         num_pans ++;
                     }else{
-                        new InteractiveTileObject(world, map, bdef, rectangle,"Pan", false, 20);
-                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan", false, 20));
+                        new InteractiveTileObject(world, map, bdef, rectangle,"Pan", false, 20,num_pans);
+                        tile_objects.add(new InteractiveTileObject(world, map, bdef, rectangle,"Pan", false, 20,num_pans));
+                        num_pans ++;
                     }
                 }else if (mapObject.getName().equals("oven")) {
                     new InteractiveTileObject(world, map, bdef, rectangle,"Oven");
