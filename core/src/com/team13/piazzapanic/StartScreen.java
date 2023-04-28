@@ -171,7 +171,7 @@ public class StartScreen implements Screen {
             }else if (current_button == 4){
                 endless = true;
             }else if (current_button == 5){
-                load = true;
+                PlayScreen.load = true;
             }else if (current_button == 6){
                 show_instruction = true;
                 startTime = System.currentTimeMillis();

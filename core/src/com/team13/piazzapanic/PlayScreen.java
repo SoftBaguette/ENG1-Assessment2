@@ -28,6 +28,8 @@ import java.util.Map;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
+import javax.swing.plaf.synth.SynthUI;
+
 /**
  * The PlayScreen class is responsible for displaying the game to the user and handling the user's interactions.
  * The PlayScreen class implements the Screen interface which is part of the LibGDX framework.
@@ -95,6 +97,7 @@ public class PlayScreen implements Screen {
     public SpeedUpPowerUp[] powerUps = new SpeedUpPowerUp[20];
     public int powerup_counter = 1;
     public boolean one_powerup = true;
+    public static boolean load = false;
 
 
 
@@ -120,7 +123,7 @@ public class PlayScreen implements Screen {
      *
      */
 
-    public void loadGameData(String filename, HashMap<String, InteractiveTileObject> stations) {
+    public void loadGameData(String filename, ArrayList<InteractiveTileObject> stations) {
         try {
             BufferedReader reader = new BufferedReader(new FileReader(filename));
 
@@ -129,14 +132,50 @@ public class PlayScreen implements Screen {
             reputation = Integer.parseInt(elements[0]);
             money = (Integer.parseInt(elements[1]));
 
-            String purchasedStationsString = elements[2];
-            String[] purchasedStations = purchasedStationsString.split(";");
-            for (String stationName : purchasedStations) {
-                InteractiveTileObject station = stations.get(stationName);
-                if (station != null) {
-                    station.setPurchased(true);
+            String purchasedChoppingBoardStr = elements[2];
+            String purchasedPansStr = elements[2];
+
+            String[] purchasedChoppingBoard = purchasedChoppingBoardStr.split(";");
+            String[] purchasedPans = purchasedPansStr.split(";");
+
+            
+            for (InteractiveTileObject interactiveTileObject : stations) {
+                if (interactiveTileObject.type == "Pan"){
+                    for (String str : purchasedPans) {
+                        if (interactiveTileObject.ID != null ){
+                            if (interactiveTileObject.ID == Integer.parseInt(str)){
+                                interactiveTileObject.isPurchased = true;
+                            }
+                        }
+                    }
                 }
+                
             }
+
+            for (InteractiveTileObject interactiveTileObject : stations) {
+                if (interactiveTileObject.type == "ChoppingBoard"){
+                    
+                    for (String str : purchasedChoppingBoard) {
+                        System.out.println(str);
+                        if (interactiveTileObject.ID != null ){
+                            if (interactiveTileObject.ID == Integer.parseInt(str)){
+                                interactiveTileObject.isPurchased = true;
+                                System.out.println(interactiveTileObject.ID);
+                                System.out.println(interactiveTileObject.isPurchased);
+                            }
+                        }
+                    }
+                }
+                
+            }
+            // String purchasedStationsString = elements[2];
+            // String[] purchasedStations = purchasedStationsString.split(";");
+            // for (String stationName : purchasedStations) {
+            //     InteractiveTileObject station = stations.get(stationName);
+            //     if (station != null) {
+            //         station.setPurchased(true);
+            //     }
+            // }
 
             reader.close();
         } catch (IOException e) {
@@ -145,22 +184,43 @@ public class PlayScreen implements Screen {
     }
 
 
-    public void saveGameData(String filename, HashMap<String, InteractiveTileObject> stations) {
+    public void saveGameData(String filename, ArrayList<InteractiveTileObject> stations) {
         try {
             BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
 
             // Write game data to CSV file
             writer.write(getReputation() + "," + getMoney() + ",");
             StringBuilder purchasedStations = new StringBuilder();
-            for (InteractiveTileObject station : stations.values()) {
-                if (station.isPurchased() && station.purchasable) {
-                    if (purchasedStations.length() > 0) {
+            for (InteractiveTileObject interactiveTileObject : stations) {
+                if (interactiveTileObject.type == "ChoppingBoard"){
+                    System.out.println(interactiveTileObject.isPurchased);
+                    if (interactiveTileObject.isPurchased == true){
+                        purchasedStations.append( Integer.toString(interactiveTileObject.ID));
                         purchasedStations.append(";");
                     }
-                    purchasedStations.append(station.getName());
+                }
+            }
+            purchasedStations.append(",");
+            for (InteractiveTileObject interactiveTileObject : stations) {
+                if (interactiveTileObject.type == "Pan"){
+                    if (interactiveTileObject.isPurchased == true){
+                        purchasedStations.append( Integer.toString(interactiveTileObject.ID));
+                        purchasedStations.append(";");
+                    }
                 }
             }
             writer.write(purchasedStations.toString());
+
+            // StringBuilder purchasedStations = new StringBuilder();
+            // for (InteractiveTileObject station : stations.values()) {
+            //     if (station.isPurchased() && station.purchasable) {
+            //         if (purchasedStations.length() > 0) {
+            //             purchasedStations.append(";");
+            //         }
+            //         purchasedStations.append(station.getName());
+            //     }
+            // }
+            // writer.write(purchasedStations.toString());
 
             writer.close();
         } catch (IOException e) {
@@ -390,7 +450,20 @@ public class PlayScreen implements Screen {
                 isEscPressed = !isEscPressed;
             }
 
+            
+            if(Gdx.input.isKeyJustPressed(Input.Keys.C)){
+                saveGameData("assets/savedata.txt", tile_objects);
+                System.out.println("Game data saved!");
+            }
+
+            if (load == true){
+                loadGameData("assets/saveData.txt", tile_objects);
+                System.out.println("LOAD");
+                load = false;
+            }
+
         }
+
 
     /**
      * The update method updates the game elements, such as camera and characters,
