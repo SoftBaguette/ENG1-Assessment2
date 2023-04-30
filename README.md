@@ -5,6 +5,7 @@ Our Engineering course project involves taking over the development of a cooking
 To access the game and learn more about the project, please use the following links:
 
 - [Website](https://softbaguette.github.io/Assessment2-Website/)
+- [Website Repository](https://github.com/SoftBaguette/Assessment2-Website)
 - [Team 13 Part 1](https://github.com/team13eng1/team13eng1.github.io)
 - [Part 1](https://github.com/SoftBaguette/ENG1-Assessment2)
 
