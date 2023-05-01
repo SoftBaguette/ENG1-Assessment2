@@ -61,6 +61,7 @@ public class PlayScreen implements Screen {
     private final World world;
     private final Chef chef1;
     private final Chef chef2;
+    private final Chef chef3;
 
     private Chef controlledChef;
 
@@ -278,6 +279,7 @@ public class PlayScreen implements Screen {
 
         chef1 = new Chef(this.world, 31.5F,65);
         chef2 = new Chef(this.world, 128,65);
+        chef3 = new Chef(this.world, 50,20);
         customers[0] = new Customer(167,15, difficulty, 60);
         customers[1] = new Customer(167,10, difficulty, 60);
         last_customer = 2;
@@ -338,6 +340,7 @@ public class PlayScreen implements Screen {
 
         chef1 = new Chef(this.world, 31.5F,65);
         chef2 = new Chef(this.world, 128,65);
+        chef3 = new Chef(this.world, 30,20);
         customers[0] = new Customer(167,15, difficulty, 60);
         customers[1] = new Customer(167,10, difficulty, 60);
         last_customer = 2;
@@ -382,11 +385,16 @@ public class PlayScreen implements Screen {
     public void handleInput(float dt){
         if ((Gdx.input.isKeyJustPressed(Input.Keys.R) &&
                 chef1.getUserControlChef() &&
-                chef2.getUserControlChef())) {
+                chef2.getUserControlChef() && 
+                chef3.getUserControlChef())) {
             if (controlledChef.equals(chef1)) {
                 controlledChef.b2body.setLinearVelocity(0, 0);
                 controlledChef = chef2;
-            } else {
+            }else if (controlledChef.equals(chef2)) {
+                controlledChef.b2body.setLinearVelocity(0, 0);
+                controlledChef = chef3;
+            }
+             else {
                 controlledChef.b2body.setLinearVelocity(0, 0);
                 controlledChef = chef1;
             }
@@ -479,6 +487,7 @@ public class PlayScreen implements Screen {
         renderer.setView(gamecam);
         chef1.update(dt);
         chef2.update(dt);
+        chef3.update(dt);
         if (chef1.getTouchingTile() != null){
             if (chef1.getTouchingTile().getUserData().getClass().getName() == "Sprites.ChoppingBoard"){
                 InteractiveTileObject tile = (InteractiveTileObject) controlledChef.getTouchingTile().getUserData();
@@ -603,6 +612,8 @@ public class PlayScreen implements Screen {
         chef1.draw_item(game.batch);
         chef2.draw(game.batch);
         chef2.draw_item(game.batch);
+        chef3.draw(game.batch);
+        chef3.draw_item(game.batch);
 
         controlledChef.drawNotification(game.batch);
         
