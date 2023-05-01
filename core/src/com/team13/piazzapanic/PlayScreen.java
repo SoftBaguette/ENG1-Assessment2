@@ -531,6 +531,10 @@ public class PlayScreen implements Screen {
         }
 
         if (endless == false){
+            // Scenario mode over
+            if (current_customer == 4){
+                reputation = 0;
+            }
             if ((HUD.worldTimerS == 59 ||HUD.worldTimerS == 30) && one_customer == true  && last_customer < 4){
                 
                 System.out.println("Created customer");
