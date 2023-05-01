@@ -432,11 +432,11 @@ public class Chef extends Sprite {
      * @param batch The batch used for drawing sprites to the screen
      */
     public void draw_item(Batch batch){
-        float offset = 0;
+        float offset = 0.1f;
         for (Ingredient chef_ing : stack.arr) {
             if (chef_ing !=null){
                 ArrayList<Texture> texture = AllTextures.getTextures(chef_ing.name);
-                batch.draw(texture.get(chef_ing.status), this.getX(),(float) this.getY() + offset, this.getWidth(),this.getHeight());
+                batch.draw(texture.get(chef_ing.status), this.getX(),(float) this.getY() + offset, 0.16f,0.16f);
                 offset +=0.1f;
 
             }
