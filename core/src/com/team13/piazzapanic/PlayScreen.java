@@ -452,12 +452,12 @@ public class PlayScreen implements Screen {
 
             
             if(Gdx.input.isKeyJustPressed(Input.Keys.C)){
-                saveGameData("assets/savedata.txt", tile_objects);
+                saveGameData("savedata.txt", tile_objects);
                 System.out.println("Game data saved!");
             }
 
             if (load == true){
-                loadGameData("assets/saveData.txt", tile_objects);
+                loadGameData("saveData.txt", tile_objects);
                 System.out.println("LOAD");
                 load = false;
             }
