@@ -102,134 +102,10 @@ public class PlayScreen implements Screen {
 
 
 
-    /** Because we are saving using CSV files, we will be reading in Strings.
-     * Therefore we need a way of mapping each purchasable station with a string, so that we can write
-     * e.g. "oven1" in the CSV file and the code knows which InteractiveTileObject it's referring to.
-     * Each purchasable station has attribute String name. The name should be unique.
-     * String name is used for the key in this mapping. This means that stations can be uniquely identified by their
-     * strings in stringsToStations, and strings/names that will correspond to the station are written to the file by getName().
-     */
-    // TODO: Define this Map in some sort of data file. Wherever a purchasable station is instantiated, you should also have stringsToStations.put(station.name, station)
-
-    static Map<String, InteractiveTileObject> stringsToStations = new HashMap<String, InteractiveTileObject>();
 
 
 
 
-
-    /** Reads a CSV of a game state and sets the class variables as appropriate.
-     *  CSV format: money, reputation, purchased stations
-     *  The HashMap stations is the same as stringsToStations. Once finalised, feel free to remove the parameter,
-     *  but stringsToStations might be moved to a separate data file at a later stage.
-     *
-     */
-
-    public void loadGameData(String filename, ArrayList<InteractiveTileObject> stations) {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(filename));
-
-            // Read game data from CSV file
-            String[] elements = reader.readLine().split(",");
-            reputation = Integer.parseInt(elements[0]);
-            money = (Integer.parseInt(elements[1]));
-
-            String purchasedChoppingBoardStr = elements[2];
-            String purchasedPansStr = elements[2];
-
-            String[] purchasedChoppingBoard = purchasedChoppingBoardStr.split(";");
-            String[] purchasedPans = purchasedPansStr.split(";");
-
-            
-            for (InteractiveTileObject interactiveTileObject : stations) {
-                if (interactiveTileObject.type == "Pan"){
-                    for (String str : purchasedPans) {
-                        if (interactiveTileObject.ID != null ){
-                            if (interactiveTileObject.ID == Integer.parseInt(str)){
-                                interactiveTileObject.isPurchased = true;
-                            }
-                        }
-                    }
-                }
-                
-            }
-
-            for (InteractiveTileObject interactiveTileObject : stations) {
-                if (interactiveTileObject.type == "ChoppingBoard"){
-                    
-                    for (String str : purchasedChoppingBoard) {
-                        System.out.println(str);
-                        if (interactiveTileObject.ID != null ){
-                            if (interactiveTileObject.ID == Integer.parseInt(str)){
-                                interactiveTileObject.isPurchased = true;
-                                System.out.println(interactiveTileObject.ID);
-                                System.out.println(interactiveTileObject.isPurchased);
-                            }
-                        }
-                    }
-                }
-                
-            }
-            // String purchasedStationsString = elements[2];
-            // String[] purchasedStations = purchasedStationsString.split(";");
-            // for (String stationName : purchasedStations) {
-            //     InteractiveTileObject station = stations.get(stationName);
-            //     if (station != null) {
-            //         station.setPurchased(true);
-            //     }
-            // }
-
-            reader.close();
-        } catch (IOException e) {
-            System.err.println("Error loading game data: " + e.getMessage());
-        }
-    }
-
-
-    public void saveGameData(String filename, ArrayList<InteractiveTileObject> stations) {
-        try {
-            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-
-            // Write game data to CSV file
-            writer.write(getReputation() + "," + getMoney() + ",");
-            StringBuilder purchasedStations = new StringBuilder();
-            for (InteractiveTileObject interactiveTileObject : stations) {
-                if (interactiveTileObject.type == "ChoppingBoard"){
-                    System.out.println(interactiveTileObject.isPurchased);
-                    if (interactiveTileObject.isPurchased == true){
-                        purchasedStations.append( Integer.toString(interactiveTileObject.ID));
-                        purchasedStations.append(";");
-                    }
-                }
-            }
-            purchasedStations.append(",");
-            for (InteractiveTileObject interactiveTileObject : stations) {
-                if (interactiveTileObject.type == "Pan"){
-                    if (interactiveTileObject.isPurchased == true){
-                        purchasedStations.append( Integer.toString(interactiveTileObject.ID));
-                        purchasedStations.append(";");
-                    }
-                }
-            }
-            writer.write(purchasedStations.toString());
-
-            // StringBuilder purchasedStations = new StringBuilder();
-            // for (InteractiveTileObject station : stations.values()) {
-            //     if (station.isPurchased() && station.purchasable) {
-            //         if (purchasedStations.length() > 0) {
-            //             purchasedStations.append(";");
-            //         }
-            //         purchasedStations.append(station.getName());
-            //     }
-            // }
-            // writer.write(purchasedStations.toString());
-
-            writer.close();
-        } catch (IOException e) {
-            System.err.println("Error saving game data: " + e.getMessage());
-        }
-    }
-    int getReputation() {return reputation;}
-    int getMoney() {return money;}
 
 
 
@@ -758,6 +634,100 @@ public class PlayScreen implements Screen {
             ordersArray.get(0).create(trayX, trayY, game.batch);
         }
     }
+    
+        /** Reads a CSV of a game state and sets the class variables as appropriate.
+     *  CSV format: money, reputation, purchased Chopping board, purchased pans
+     *
+     */
+
+    public void loadGameData(String filename, ArrayList<InteractiveTileObject> stations) {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(filename));
+
+            // Read game data from CSV file
+            String[] elements = reader.readLine().split(",");
+            reputation = Integer.parseInt(elements[0]);
+            money = (Integer.parseInt(elements[1]));
+
+            String purchasedChoppingBoardStr = elements[2];
+            String purchasedPansStr = elements[2];
+
+            String[] purchasedChoppingBoard = purchasedChoppingBoardStr.split(";");
+            String[] purchasedPans = purchasedPansStr.split(";");
+
+            
+            for (InteractiveTileObject interactiveTileObject : stations) {
+                if (interactiveTileObject.type == "Pan"){
+                    for (String str : purchasedPans) {
+                        if (interactiveTileObject.ID != null ){
+                            if (interactiveTileObject.ID == Integer.parseInt(str)){
+                                interactiveTileObject.isPurchased = true;
+                            }
+                        }
+                    }
+                }
+                
+            }
+
+            for (InteractiveTileObject interactiveTileObject : stations) {
+                if (interactiveTileObject.type == "ChoppingBoard"){
+                    
+                    for (String str : purchasedChoppingBoard) {
+                        System.out.println(str);
+                        if (interactiveTileObject.ID != null ){
+                            if (interactiveTileObject.ID == Integer.parseInt(str)){
+                                interactiveTileObject.isPurchased = true;
+                                System.out.println(interactiveTileObject.ID);
+                                System.out.println(interactiveTileObject.isPurchased);
+                            }
+                        }
+                    }
+                }
+                
+            }
+
+
+            reader.close();
+        } catch (IOException e) {
+            System.err.println("Error loading game data: " + e.getMessage());
+        }
+    }
+
+
+    public void saveGameData(String filename, ArrayList<InteractiveTileObject> stations) {
+        try {
+            BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
+
+            // Write game data to CSV file
+            writer.write(getReputation() + "," + getMoney() + ",");
+            StringBuilder purchasedStations = new StringBuilder();
+            for (InteractiveTileObject interactiveTileObject : stations) {
+                if (interactiveTileObject.type == "ChoppingBoard"){
+                    System.out.println(interactiveTileObject.isPurchased);
+                    if (interactiveTileObject.isPurchased == true){
+                        purchasedStations.append( Integer.toString(interactiveTileObject.ID));
+                        purchasedStations.append(";");
+                    }
+                }
+            }
+            purchasedStations.append(",");
+            for (InteractiveTileObject interactiveTileObject : stations) {
+                if (interactiveTileObject.type == "Pan"){
+                    if (interactiveTileObject.isPurchased == true){
+                        purchasedStations.append( Integer.toString(interactiveTileObject.ID));
+                        purchasedStations.append(";");
+                    }
+                }
+            }
+            writer.write(purchasedStations.toString());
+
+            writer.close();
+        } catch (IOException e) {
+            System.err.println("Error saving game data: " + e.getMessage());
+        }
+    }
+    int getReputation() {return reputation;}
+    int getMoney() {return money;}
 
     @Override
     public void dispose(){
